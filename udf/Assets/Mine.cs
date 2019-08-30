@@ -9,7 +9,7 @@ public class Mine : MonoBehaviour
     [SerializeField] public GameObject SP;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public float speedCoeff;
-    [SerializeField] GameObject b;
+    [SerializeField] public GameObject b;
     public int CPPosLimit;
     public int SPPosLimit;
     private float speed;

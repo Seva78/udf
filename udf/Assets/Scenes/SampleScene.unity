@@ -369,3 +369,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vertSpeed: 0
+  horSpeed: 2
+  rotateSpeed: 2

@@ -235,7 +235,7 @@ MonoBehaviour:
   CP: {fileID: 2302104410519513460, guid: e182ade8746322a439ac44eb875bc10e, type: 3}
   SP: {fileID: 2302104410519513460, guid: 6dff2a13bb9df2c4d9bf8fec4aa69594, type: 3}
   MainCamera: {fileID: 519420031}
-  speedCoeff: 2
+  speedCoeff: 1
   b: {fileID: 2069570061}
   CPPosLimit: 100
   SPPosLimit: 200

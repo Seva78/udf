@@ -8,7 +8,6 @@ public class Mine : MonoBehaviour
     [SerializeField] public GameObject CP;
     [SerializeField] public GameObject SP;
     [SerializeField] public Camera MainCamera;
-    [SerializeField] public float speedCoeff;
     [SerializeField] public GameObject b;
     public int CPPosLimit;
     public int SPPosLimit;
@@ -46,7 +45,7 @@ public class Mine : MonoBehaviour
     }
     void Update()
     {
-        speed = b.GetComponent<B>().vertSpeed * speedCoeff;
+        speed = b.GetComponent<B>().vertSpeed;
         transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
         _yCP += speed;
         _last_ySPL += speed;

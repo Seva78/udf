@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,6 +34,12 @@ public class B : MonoBehaviour
         Debug.Log(V);
         R = Mathf.Asin(aVx / V);
     }
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s.");
+    }
+
+
 }
 
 

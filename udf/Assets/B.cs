@@ -13,30 +13,62 @@ public class B : MonoBehaviour
     private int G = 8; //Ускорение G свободного падения.
     private float A = 0; //Ускорение A, которое демон создаёт в период маха крыла.
     private float K = 0.2f; //Коэффициент K трения об воздух (не константа, т.к. зависит от того, как сильно у Б расправлены крылья).
+    private float D; //переменная для вывода всякого в служебное меню
     private int Ratio = 20;
     //private int L = 200 - 64;
     private float aVx;
     private float aVy;
     //private bool aHit;
-    private float aDelta = 0.02f; 
 
-    void FixedUpdate()
+    void Update()
     {
-        K = 0.5f;
-        A = 0;
-        V *= 1 - K * aDelta;
-        V += A * aDelta;
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
+        }
+        else R *= 1 - K * Time.deltaTime;
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            K = 0.99f;
+            A = 0;
+        }
+        else if (Input.GetAxis("Vertical") == 0)
+        {
+            K = 0.5f;
+            A = 0;
+        }
+        else {
+            K = 0.4f;
+        }
+
+
+        V *= 1 - K * Time.deltaTime;
+        V += A * Time.deltaTime;
         aVx = V* Mathf.Sin(R);
         aVy = V* Mathf.Cos(R);
-        aVy += G * aDelta;
-        vertSpeed = aVy * Ratio * aDelta;
+        aVy += G * Time.deltaTime;
+        vertSpeed = aVy * Ratio * Time.deltaTime;
         V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
-        Debug.Log(V);
         R = Mathf.Asin(aVx / V);
+        if (Input.GetAxis("Vertical") <= 0)
+        {
+            GetComponent<Rigidbody2D>().transform.rotation =
+                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 100);
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().transform.rotation =
+                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 100);
+        }
     }
     private void OnGUI()
     {
-        GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s.");
+        GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
+        GUI.Box(new Rect(10, 50, 100, 30), "R = " + R.ToString());
+        GUI.Box(new Rect(10, 90, 100, 30), "A = " + A.ToString());
+        GUI.Box(new Rect(10, 130, 100, 30), "K = " + K.ToString());
+        //GUI.Box(new Rect(10, 170, 100, 30), "D = " + D.ToString());
     }
 
 

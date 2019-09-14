@@ -30,18 +30,20 @@ public class B : MonoBehaviour
 
         if (Input.GetAxis("Vertical") > 0)
         {
+            GetComponent<SpriteRenderer>().flipY = true;
             K = 0.99f;
             A = 0;
         }
         else if (Input.GetAxis("Vertical") == 0)
         {
+            GetComponent<SpriteRenderer>().flipY = false;
             K = 0.5f;
             A = 0;
         }
         else {
+            GetComponent<SpriteRenderer>().flipY = false;
             K = 0.4f;
         }
-
 
         V *= 1 - K * Time.deltaTime;
         V += A * Time.deltaTime;
@@ -49,6 +51,9 @@ public class B : MonoBehaviour
         aVy = V* Mathf.Cos(R);
         aVy += G * Time.deltaTime;
         vertSpeed = aVy * Ratio * Time.deltaTime;
+
+        GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y, transform.position.z));
+
         V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
         R = Mathf.Asin(aVx / V);
         if (Input.GetAxis("Vertical") <= 0)

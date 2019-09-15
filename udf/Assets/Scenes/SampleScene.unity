@@ -238,6 +238,7 @@ MonoBehaviour:
   b: {fileID: 2069570061}
   CPPosLimit: 100
   SPPosLimit: 200
+  SPConvLimit: 100
 --- !u!4 &1111420319
 Transform:
   m_ObjectHideFlags: 0

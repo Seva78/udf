@@ -11,6 +11,7 @@ public class Mine : MonoBehaviour
     [SerializeField] public GameObject b;
     public int CPPosLimit;
     public int SPPosLimit;
+    public int SPConvLimit; // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
     private float speed;
     private int _CPPosLimitL;
     private int _CPPosLimitR;
@@ -74,19 +75,18 @@ public class Mine : MonoBehaviour
         if (_xCP > _CPPosLimitR) _xCP = _CPPosLimitR;
         _xSPL = _xCP - 50 - Random.Range(0, 150);
         if (_xSPL < _SPPosLimitL) _xSPL = _SPPosLimitL;
+        if (_mineDictNumber > 0) while (Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][2].transform.position.x) < SPConvLimit) _xSPL -= 10;
         _ySPL = _yCP + Random.Range(-25, 25);
         if (_last_ySPL == MainCamera.pixelHeight * 2) _last_ySPL = _ySPL; // выставляем первое реальное значение y-координаты конца ребра для запоминания
         if (_ySPL > _last_ySPL) _ySPL = _last_ySPL; // проверяем, не пересекаются ли рёбра, и если да, исправляем
         _last_ySPL = _ySPL; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
         _xSPR = _xCP + 50 + Random.Range(0, 150);
         if (_xSPR > _SPPosLimitR) _xSPR = _SPPosLimitR;
+        if (_mineDictNumber > 0) while (Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][1].transform.position.x) < SPConvLimit) _xSPR += 10;
         _ySPR = _yCP + Random.Range(-25, 25);
         if (_last_ySPR == MainCamera.pixelHeight * 2) _last_ySPR = _ySPR; // выставляем первое реальное значение y-координаты конца ребра для запоминания
         if (_ySPR > _last_ySPR) _ySPR = _last_ySPR; // проверяем, не пересекаются ли рёбра, и если да, исправляем
         _last_ySPR = _ySPR; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
-        GenerateMine(_xCP, _yCP, _xSPL, _ySPL, _xSPR, _ySPR);
-    }
-    void GenerateMine(int _xCP, float _yCP, int _xSPL, float _ySPL, int _xSPR, float _ySPR) {
         var CPI = Instantiate(CP, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
         CPI.transform.parent = transform;
         _vertebraDict = new Dictionary<int, GameObject>();

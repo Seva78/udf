@@ -9,9 +9,11 @@ public class Mine : MonoBehaviour
     [SerializeField] public GameObject SP;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public GameObject b;
+    [SerializeField] public GameObject Cube;
     public int CPPosLimit;
     public int SPPosLimit;
     public int SPConvLimit; // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
+    public float CollLength; //параметр для передачи в скрипт коллайдера - задаёт его длину
     private float speed;
     private int _CPPosLimitL;
     private int _CPPosLimitR;
@@ -30,6 +32,7 @@ public class Mine : MonoBehaviour
     private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     private int _mineDictNumber;
     private int _vertebraToDelete;
+    //private int _collNumber; //служебная переменная - номер коллижена
     void Start()
     {
         _vertebraDict = new Dictionary<int, GameObject>();
@@ -93,9 +96,29 @@ public class Mine : MonoBehaviour
         _vertebraDict.Add(0, CPI);
         var SPLI = Instantiate(SP, new Vector3(_xSPL, _ySPL, 0), Quaternion.identity);
         SPLI.transform.parent = CPI.transform;
+        if (_mineDictNumber > 0)
+        {
+            float CollLengthX = Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x);
+            float CollLengthY = Mathf.Abs(_ySPL - _mineDict[_mineDictNumber - 1][1].transform.position.y);
+            CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
+            Cube.GetComponent<Cube>().length = CollLength;
+            Cube.GetComponent<Cube>().Point = SPLI;
+            var MineCollL = Instantiate(Cube, new Vector3(_xSPL - (_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x) / 2, _ySPL + CollLengthY / 2, 0), Quaternion.identity);
+            MineCollL.transform.parent = SPLI.transform;
+        }
         _vertebraDict.Add(1, SPLI);
         var SPRI = Instantiate(SP, new Vector3(_xSPR, _ySPR, 0), Quaternion.identity);
         SPRI.transform.parent = CPI.transform;
+        if (_mineDictNumber > 0)
+        {
+            float CollLengthX = Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x);
+            float CollLengthY = Mathf.Abs(_ySPR - _mineDict[_mineDictNumber - 1][2].transform.position.y);
+            CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
+            Cube.GetComponent<Cube>().length = CollLength;
+            Cube.GetComponent<Cube>().Point = SPRI;
+            var MineCollR = Instantiate(Cube, new Vector3(_xSPR - (_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x) / 2, _ySPR + CollLengthY / 2, 0), Quaternion.identity);
+            MineCollR.transform.parent = SPRI.transform;
+        }
         _vertebraDict.Add(2, SPRI);
         _mineDict.Add(_mineDictNumber, _vertebraDict);
         _mineDictNumber++;

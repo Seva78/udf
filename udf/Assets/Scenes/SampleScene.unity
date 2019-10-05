@@ -241,6 +241,7 @@ MonoBehaviour:
   CPPosLimit: 100
   SPPosLimit: 200
   SPConvLimit: 100
+  CollLength: 0
 --- !u!4 &1111420319
 Transform:
   m_ObjectHideFlags: 0
@@ -267,7 +268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3073f012469544046b79c3337c787542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tile: {fileID: 116270460717177464, guid: b6ed5b41246c13b4fa5a0587dc56e534, type: 3}
+  TileSides: {fileID: 116270460717177464, guid: b6ed5b41246c13b4fa5a0587dc56e534,
+    type: 3}
+  TileMine: {fileID: 8545482290073826858, guid: c60ea68a837abbf47b4676f12743afe9,
+    type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
 --- !u!1 &2069570061

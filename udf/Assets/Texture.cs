@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Texture : MonoBehaviour
 {
-    [SerializeField] public GameObject Tile;
+    [SerializeField] public GameObject TileSides;
+    [SerializeField] public GameObject TileMine;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public GameObject b;
     private float speed;
     private float _yTile;
-    private Dictionary<int, GameObject> _tileDict;
-    private int _tileDictNumber;
+    private Dictionary<int, GameObject> _tileMineDict;
+    //private Dictionary<int, GameObject> _tileSidesDict;
+    private int _tileMineDictNumber;
+    //private int _tileSidesDictNumber;
     private int _tileToDelete;
     void Start()
     {
-        _tileDict = new Dictionary<int, GameObject>();
+        _tileMineDict = new Dictionary<int, GameObject>();
+        //_tileSidesDict = new Dictionary<int, GameObject>();
         _yTile = MainCamera.pixelHeight + 50;
         GenerateTile(256, _yTile);
     }
@@ -22,11 +26,11 @@ public class Texture : MonoBehaviour
     {
         speed = b.GetComponent<B>().vertSpeed;
         _yTile += speed;
-        _yTile -= Tile.GetComponent<SpriteRenderer>().sprite.texture.height / 1.9f;
-        if (_yTile > -Tile.GetComponent<SpriteRenderer>().sprite.texture.height) GenerateTile(256, _yTile);
-        else _yTile += Tile.GetComponent<SpriteRenderer>().sprite.texture.height / 1.9f;
+        _yTile -= TileMine.GetComponent<SpriteRenderer>().sprite.texture.height;
+        if (_yTile > -TileMine.GetComponent<SpriteRenderer>().sprite.texture.height) GenerateTile(256, _yTile);
+        else _yTile += TileMine.GetComponent<SpriteRenderer>().sprite.texture.height;
 
-        foreach (KeyValuePair<int, GameObject> tile in _tileDict)
+        foreach (KeyValuePair<int, GameObject> tile in _tileMineDict)
         {
             if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
             {
@@ -35,15 +39,33 @@ public class Texture : MonoBehaviour
         }
         if (_tileToDelete != 0)
         {
-            _tileDict.Remove(_tileToDelete - 1);
+            _tileMineDict.Remove(_tileToDelete - 1);
             _tileToDelete = 0;
         }
+    
+
+        //foreach (KeyValuePair<int, GameObject> tile in _tileSidesDict)
+        //{
+        //    if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
+        //    {
+        //        _tileToDelete = tile.Key + 1;
+        //    }
+        //}
+        //if (_tileToDelete != 0)
+        //{
+        //    _tileSidesDict.Remove(_tileToDelete - 1);
+        //    _tileToDelete = 0;
+        //}
     }
     void GenerateTile(int _xTile, float _yTile)
     {
-        var TileI = Instantiate(Tile, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
-        TileI.transform.parent = transform;
-        _tileDict.Add(_tileDictNumber, TileI);
-        _tileDictNumber++;
+        var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
+        var TileMineI = Instantiate(TileMine, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
+        TileMineI.transform.parent = transform;
+        TileSidesI.transform.parent = transform;
+        _tileMineDict.Add(_tileMineDictNumber, TileMineI);
+        _tileMineDictNumber++;
+        //_tileSidesDict.Add(_tileSidesDictNumber, TileSidesI);
+        //_tileSidesDictNumber++;
     }
 }

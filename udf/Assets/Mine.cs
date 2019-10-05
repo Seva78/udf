@@ -92,10 +92,12 @@ public class Mine : MonoBehaviour
         _last_ySPR = _ySPR; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
         var CPI = Instantiate(CP, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
         CPI.transform.parent = transform;
+        CPI.name = _mineDictNumber.ToString();
         _vertebraDict = new Dictionary<int, GameObject>();
         _vertebraDict.Add(0, CPI);
         var SPLI = Instantiate(SP, new Vector3(_xSPL, _ySPL, 0), Quaternion.identity);
         SPLI.transform.parent = CPI.transform;
+        SPLI.name = _mineDictNumber.ToString() + "L";
         if (_mineDictNumber > 0)
         {
             float CollLengthX = Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x);
@@ -109,6 +111,7 @@ public class Mine : MonoBehaviour
         _vertebraDict.Add(1, SPLI);
         var SPRI = Instantiate(SP, new Vector3(_xSPR, _ySPR, 0), Quaternion.identity);
         SPRI.transform.parent = CPI.transform;
+        SPRI.name = _mineDictNumber.ToString() + "R";
         if (_mineDictNumber > 0)
         {
             float CollLengthX = Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x);

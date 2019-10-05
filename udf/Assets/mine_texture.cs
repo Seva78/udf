@@ -30,4 +30,17 @@ public class mine_texture : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    void OnCollisionEnter(Collision coll)
+    {
+
+        if (coll.transform.tag == "SP")
+        {
+            foreach (ContactPoint Hit in coll.contacts)
+            {
+                Vector3 hit = Hit.point;
+                print(coll.transform.name + ", " + coll.transform.position + ", " + hit);
+                //Instantiate(explosion, new Vector3(hitPoint.x, hitPoint.y, 0), Quaternion.identity);
+            }
+        }
+    }
 }

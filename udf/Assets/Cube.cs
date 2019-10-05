@@ -8,7 +8,7 @@ public class Cube : MonoBehaviour
     public GameObject Point;
     void Start()
     {
-        transform.localScale = new Vector3(length/10, 0, 10);
+        transform.localScale = new Vector3(length/10, 0, 200);
         float _deltaX = transform.position.x - Point.transform.position.x;//противолежащий катет
         float _dist = length / 2;//гипотенуза
         float _sin = _deltaX / _dist;

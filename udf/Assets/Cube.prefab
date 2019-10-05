@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 9061177284547931724}
   - component: {fileID: 418941193182363169}
   - component: {fileID: 3094023157761447351}
-  - component: {fileID: 5432734103782343961}
+  - component: {fileID: 7644961695754017581}
   - component: {fileID: 2531889952808705845}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: MineCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,9 +49,9 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284733589741966235}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5432734103782343961
+--- !u!65 &7644961695754017581
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,4 +105,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68edbab6809a1004ab8a8da3e9997750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 151.47607
+  length: 69.64154
+  Point: {fileID: 0}

@@ -59,10 +59,10 @@ public class Texture : MonoBehaviour
     }
     void GenerateTile(int _xTile, float _yTile)
     {
-        var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
-        var TileMineI = Instantiate(TileMine, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
+        var TileMineI = Instantiate(TileMine, new Vector3(_xTile, _yTile, 5), Quaternion.identity);
+        //var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
         TileMineI.transform.parent = transform;
-        TileSidesI.transform.parent = transform;
+        //TileSidesI.transform.parent = transform;
         _tileMineDict.Add(_tileMineDictNumber, TileMineI);
         _tileMineDictNumber++;
         //_tileSidesDict.Add(_tileSidesDictNumber, TileSidesI);

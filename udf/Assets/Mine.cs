@@ -98,6 +98,7 @@ public class Mine : MonoBehaviour
         var SPLI = Instantiate(SP, new Vector3(_xSPL, _ySPL, 0), Quaternion.identity);
         SPLI.transform.parent = CPI.transform;
         SPLI.name = _mineDictNumber.ToString() + "L";
+        SPLI.tag = "SPL";
         if (_mineDictNumber > 0)
         {
             float CollLengthX = Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x);
@@ -112,6 +113,7 @@ public class Mine : MonoBehaviour
         var SPRI = Instantiate(SP, new Vector3(_xSPR, _ySPR, 0), Quaternion.identity);
         SPRI.transform.parent = CPI.transform;
         SPRI.name = _mineDictNumber.ToString() + "R";
+        SPRI.tag = "SPR";
         if (_mineDictNumber > 0)
         {
             float CollLengthX = Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x);

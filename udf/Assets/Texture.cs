@@ -62,6 +62,7 @@ public class Texture : MonoBehaviour
         var TileMineI = Instantiate(TileMine, new Vector3(_xTile, _yTile, 5), Quaternion.identity);
         //var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
         TileMineI.transform.parent = transform;
+        TileMineI.name = "MineBG" + _tileMineDictNumber;
         //TileSidesI.transform.parent = transform;
         _tileMineDict.Add(_tileMineDictNumber, TileMineI);
         _tileMineDictNumber++;

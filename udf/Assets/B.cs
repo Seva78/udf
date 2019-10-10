@@ -22,6 +22,7 @@ public class B : MonoBehaviour
 
     void Update()
     {
+		// test
         if (Input.GetAxis("Horizontal") != 0)
         {
             R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;

@@ -28,11 +28,12 @@ public class Mine : MonoBehaviour
     private float _ySPR;
     private float _last_ySPR;
     private int _yCPoffset;
-    public Dictionary<int, GameObject> _vertebraDict;
+    private Dictionary<int, GameObject> _vertebraDict;
     public Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     private int _mineDictNumber;
     private int _vertebraToDelete;
-    //private int _collNumber; //служебная переменная - номер коллижена
+    public int SidesSpawnTrigger; //пока не включен, фоновую текстуру не генерим
+
     void Start()
     {
         _vertebraDict = new Dictionary<int, GameObject>();
@@ -56,8 +57,11 @@ public class Mine : MonoBehaviour
         _last_ySPR += speed;
         _yCPoffset = Random.Range(50, 100);
         _yCP -= _yCPoffset;
-        if (_yCP > -1500) GenerateVertebra(_xCP, _yCP);
-        else _yCP += _yCPoffset;
+        if (_yCP > -800) GenerateVertebra(_xCP, _yCP);
+        else {
+            SidesSpawnTrigger = 1;
+            _yCP += _yCPoffset;
+        }
 
         foreach (KeyValuePair<int, Dictionary<int, GameObject>>  vertebra in _mineDict)
         {

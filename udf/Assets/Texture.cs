@@ -15,7 +15,7 @@ public class Texture : MonoBehaviour
     void Start()
     {
         _tileSidesDict = new Dictionary<int, GameObject>();
-        _yTile = MainCamera.pixelHeight + 50;
+        _yTile = MainCamera.pixelHeight + 256;
         GenerateTile(256, _yTile);
     }
     void Update()
@@ -23,7 +23,7 @@ public class Texture : MonoBehaviour
         speed = b.GetComponent<B>().vertSpeed;
         _yTile += speed;
         _yTile -= TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
-        if (_yTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height) GenerateTile(256, _yTile);
+        if (_yTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && GameObject.Find("Controller").GetComponent<Mine>().SidesSpawnTrigger == 1) GenerateTile(256, _yTile);
         else _yTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
 
         foreach (KeyValuePair<int, GameObject> tile in _tileSidesDict)
@@ -43,6 +43,7 @@ public class Texture : MonoBehaviour
     {
         var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 100), Quaternion.identity);
         TileSidesI.transform.parent = transform;
+        TileSidesI.name = "SideTexture" + _tileSidesDictNumber;
         _tileSidesDict.Add(_tileSidesDictNumber, TileSidesI);
         _tileSidesDictNumber++;
     }

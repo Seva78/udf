@@ -8,11 +8,6 @@ public class mine_texture : MonoBehaviour
 {
     SpriteRenderer rend;
     GameObject collObj;
-    public void Start()
-    {
-
-    }
-
 
     public void Update()
     {

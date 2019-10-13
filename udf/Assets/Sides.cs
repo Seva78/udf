@@ -6,17 +6,12 @@ using UnityEngine;
 public class Sides : MonoBehaviour
 {
     SpriteRenderer rend;
+    public GameObject Controller;
+    public Dictionary<int, GameObject> _vertebraDict;
+    public Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     public void Start()
     {
-        rend = GetComponent<SpriteRenderer>();
-        Texture2D tex = rend.sprite.texture;
-        Color32[] pixels = new Color32[tex.width * tex.height];
-        pixels = tex.GetPixels32();
-        for (var i = 0; i < pixels.Length; i++) {
-            pixels[i].a = 0;
-        }
-        tex.SetPixels32(pixels);
-        tex.Apply();
+
     }
 
 

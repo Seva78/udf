@@ -57,7 +57,7 @@ public class Mine : MonoBehaviour
         _last_ySPR += speed;
         _yCPoffset = Random.Range(50, 100);
         _yCP -= _yCPoffset;
-        if (_yCP > -800) GenerateVertebra(_xCP, _yCP);
+        if (_yCP > -1200) GenerateVertebra(_xCP, _yCP);
         else {
             SidesSpawnTrigger = 1;
             _yCP += _yCPoffset;
@@ -81,14 +81,14 @@ public class Mine : MonoBehaviour
         if (_xCP < _CPPosLimitL) _xCP = _CPPosLimitL;
         if (_xCP > _CPPosLimitR) _xCP = _CPPosLimitR;
         _xSPL = _xCP - 50 - Random.Range(0, 150);
-        if (_xSPL < _SPPosLimitL) _xSPL = _SPPosLimitL;
+        _xSPL = Mathf.Clamp(_xSPL, _SPPosLimitL, 255);
         if (_mineDictNumber > 0) while (Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][2].transform.position.x) < SPConvLimit) _xSPL -= 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
         _ySPL = _yCP + Random.Range(-25, 25);
         if (_last_ySPL == MainCamera.pixelHeight * 2) _last_ySPL = _ySPL; // выставляем первое реальное значение y-координаты конца ребра для запоминания
         if (_ySPL > _last_ySPL) _ySPL = _last_ySPL; // проверяем, не пересекаются ли рёбра, и если да, исправляем
         _last_ySPL = _ySPL; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
         _xSPR = _xCP + 50 + Random.Range(0, 150);
-        if (_xSPR > _SPPosLimitR) _xSPR = _SPPosLimitR;
+        _xSPR = Mathf.Clamp(_xSPR, 256, _SPPosLimitR);
         if (_mineDictNumber > 0) while (Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][1].transform.position.x) < SPConvLimit) _xSPR += 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
         _ySPR = _yCP + Random.Range(-25, 25);
         if (_last_ySPR == MainCamera.pixelHeight * 2) _last_ySPR = _ySPR; // выставляем первое реальное значение y-координаты конца ребра для запоминания

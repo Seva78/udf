@@ -19,7 +19,6 @@ public class Sides : MonoBehaviour
     float y_top;
     public int antiGap;
     private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
-    //private int _screenHalfWidth;
     public void Start()
     {
         rend = GetComponent<SpriteRenderer>();
@@ -30,7 +29,6 @@ public class Sides : MonoBehaviour
         newTex.SetPixels32(pixels);
         Vector3 GlobalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict;
-        //_screenHalfWidth = GameObject.Find("Controller").GetComponent<Mine>().MainCamera.pixelWidth/2;
         y_top = GlobalPos.y + tex.height;
         foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
         {
@@ -39,11 +37,11 @@ public class Sides : MonoBehaviour
                 {
                     x = vertebra.Value[q].transform.position.x; //горизонталь точки, правее которой будем удалять текстуру
                     y = vertebra.Value[q].transform.position.y - GlobalPos.y; //вертикаль точки, правее которой будем удалять текстуру
-                    if (_mineDict[vertebra.Key - 1][q].transform.position.y > y_top) //вырезаем кусочки над первым позвонком
+                    if (_mineDict[vertebra.Key - 1][q].transform.position.y >= y_top) //вырезаем кусочки над первым позвонком
                     {
                         x_prev = _mineDict[vertebra.Key - 1][q].transform.position.x; //горизонталь точки на предыдущем позвонке шахты
                         y_prev = _mineDict[vertebra.Key - 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на предыдущем позвонке шахты
-                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x), (int)(y_prev - y) + antiGap];
+                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x) + antiGap, (int)(y_prev - y) + antiGap];
                         int rows2cut_triangle_top = pixels2cut_triangle_top.GetUpperBound(0) + 1;
                         if (rows2cut_triangle_top != 0)
                         {
@@ -66,25 +64,27 @@ public class Sides : MonoBehaviour
                         }
                         if (x > x_prev && q == 1) x_prev = x;
                         if (x < x_prev && q == 2) x_prev = x;
-                        Color32[,] pixels2cut_rect_top = new Color32[(int)(Mathf.Abs(x_prev - 256) + antiGap), (int)(tex.height - y + antiGap)];
+                        Color32[,] pixels2cut_rect_top = new Color32[(int)(Mathf.Abs(x_prev - 256) + antiGap), (int)(tex.height - y) + antiGap];
                         int rows2cut_rect_top = pixels2cut_rect_top.GetUpperBound(0) + 1;
-                        int columns2cut_rect_top = pixels2cut_rect_top.Length / rows2cut_rect_top;
-                        for (int i = 0; i < rows2cut_rect_top; i++)
-                        {
-                            for (int j = 0; j < columns2cut_rect_top; j++)
+                        if (rows2cut_rect_top != 0) { 
+                            int columns2cut_rect_top = pixels2cut_rect_top.Length / rows2cut_rect_top;
+                            for (int i = 0; i < rows2cut_rect_top; i++)
                             {
-                                if (vertebra.Value[q].transform.position.y - j > GlobalPos.y)
+                                for (int j = 0; j < columns2cut_rect_top; j++)
                                 {
-                                    pixels2cut_rect_top[i, j].a = 0;
-                                    if (q==1) newTex.SetPixel(256 - i, tex.height - j, pixels2cut_rect_top[i, j]);
-                                    else newTex.SetPixel(256 + i, tex.height - j, pixels2cut_rect_top[i, j]);
+                                    if (vertebra.Value[q].transform.position.y - j > GlobalPos.y)
+                                    {
+                                        pixels2cut_rect_top[i, j].a = 0;
+                                        if (q==1) newTex.SetPixel(256 - i, tex.height - j, pixels2cut_rect_top[i, j]);
+                                        else newTex.SetPixel(256 + i, tex.height - j, pixels2cut_rect_top[i, j]);
+                                    }
                                 }
                             }
                         }
                     }
                     x_next = _mineDict[vertebra.Key + 1][q].transform.position.x; //горизонталь точки на следующем позвонке шахты
                     y_next = _mineDict[vertebra.Key + 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на следующем позвонке шахты
-                    Color32[,] pixels2cut_triangle = new Color32[(int)Mathf.Abs(x_next - x), (int)(y - y_next) + antiGap];
+                    Color32[,] pixels2cut_triangle = new Color32[(int)Mathf.Abs(x_next - x) + antiGap, (int)(y - y_next) + antiGap];
                     int rows2cut_triangle = pixels2cut_triangle.GetUpperBound(0) + 1;
                     if (rows2cut_triangle != 0)
                     {
@@ -107,25 +107,25 @@ public class Sides : MonoBehaviour
                     }
                     if (x < x_next && q == 1) x = x_next;
                     if (x > x_next && q == 2) x = x_next;
-                    Color32[,] pixels2cut_rect = new Color32[(int)Mathf.Abs(x - 256 + antiGap), (int)(y - y_next + antiGap)];
+                    Color32[,] pixels2cut_rect = new Color32[(int)(Mathf.Abs(x - 256) + antiGap), (int)(y - y_next) + antiGap];
                     int rows2cut_rect = pixels2cut_rect.GetUpperBound(0) + 1;
-                    int columns2cut_rect = pixels2cut_rect.Length / rows2cut_rect;
-                    for (int i = 0; i < rows2cut_rect; i++)
-                    {
-                        for (int j = 0; j < columns2cut_rect; j++)
+                    if (rows2cut_rect != 0) {
+                        int columns2cut_rect = pixels2cut_rect.Length / rows2cut_rect;
+                        for (int i = 0; i < rows2cut_rect; i++)
                         {
-                            if (vertebra.Value[q].transform.position.y - j >= GlobalPos.y)
+                            for (int j = 0; j < columns2cut_rect; j++)
                             {
-                                pixels2cut_rect[i, j].a = 0;
-                                if(q==1) newTex.SetPixel(256 - i - antiGap, (int)y - j, pixels2cut_rect[i, j]);
-                                else newTex.SetPixel(256 + i, (int)y - j, pixels2cut_rect[i, j]);
+                                if (vertebra.Value[q].transform.position.y - j >= GlobalPos.y)
+                                {
+                                    pixels2cut_rect[i, j].a = 0;
+                                    if(q==1) newTex.SetPixel(256 - i, (int)y - j, pixels2cut_rect[i, j]);
+                                    else newTex.SetPixel(256 + i, (int)y - j, pixels2cut_rect[i, j]);
+                                }
                             }
                         }
                     }
                 }
-                    //print(256 - x + " " + (y - (int)(_mineDict[vertebra.Key + 1][1].transform.position.y - GlobalPos.y)));
-                    //} _mineDict[vertebra.Key - 1][0].transform.position, vertebra.Value[0].transform.position
-                }
+            }
         }
         newTex.Apply();
         Sprite newSprite = Sprite.Create(newTex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 1f);

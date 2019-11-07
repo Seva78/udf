@@ -93,4 +93,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd29306bbc13444d8cd305a2c034b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  antiGap: 2
+  antiGap: 1

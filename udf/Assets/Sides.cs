@@ -28,20 +28,20 @@ public class Sides : MonoBehaviour
         Texture2D newTex = new Texture2D(tex.width, tex.height, tex.format, mipChain: false);
         newTex.SetPixels32(pixels);
         Vector3 GlobalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
-        _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict;
-        y_top = GlobalPos.y + tex.height;
+        _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict; //координаты всех точек "позвоночника", из которого состоит шахта
+        y_top = GlobalPos.y + tex.height; //вертикальная координата верхней части объекта 
         foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
         {
-            for (int q = 1; q < 3; q++) {
-                if (vertebra.Value[q].transform.position.y > GlobalPos.y && vertebra.Value[q].transform.position.y < y_top)
+            for (int q = 1; q < 3; q++) { //q принимает значения 1 и 2; 1 - это значения координат ключевых точек по левой стороне шахты, а 2 - по правой
+                if (vertebra.Value[q].transform.position.y > GlobalPos.y && vertebra.Value[q].transform.position.y < y_top) //если вертикальные координаты точки лежат в пределах вертикальных координат объекта
                 {
-                    x = vertebra.Value[q].transform.position.x; //горизонталь точки, правее которой будем удалять текстуру
-                    y = vertebra.Value[q].transform.position.y - GlobalPos.y; //вертикаль точки, правее которой будем удалять текстуру
-                    if (_mineDict[vertebra.Key - 1][q].transform.position.y >= y_top) //вырезаем кусочки над первым позвонком
+                    x = vertebra.Value[q].transform.position.x; //горизонталь ключевой точки, правее или левее которой будем удалять текстуру
+                    y = vertebra.Value[q].transform.position.y - GlobalPos.y; //вертикаль ключевой точки, правее или левее которой будем удалять текстуру
+                    if (_mineDict[vertebra.Key - 1][q].transform.position.y >= y_top) //если точка является верхней среди точек с данной стороны, принадлежащих объекту
                     {
                         x_prev = _mineDict[vertebra.Key - 1][q].transform.position.x; //горизонталь точки на предыдущем позвонке шахты
                         y_prev = _mineDict[vertebra.Key - 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на предыдущем позвонке шахты
-                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x) + antiGap, (int)(y_prev - y) + antiGap];
+                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x) + antiGap, (int)(y_prev - y) + antiGap]; //создаём двухмерный массив точек, диагональ которого - это отрезок, соединяющий верхнюю точку с данной стороны, и ближайшую точку за пределами (выше) объекта
                         int rows2cut_triangle_top = pixels2cut_triangle_top.GetUpperBound(0) + 1;
                         if (rows2cut_triangle_top != 0)
                         {
@@ -50,14 +50,23 @@ public class Sides : MonoBehaviour
                             {
                                 for (int j = 0; j < columns2cut_triangle_top; j++)
                                 {
-                                    y_dist = y_prev - j - y;
-                                    tgA = Mathf.Abs(x_prev - x) / (y_prev - y);
-                                    a = tgA * y_dist;
-                                    pixels2cut_triangle_top[i, j].a = 0;
                                     if (_mineDict[vertebra.Key - 1][q].transform.position.y - j < y_top)
                                     {
-                                        if ((x - i < x - a && x_prev < x && q == 2) || (x - i > x - a && x_prev < x && q == 1)) newTex.SetPixel((int)x - i, (int)y_prev - j, pixels2cut_triangle_top[i, j]);
-                                        if ((x - i > x - a && x_prev > x && q == 2) || (x - i < x - a && x_prev > x && q == 1)) newTex.SetPixel((int)x + i, (int)y_prev - j, pixels2cut_triangle_top[i, j]);
+                                        y_dist = y_prev - j - y;
+                                        tgA = Mathf.Abs(x_prev - x) / (y_prev - y);
+                                        a = tgA * y_dist;
+                                        if ((q == 1 && x - i > x - a && x_prev < x) || (q == 2 && x - i < x - a && x_prev < x)) {
+                                        //если работаем с левой стороной, если элемент массива находится правее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка правее предыдущей
+                                        //либо если работаем с правой стороной, если элемент массива находится левее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка правее предыдущей
+                                            pixels2cut_triangle_top[i, j].a = 0; //делаем пиксель прозрачным
+                                            newTex.SetPixel((int)x - i, (int)y_prev - j, pixels2cut_triangle_top[i, j]); //устанавливаем пиксель
+                                        }
+                                        if ((q == 1 && x - i < x - a && x_prev > x) || (q == 2 && x - i > x - a && x_prev > x)) {
+                                        //если работаем с левой стороной, если элемент массива находится правее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка левее предыдущей
+                                        //либо если работаем с правой стороной, если элемент массива находится левее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка левее предыдущей
+                                            pixels2cut_triangle_top[i, j].a = 0; //делаем пиксель прозрачным
+                                            newTex.SetPixel((int)x + i, (int)y_prev - j, pixels2cut_triangle_top[i, j]); //устанавливаем пиксель
+                                        }
                                     }
                                 }
                             }

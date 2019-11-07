@@ -37,13 +37,16 @@ public class Sides : MonoBehaviour
                 {
                     x = vertebra.Value[q].transform.position.x; //горизонталь ключевой точки, правее или левее которой будем удалять текстуру
                     y = vertebra.Value[q].transform.position.y - GlobalPos.y; //вертикаль ключевой точки, правее или левее которой будем удалять текстуру
+                    //до строки 77 - выпиливаем треугольник над верхней правой или левой ключевой точкой
                     if (_mineDict[vertebra.Key - 1][q].transform.position.y >= y_top) //если точка является верхней среди точек с данной стороны, принадлежащих объекту
                     {
                         x_prev = _mineDict[vertebra.Key - 1][q].transform.position.x; //горизонталь точки на предыдущем позвонке шахты
                         y_prev = _mineDict[vertebra.Key - 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на предыдущем позвонке шахты
-                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x) + antiGap, (int)(y_prev - y) + antiGap]; //создаём двухмерный массив точек, диагональ которого - это отрезок, соединяющий верхнюю точку с данной стороны, и ближайшую точку за пределами (выше) объекта
+                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x) + antiGap, (int)(y_prev - y) + antiGap];
+                        //создаём двухмерный массив точек, соответствующий по размерам и соотношению сторон прямоугольнику, противолежащие углы которого - это верхняя точка с данной стороны, и ближайшая точка за пределами (выше) объекта
+                        //добавляем antiGap к ширине и высоте (1-2 пикселя)
                         int rows2cut_triangle_top = pixels2cut_triangle_top.GetUpperBound(0) + 1;
-                        if (rows2cut_triangle_top != 0)
+                        if (rows2cut_triangle_top != 0) //исключаем деление на ноль
                         {
                             int columns2cut_triangle_top = pixels2cut_triangle_top.Length / rows2cut_triangle_top;
                             for (int i = 0; i < rows2cut_triangle_top; i++)
@@ -71,11 +74,14 @@ public class Sides : MonoBehaviour
                                 }
                             }
                         }
-                        if (x > x_prev && q == 1) x_prev = x;
-                        if (x < x_prev && q == 2) x_prev = x;
+                        //до строки 99 - выпиливаем прямоугольник между центральной линией и треугольником, выпиленным ранее
+                        if (x > x_prev && q == 1 || x < x_prev && q == 2) x_prev = x;
+                        //если работаем с левой стороной, и точка находится правее точки предыдущего сегмента, приравниваем в расчётах точку предыдущего сегмента к точке
+                        //либо если работаем с правой стороной, и точка находится левее точки предыдущего сегмента, приравниваем в расчётах точку предыдущего сегмента к точке
                         Color32[,] pixels2cut_rect_top = new Color32[(int)(Mathf.Abs(x_prev - 256) + antiGap), (int)(tex.height - y) + antiGap];
+                        //создаём двухмерный массив точек со сторонами "от середины экрана по горизонтали до точки на предыдущем сегмента" и "от верхнего края объекта до точки", добавляем antiGap к ширине и высоте (1-2 пикселя)
                         int rows2cut_rect_top = pixels2cut_rect_top.GetUpperBound(0) + 1;
-                        if (rows2cut_rect_top != 0) { 
+                        if (rows2cut_rect_top != 0) { //исключаем деление на ноль
                             int columns2cut_rect_top = pixels2cut_rect_top.Length / rows2cut_rect_top;
                             for (int i = 0; i < rows2cut_rect_top; i++)
                             {
@@ -84,13 +90,14 @@ public class Sides : MonoBehaviour
                                     if (vertebra.Value[q].transform.position.y - j > GlobalPos.y)
                                     {
                                         pixels2cut_rect_top[i, j].a = 0;
-                                        if (q==1) newTex.SetPixel(256 - i, tex.height - j, pixels2cut_rect_top[i, j]);
-                                        else newTex.SetPixel(256 + i, tex.height - j, pixels2cut_rect_top[i, j]);
+                                        if (q==1) newTex.SetPixel(256 - i, tex.height - j, pixels2cut_rect_top[i, j]); //если работаем с левой стороной, выпиливаем прямоугольник от вертикальной линии симметрии налево
+                                        else newTex.SetPixel(256 + i, tex.height - j, pixels2cut_rect_top[i, j]); //а если с правой сторогой - направо
                                     }
                                 }
                             }
                         }
                     }
+                    //до строки 128 - выпиливаем треугольник под каждой ключевой точкой слева (q=1), а на втором проходе - справа (q=2)
                     x_next = _mineDict[vertebra.Key + 1][q].transform.position.x; //горизонталь точки на следующем позвонке шахты
                     y_next = _mineDict[vertebra.Key + 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на следующем позвонке шахты
                     Color32[,] pixels2cut_triangle = new Color32[(int)Mathf.Abs(x_next - x) + antiGap, (int)(y - y_next) + antiGap];
@@ -105,15 +112,21 @@ public class Sides : MonoBehaviour
                                 yn_dist = y - j - y_next;
                                 tgA = Mathf.Abs(x - x_next) / (y - y_next);
                                 a = tgA * yn_dist;
-                                pixels2cut_triangle[i, j].a = 0;
                                 if (vertebra.Value[q].transform.position.y - j >= GlobalPos.y)
                                 {
-                                    if (x_next - i > x_next - a && x < x_next && q == 1 || x_next - i < x_next - a && x < x_next && q == 2) newTex.SetPixel((int)x_next - i, (int)y - j, pixels2cut_triangle[i, j]);
-                                    if (x_next - i < x_next - a && x > x_next && q == 1 || x_next - i > x_next - a && x > x_next && q == 2) newTex.SetPixel((int)x_next + i, (int)y - j, pixels2cut_triangle[i, j]);
+                                    if (x_next - i > x_next - a && x < x_next && q == 1 || x_next - i < x_next - a && x < x_next && q == 2) {
+                                        pixels2cut_triangle[i, j].a = 0;
+                                        newTex.SetPixel((int)x_next - i, (int)y - j, pixels2cut_triangle[i, j]);
+                                    }
+                                    if (x_next - i < x_next - a && x > x_next && q == 1 || x_next - i > x_next - a && x > x_next && q == 2) {
+                                        pixels2cut_triangle[i, j].a = 0;
+                                        newTex.SetPixel((int)x_next + i, (int)y - j, pixels2cut_triangle[i, j]);
+                                    }
                                 }
                             }
                         }
                     }
+                    //до строки 148 - выпиливаем прямоугольник под каждой ключевой точкой, сначала (q=1)налево от оси симметрии по вертикали, а потом направо (q=2)
                     if (x < x_next && q == 1) x = x_next;
                     if (x > x_next && q == 2) x = x_next;
                     Color32[,] pixels2cut_rect = new Color32[(int)(Mathf.Abs(x - 256) + antiGap), (int)(y - y_next) + antiGap];

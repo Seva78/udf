@@ -1,23 +1,18 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Sides : MonoBehaviour
 {
+    Stopwatch sw = new Stopwatch();
+    private float y_top;
+    private int wall;
+    private int wall_left;
+    private int wall_right;
+    private int mine_width;
     SpriteRenderer rend;
-    float yn_dist;
-    float y_dist;
-    float tgA;
-    float a;
-    float x;
-    float y;
-    float x_prev;
-    float y_prev;
-    float x_next;
-    float y_next;
-    float y_top;
-    public int antiGap;
     private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     public void Start()
     {
@@ -30,130 +25,43 @@ public class Sides : MonoBehaviour
         Vector3 GlobalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict; //координаты всех точек "позвоночника", из которого состоит шахта
         y_top = GlobalPos.y + tex.height; //вертикальная координата верхней части объекта 
-        foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
+        sw.Start();
+        for (int y = (int)GlobalPos.y; y < (int)y_top; y++)
         {
-            for (int q = 1; q < 3; q++) { //q принимает значения 1 и 2; 1 - это значения координат ключевых точек по левой стороне шахты, а 2 - по правой
-                if (vertebra.Value[q].transform.position.y > GlobalPos.y && vertebra.Value[q].transform.position.y < y_top) //если вертикальные координаты точки лежат в пределах вертикальных координат объекта
-                {
-                    x = vertebra.Value[q].transform.position.x; //горизонталь ключевой точки, правее или левее которой будем удалять текстуру
-                    y = vertebra.Value[q].transform.position.y - GlobalPos.y; //вертикаль ключевой точки, правее или левее которой будем удалять текстуру
-                    //до строки 77 - выпиливаем треугольник над верхней правой или левой ключевой точкой
-                    if (_mineDict[vertebra.Key - 1][q].transform.position.y >= y_top) //если точка является верхней среди точек с данной стороны, принадлежащих объекту
-                    {
-                        x_prev = _mineDict[vertebra.Key - 1][q].transform.position.x; //горизонталь точки на предыдущем позвонке шахты
-                        y_prev = _mineDict[vertebra.Key - 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на предыдущем позвонке шахты
-                        Color32[,] pixels2cut_triangle_top = new Color32[(int)Mathf.Abs(x_prev - x) + antiGap, (int)(y_prev - y) + antiGap];
-                        //создаём двухмерный массив точек, соответствующий по размерам и соотношению сторон прямоугольнику, противолежащие углы которого - это верхняя точка с данной стороны, и ближайшая точка за пределами (выше) объекта
-                        //добавляем antiGap к ширине и высоте (1-2 пикселя)
-                        int rows2cut_triangle_top = pixels2cut_triangle_top.GetUpperBound(0) + 1;
-                        if (rows2cut_triangle_top != 0) //исключаем деление на ноль
-                        {
-                            int columns2cut_triangle_top = pixels2cut_triangle_top.Length / rows2cut_triangle_top;
-                            for (int i = 0; i < rows2cut_triangle_top; i++)
-                            {
-                                for (int j = 0; j < columns2cut_triangle_top; j++)
-                                {
-                                    if (_mineDict[vertebra.Key - 1][q].transform.position.y - j < y_top)
-                                    {
-                                        y_dist = y_prev - j - y;
-                                        tgA = Mathf.Abs(x_prev - x) / (y_prev - y);
-                                        a = tgA * y_dist;
-                                        if ((q == 1 && x - i > x - a && x_prev < x) || (q == 2 && x - i < x - a && x_prev < x)) {
-                                        //если работаем с левой стороной, если элемент массива находится правее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка правее предыдущей
-                                        //либо если работаем с правой стороной, если элемент массива находится левее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка правее предыдущей
-                                            pixels2cut_triangle_top[i, j].a = 0; //делаем пиксель прозрачным
-                                            newTex.SetPixel((int)x - i, (int)y_prev - j, pixels2cut_triangle_top[i, j]); //устанавливаем пиксель
-                                        }
-                                        if ((q == 1 && x - i < x - a && x_prev > x) || (q == 2 && x - i > x - a && x_prev > x)) {
-                                        //если работаем с левой стороной, если элемент массива находится правее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка левее предыдущей
-                                        //либо если работаем с правой стороной, если элемент массива находится левее линии, соединяющей ключевую точку и предыдущую ключевую точку, и если ключевая точка левее предыдущей
-                                            pixels2cut_triangle_top[i, j].a = 0; //делаем пиксель прозрачным
-                                            newTex.SetPixel((int)x + i, (int)y_prev - j, pixels2cut_triangle_top[i, j]); //устанавливаем пиксель
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //до строки 99 - выпиливаем прямоугольник между центральной линией и треугольником, выпиленным ранее
-                        if (x > x_prev && q == 1 || x < x_prev && q == 2) x_prev = x;
-                        //если работаем с левой стороной, и точка находится правее точки предыдущего сегмента, приравниваем в расчётах точку предыдущего сегмента к точке
-                        //либо если работаем с правой стороной, и точка находится левее точки предыдущего сегмента, приравниваем в расчётах точку предыдущего сегмента к точке
-                        Color32[,] pixels2cut_rect_top = new Color32[(int)(Mathf.Abs(x_prev - 256) + antiGap), (int)(tex.height - y) + antiGap];
-                        //создаём двухмерный массив точек со сторонами "от середины экрана по горизонтали до точки на предыдущем сегмента" и "от верхнего края объекта до точки", добавляем antiGap к ширине и высоте (1-2 пикселя)
-                        int rows2cut_rect_top = pixels2cut_rect_top.GetUpperBound(0) + 1;
-                        if (rows2cut_rect_top != 0) { //исключаем деление на ноль
-                            int columns2cut_rect_top = pixels2cut_rect_top.Length / rows2cut_rect_top;
-                            for (int i = 0; i < rows2cut_rect_top; i++)
-                            {
-                                for (int j = 0; j < columns2cut_rect_top; j++)
-                                {
-                                    if (vertebra.Value[q].transform.position.y - j > GlobalPos.y)
-                                    {
-                                        pixels2cut_rect_top[i, j].a = 0;
-                                        if (q==1) newTex.SetPixel(256 - i, tex.height - j, pixels2cut_rect_top[i, j]); //если работаем с левой стороной, выпиливаем прямоугольник от вертикальной линии симметрии налево
-                                        else newTex.SetPixel(256 + i, tex.height - j, pixels2cut_rect_top[i, j]); //а если с правой сторогой - направо
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //до строки 128 - выпиливаем треугольник под каждой ключевой точкой слева (q=1), а на втором проходе - справа (q=2)
-                    x_next = _mineDict[vertebra.Key + 1][q].transform.position.x; //горизонталь точки на следующем позвонке шахты
-                    y_next = _mineDict[vertebra.Key + 1][q].transform.position.y - GlobalPos.y; //вертикаль точки на следующем позвонке шахты
-                    Color32[,] pixels2cut_triangle = new Color32[(int)Mathf.Abs(x_next - x) + antiGap, (int)(y - y_next) + antiGap];
-                    int rows2cut_triangle = pixels2cut_triangle.GetUpperBound(0) + 1;
-                    if (rows2cut_triangle != 0)
-                    {
-                        int columns2cut_triangle = pixels2cut_triangle.Length / rows2cut_triangle;
-                        for (int i = 0; i < rows2cut_triangle; i++)
-                        {
-                            for (int j = 0; j < columns2cut_triangle; j++)
-                            {
-                                yn_dist = y - j - y_next;
-                                tgA = Mathf.Abs(x - x_next) / (y - y_next);
-                                a = tgA * yn_dist;
-                                if (vertebra.Value[q].transform.position.y - j >= GlobalPos.y)
-                                {
-                                    if (x_next - i > x_next - a && x < x_next && q == 1 || x_next - i < x_next - a && x < x_next && q == 2) {
-                                        pixels2cut_triangle[i, j].a = 0;
-                                        newTex.SetPixel((int)x_next - i, (int)y - j, pixels2cut_triangle[i, j]);
-                                    }
-                                    if (x_next - i < x_next - a && x > x_next && q == 1 || x_next - i > x_next - a && x > x_next && q == 2) {
-                                        pixels2cut_triangle[i, j].a = 0;
-                                        newTex.SetPixel((int)x_next + i, (int)y - j, pixels2cut_triangle[i, j]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //до строки 148 - выпиливаем прямоугольник под каждой ключевой точкой, сначала (q=1)налево от оси симметрии по вертикали, а потом направо (q=2)
-                    if (x < x_next && q == 1) x = x_next;
-                    if (x > x_next && q == 2) x = x_next;
-                    Color32[,] pixels2cut_rect = new Color32[(int)(Mathf.Abs(x - 256) + antiGap), (int)(y - y_next) + antiGap];
-                    int rows2cut_rect = pixels2cut_rect.GetUpperBound(0) + 1;
-                    if (rows2cut_rect != 0) {
-                        int columns2cut_rect = pixels2cut_rect.Length / rows2cut_rect;
-                        for (int i = 0; i < rows2cut_rect; i++)
-                        {
-                            for (int j = 0; j < columns2cut_rect; j++)
-                            {
-                                if (vertebra.Value[q].transform.position.y - j >= GlobalPos.y)
-                                {
-                                    pixels2cut_rect[i, j].a = 0;
-                                    if(q==1) newTex.SetPixel(256 - i, (int)y - j, pixels2cut_rect[i, j]);
-                                    else newTex.SetPixel(256 + i, (int)y - j, pixels2cut_rect[i, j]);
-                                }
-                            }
-                        }
+            foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
+            {
+                for (int q = 1; q < 3; q++) { //q принимает значения 1 и 2; 1 - это значения координат ключевых точек по левой стороне шахты, а 2 - по правой
+                    if (vertebra.Value[q].transform.position.y > y && _mineDict[vertebra.Key + 1][q].transform.position.y < y) {
+                        wall = (int)(vertebra.Value[q].transform.position.x - (vertebra.Value[q].transform.position.x - _mineDict[vertebra.Key + 1][q].transform.position.x) * ((vertebra.Value[q].transform.position.y - y) / (vertebra.Value[q].transform.position.y - _mineDict[vertebra.Key + 1][q].transform.position.y)));
+                        if (q == 1) wall_left = wall;
+                        else wall_right = wall;
                     }
                 }
             }
+            mine_width = wall_right - wall_left;
+            newTex.SetPixels32(wall_left, y - (int)GlobalPos.y, mine_width, 1, GetRow(mine_width));
         }
+        sw.Stop();
+        print("Prepare " + sw.Elapsed.Milliseconds);
+        sw.Reset();
+        sw.Start();
         newTex.Apply();
         Sprite newSprite = Sprite.Create(newTex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 1f);
         rend.sprite = newSprite;
+        sw.Stop();
+        print("Apply " + sw.Elapsed.Milliseconds);
     }
 
+    public Color32[] GetRow(int length)
+    {
+        var pixel = new Color32(0, 0, 0, 0);
+        var row = new Color32[length];
+        for (int i = 0; i < length; i++)
+        {
+            row[i] = pixel;
+        }
+        return row;
+    }
 
     public void Update()
     {

@@ -108,12 +108,15 @@ public class Mine : MonoBehaviour
             float CollLengthX = Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x);
             float CollLengthY = Mathf.Abs(_ySPL - _mineDict[_mineDictNumber - 1][1].transform.position.y);
             CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
-            Cube.GetComponent<Cube>().length = CollLength;
-            Cube.GetComponent<Cube>().Point = SPLI;
-            var MineCollL = Instantiate(Cube, new Vector3(_xSPL - (_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x) / 2, _ySPL + CollLengthY / 2, 0), Quaternion.identity);
-            MineCollL.transform.parent = SPLI.transform;
+            var MineCollL = SPLI.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            MineCollL.size = new Vector2(CollLength/10, 0.1f);
+            MineCollL.offset = new Vector2(CollLength / 20, 0.07f);
+            float sin = (_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x) / CollLength;
+            float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
+            SPLI.transform.rotation = Quaternion.RotateTowards(SPLI.transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
         }
         _vertebraDict.Add(1, SPLI);
+        
         var SPRI = Instantiate(SP, new Vector3(_xSPR, _ySPR, 0), Quaternion.identity);
         SPRI.transform.parent = CPI.transform;
         SPRI.name = _mineDictNumber.ToString() + "R";
@@ -123,10 +126,12 @@ public class Mine : MonoBehaviour
             float CollLengthX = Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x);
             float CollLengthY = Mathf.Abs(_ySPR - _mineDict[_mineDictNumber - 1][2].transform.position.y);
             CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
-            Cube.GetComponent<Cube>().length = CollLength;
-            Cube.GetComponent<Cube>().Point = SPRI;
-            var MineCollR = Instantiate(Cube, new Vector3(_xSPR - (_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x) / 2, _ySPR + CollLengthY / 2, 0), Quaternion.identity);
-            MineCollR.transform.parent = SPRI.transform;
+            var MineCollR = SPRI.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            MineCollR.size = new Vector2(CollLength / 10, 0.1f);
+            MineCollR.offset = new Vector2(CollLength / 20, -0.07f);
+            float sin = (_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x) / CollLength;
+            float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
+            SPRI.transform.rotation = Quaternion.RotateTowards(SPRI.transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
         }
         _vertebraDict.Add(2, SPRI);
         _mineDict.Add(_mineDictNumber, _vertebraDict);

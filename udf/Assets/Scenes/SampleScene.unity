@@ -244,6 +244,8 @@ MonoBehaviour:
   SPPosLimit: 200
   SPConvLimit: 100
   CollLength: 0
+  SidesSpawnTrigger: 0
+  collWall: {fileID: 0}
 --- !u!4 &1111420319
 Transform:
   m_ObjectHideFlags: 0
@@ -287,8 +289,8 @@ GameObject:
   - component: {fileID: 2069570064}
   - component: {fileID: 2069570063}
   - component: {fileID: 2069570065}
-  - component: {fileID: 2069570062}
   - component: {fileID: 2069570066}
+  - component: {fileID: 2069570062}
   m_Layer: 0
   m_Name: b
   m_TagString: Untagged
@@ -296,22 +298,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &2069570062
-Rigidbody:
+--- !u!58 &2069570062
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069570061}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Mass: 0.0001
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Radius: 0.46500006
 --- !u!212 &2069570063
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -369,7 +371,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069570061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 252, y: 370, z: -30}
+  m_LocalPosition: {x: 252, y: 370, z: 0}
   m_LocalScale: {x: 70, y: 70, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -388,19 +390,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vertSpeed: 0
---- !u!135 &2069570066
-SphereCollider:
+--- !u!50 &2069570066
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069570061}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.46500006
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1001 &7023896549662320693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,6 +423,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: b
+      value: 
+      objectReference: {fileID: 2069570061}
     - target: {fileID: 7023896550766544298, guid: 65b21eb075529964fb1379f7fb23c4c4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -468,16 +488,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
-        type: 3}
-      propertyPath: MainCamera
-      value: 
-      objectReference: {fileID: 519420031}
-    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
-        type: 3}
-      propertyPath: b
-      value: 
-      objectReference: {fileID: 2069570061}
     - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
         type: 3}
       propertyPath: MainCamera

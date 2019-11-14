@@ -53,18 +53,18 @@ public class B : MonoBehaviour
         aVy += G * Time.deltaTime;
         vertSpeed = aVy * Ratio * Time.deltaTime;
 
-        GetComponent<Rigidbody>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y, transform.position.z));
+        GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y, transform.position.z));
 
         V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
         R = Mathf.Asin(aVx / V);
         if (Input.GetAxis("Vertical") <= 0)
         {
-            GetComponent<Rigidbody>().transform.rotation =
+            GetComponent<Rigidbody2D>().transform.rotation =
                     Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 100);
         }
         else
         {
-            GetComponent<Rigidbody>().transform.rotation =
+            GetComponent<Rigidbody2D>().transform.rotation =
                     Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 100);
         }
     }

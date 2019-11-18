@@ -7,7 +7,6 @@ using System.Linq;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Sides : MonoBehaviour
 {
-    Stopwatch sw = new Stopwatch();
     private float y_top;
     private int wall;
     private int wall_left;
@@ -15,6 +14,7 @@ public class Sides : MonoBehaviour
     private int mine_width;
     private int _mineDictNumberLocal;
     SpriteRenderer rend;
+    private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     private Dictionary<int, GameObject> _vertebraDictLocal;
     private Dictionary<int, Dictionary<int, GameObject>> _mineDictLocal;
     public void Start()
@@ -27,22 +27,22 @@ public class Sides : MonoBehaviour
         newTex.SetPixels32(pixels);
         Vector3 GlobalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         y_top = GlobalPos.y + tex.height; //вертикальная координата верхней части объекта 
+        _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict;
         _mineDictLocal = new Dictionary<int, Dictionary<int, GameObject>>();
-        for (int i = GameObject.Find("Controller").GetComponent<Mine>()._mineDict.Keys.Min() + 1; i < GameObject.Find("Controller").GetComponent<Mine>()._mineDict.Keys.Max(); i++) {
-            if (GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i + 1][1].transform.position.y < y_top && GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i + 1][1].transform.position.y > GlobalPos.y ||
-                GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i - 1][1].transform.position.y < y_top && GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i - 1][1].transform.position.y > GlobalPos.y ||
-                GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i + 1][2].transform.position.y < y_top && GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i + 1][2].transform.position.y > GlobalPos.y ||
-                GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i - 1][2].transform.position.y < y_top && GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i - 1][2].transform.position.y > GlobalPos.y)
+        for (int i = _mineDict.Keys.Min() + 1; i < _mineDict.Keys.Max(); i++) {
+            if (_mineDict[i + 1][1].transform.position.y < y_top && _mineDict[i + 1][1].transform.position.y > GlobalPos.y ||
+                _mineDict[i - 1][1].transform.position.y < y_top && _mineDict[i - 1][1].transform.position.y > GlobalPos.y ||
+                _mineDict[i + 1][2].transform.position.y < y_top && _mineDict[i + 1][2].transform.position.y > GlobalPos.y ||
+                _mineDict[i - 1][2].transform.position.y < y_top && _mineDict[i - 1][2].transform.position.y > GlobalPos.y)
             {
                 _vertebraDictLocal = new Dictionary<int, GameObject>();
-                _vertebraDictLocal.Add(0, GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i][0]);
-                _vertebraDictLocal.Add(1, GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i][1]);
-                _vertebraDictLocal.Add(2, GameObject.Find("Controller").GetComponent<Mine>()._mineDict[i][2]);
+                _vertebraDictLocal.Add(0, _mineDict[i][0]);
+                _vertebraDictLocal.Add(1, _mineDict[i][1]);
+                _vertebraDictLocal.Add(2, _mineDict[i][2]);
                 _mineDictLocal.Add(_mineDictNumberLocal, _vertebraDictLocal);
                 _mineDictNumberLocal++;
             }
         }
-        sw.Start();
         for (int y = (int)GlobalPos.y; y < (int)y_top; y++)
         {
             foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDictLocal)
@@ -61,15 +61,9 @@ public class Sides : MonoBehaviour
             mine_width = wall_right - wall_left;
             newTex.SetPixels32(wall_left, y - (int)GlobalPos.y, mine_width, 1, GetRow(mine_width));
         }
-        sw.Stop();
-        print("Prepare " + sw.Elapsed.Milliseconds);
-        sw.Reset();
-        sw.Start();
         newTex.Apply();
         Sprite newSprite = Sprite.Create(newTex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 1f);
         rend.sprite = newSprite;
-        sw.Stop();
-        print("Apply " + sw.Elapsed.Milliseconds);
     }
 
     public Color32[] GetRow(int length)

@@ -18,32 +18,36 @@ public class B : MonoBehaviour
     //private int L = 200 - 64;
     private float aVx;
     private float aVy;
+    private float OC;
+    public GameObject cam;
     //private bool aHit;
 
     void Update()
     {
-		// test
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
-        }
-        else R *= 1 - K * Time.deltaTime;
+        if (Input.GetAxis("Horizontal") == 0) R *= 1 - K * Time.deltaTime; 
+        else R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
 
         if (Input.GetAxis("Vertical") > 0)
         {
             GetComponent<SpriteRenderer>().flipY = true;
             K = 0.99f;
             A = 0;
+            OC = (transform.position.y - (cam.transform.position.y + 200)) / 100;
+            print(OC);
         }
         else if (Input.GetAxis("Vertical") == 0)
         {
             GetComponent<SpriteRenderer>().flipY = false;
             K = 0.5f;
             A = 0;
+            OC = (transform.position.y - cam.transform.position.y) / 100;
+            print(OC);
         }
         else {
             GetComponent<SpriteRenderer>().flipY = false;
             K = 0.4f;
+            OC = (transform.position.y - (cam.transform.position.y - 200))/100;
+            print (OC);
         }
 
         V *= 1 - K * Time.deltaTime;
@@ -53,19 +57,19 @@ public class B : MonoBehaviour
         aVy += G * Time.deltaTime;
         vertSpeed = aVy * Ratio * Time.deltaTime;
 
-        GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y, transform.position.z));
+        GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y - OC, transform.position.z));
 
         V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
         R = Mathf.Asin(aVx / V);
         if (Input.GetAxis("Vertical") <= 0)
         {
             GetComponent<Rigidbody2D>().transform.rotation =
-                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 100);
+                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 180);
         }
         else
         {
             GetComponent<Rigidbody2D>().transform.rotation =
-                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 100);
+                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
         }
     }
     private void OnGUI()

@@ -20,7 +20,12 @@ public class B : MonoBehaviour
     private float aVy;
     private float OC;
     public GameObject cam;
+    private Animator _anim;
     //private bool aHit;
+
+    void Start() {
+        _anim = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -33,7 +38,7 @@ public class B : MonoBehaviour
             K = 0.99f;
             A = 0;
             OC = (transform.position.y - (cam.transform.position.y + 200)) / 100;
-            print(OC);
+            //print(OC);
         }
         else if (Input.GetAxis("Vertical") == 0)
         {
@@ -41,15 +46,14 @@ public class B : MonoBehaviour
             K = 0.5f;
             A = 0;
             OC = (transform.position.y - cam.transform.position.y) / 100;
-            print(OC);
+            //print(OC);
         }
         else {
             GetComponent<SpriteRenderer>().flipY = false;
             K = 0.4f;
             OC = (transform.position.y - (cam.transform.position.y - 200))/100;
-            print (OC);
+            //print (OC);
         }
-
         V *= 1 - K * Time.deltaTime;
         V += A * Time.deltaTime;
         aVx = V* Mathf.Sin(R);
@@ -60,6 +64,8 @@ public class B : MonoBehaviour
         GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y - OC, transform.position.z));
 
         V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
+        _anim.SetFloat("speed", V);
+        _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
         R = Mathf.Asin(aVx / V);
         if (Input.GetAxis("Vertical") <= 0)
         {

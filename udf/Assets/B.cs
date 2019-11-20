@@ -12,6 +12,7 @@ public class B : MonoBehaviour
     private float R = Mathf.PI / 2; //Направление R полёта демона.
     private int G = 8; //Ускорение G свободного падения.
     private float A = 0; //Ускорение A, которое демон создаёт в период маха крыла.
+    private int A_trigger;
     private float K = 0.2f; //Коэффициент K трения об воздух (не константа, т.к. зависит от того, как сильно у Б расправлены крылья).
     private float D; //переменная для вывода всякого в служебное меню
     private int Ratio = 20;
@@ -38,7 +39,6 @@ public class B : MonoBehaviour
             K = 0.99f;
             A = 0;
             OC = (transform.position.y - (cam.transform.position.y + 200)) / 100;
-            //print(OC);
         }
         else if (Input.GetAxis("Vertical") == 0)
         {
@@ -46,13 +46,12 @@ public class B : MonoBehaviour
             K = 0.5f;
             A = 0;
             OC = (transform.position.y - cam.transform.position.y) / 100;
-            //print(OC);
         }
         else {
             GetComponent<SpriteRenderer>().flipY = false;
             K = 0.4f;
-            OC = (transform.position.y - (cam.transform.position.y - 200))/100;
-            //print (OC);
+            OC = (transform.position.y - (cam.transform.position.y - A_trigger * 200))/100;
+            A = A_trigger * 20;
         }
         V *= 1 - K * Time.deltaTime;
         V += A * Time.deltaTime;
@@ -77,6 +76,9 @@ public class B : MonoBehaviour
             GetComponent<Rigidbody2D>().transform.rotation =
                     Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
         }
+    }
+    void BoostEvent(int v) {
+        A_trigger = 1 * v;
     }
     private void OnGUI()
     {

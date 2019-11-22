@@ -9,7 +9,6 @@ public class Mine : MonoBehaviour
     [SerializeField] public GameObject SP;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public GameObject b;
-    [SerializeField] public GameObject Cube;
     public int CPPosLimit;
     public int SPPosLimit;
     public int SPConvLimit; // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
@@ -109,8 +108,8 @@ public class Mine : MonoBehaviour
             float CollLengthY = Mathf.Abs(_ySPL - _mineDict[_mineDictNumber - 1][1].transform.position.y);
             CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
             var MineCollL = SPLI.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            MineCollL.size = new Vector2(CollLength/10, 0.1f);
-            MineCollL.offset = new Vector2(CollLength / 20, 0.07f);
+            MineCollL.size = new Vector2(CollLength/10, 0.5f);
+            MineCollL.offset = new Vector2(CollLength / 20, 0.25f);
             float sin = (_xSPL - _mineDict[_mineDictNumber - 1][1].transform.position.x) / CollLength;
             float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
             SPLI.transform.rotation = Quaternion.RotateTowards(SPLI.transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
@@ -127,8 +126,8 @@ public class Mine : MonoBehaviour
             float CollLengthY = Mathf.Abs(_ySPR - _mineDict[_mineDictNumber - 1][2].transform.position.y);
             CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
             var MineCollR = SPRI.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            MineCollR.size = new Vector2(CollLength / 10, 0.1f);
-            MineCollR.offset = new Vector2(CollLength / 20, -0.07f);
+            MineCollR.size = new Vector2(CollLength / 10, 0.5f);
+            MineCollR.offset = new Vector2(CollLength / 20, -0.25f);
             float sin = (_xSPR - _mineDict[_mineDictNumber - 1][2].transform.position.x) / CollLength;
             float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
             SPRI.transform.rotation = Quaternion.RotateTowards(SPRI.transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);

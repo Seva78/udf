@@ -139,10 +139,12 @@ public class Mine : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if (EditorApplication.isPlaying) { 
-            foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict) {
+        if (EditorApplication.isPlaying)
+        {
+            foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
+            {
                 Gizmos.color = Color.blue;
-                Gizmos.DrawLine(vertebra.Value[1].transform.position,vertebra.Value[0].transform.position);
+                Gizmos.DrawLine(vertebra.Value[1].transform.position, vertebra.Value[0].transform.position);
                 Gizmos.DrawLine(vertebra.Value[2].transform.position, vertebra.Value[0].transform.position);
                 if (_mineDict.ContainsKey(vertebra.Key - 1))
                 {

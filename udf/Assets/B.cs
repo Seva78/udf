@@ -3,8 +3,6 @@
 public class B : MonoBehaviour
 {
     public float vertSpeed; //переменная для передачи в скрипт Mine
-    //public float horSpeed;
-    //public float rotateSpeed;
     private float V = 0; //Скорость V полёта демона.
     private float R = Mathf.PI / 2; //Направление R полёта демона.
     private int G = 8; //Ускорение G свободного падения.
@@ -13,13 +11,11 @@ public class B : MonoBehaviour
     private float K = 0.2f; //Коэффициент K трения об воздух (не константа, т.к. зависит от того, как сильно у Б расправлены крылья).
     private float D; //переменная для вывода всякого в служебное меню
     private int Ratio = 20;
-    //private int L = 200 - 64;
     private float aVx;
     private float aVy;
     private float OC;
     public GameObject cam;
     private Animator _anim;
-    //private bool aHit;
 
     void Start() {
         _anim = GetComponent<Animator>();

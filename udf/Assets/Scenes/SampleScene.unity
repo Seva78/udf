@@ -159,7 +159,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &419979421
 SpriteRenderer:
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   b: {fileID: 2069570061}
+  s: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816, type: 3}
 --- !u!70 &419979424
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -250,8 +251,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.6786505}
-  m_Size: {x: 0.65, y: 2.317057}
+  m_Offset: {x: -0.012412719, y: -0.6786505}
+  m_Size: {x: 0.7906817, y: 2.317057}
   m_Direction: 0
 --- !u!1 &519420028
 GameObject:

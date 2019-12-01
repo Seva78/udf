@@ -17,7 +17,8 @@ public class g : MonoBehaviour
         if (transform.position.y>780) {
             transform.position = new Vector3(transform.position.x, transform.position.y - speed, transform.position.z);
         }
-        if (fire_cooldown_trigger == 0) {
+        if (fire_cooldown_trigger == 0)
+        {
             fire_cooldown_trigger = 1;
             StartCoroutine(Fire());
         }
@@ -30,10 +31,10 @@ public class g : MonoBehaviour
         yield return new WaitForSeconds(2);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), 360);
     }
-    IEnumerator Fire() {
+    IEnumerator Fire()
+    {
         yield return new WaitForSeconds(2);
         var snowball = Instantiate(s, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        snowball.transform.parent = transform;
         fire_cooldown_trigger = 0;
     }
 }

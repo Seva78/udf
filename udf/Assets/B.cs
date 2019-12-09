@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class B : MonoBehaviour
 {
     public float vertSpeed; //переменная для передачи в скрипт Mine
@@ -16,6 +16,7 @@ public class B : MonoBehaviour
     private float OC;
     public GameObject cam;
     private Animator _anim;
+    private int HP = 100;
 
     void Start() {
         _anim = GetComponent<Animator>();
@@ -23,6 +24,8 @@ public class B : MonoBehaviour
 
     void Update()
     {
+        if (HP <= 0) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         if (Input.GetAxis("Horizontal") == 0) R *= 1 - K * Time.deltaTime; 
         else R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
 
@@ -75,81 +78,16 @@ public class B : MonoBehaviour
     }
     private void OnGUI()
     {
-        GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
-        GUI.Box(new Rect(10, 50, 100, 30), "R = " + R.ToString());
-        GUI.Box(new Rect(10, 90, 100, 30), "A = " + A.ToString());
-        GUI.Box(new Rect(10, 130, 100, 30), "K = " + K.ToString());
+        GUI.Box(new Rect(206, 10, 100, 30), "HP: " + HP);
+        //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
+        //GUI.Box(new Rect(10, 50, 100, 30), "R = " + R.ToString());
+        //GUI.Box(new Rect(10, 90, 100, 30), "A = " + A.ToString());
+        //GUI.Box(new Rect(10, 130, 100, 30), "K = " + K.ToString());
         //GUI.Box(new Rect(10, 170, 100, 30), "D = " + D.ToString());
     }
-
-
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "SPL" || collision.gameObject.tag == "SPR") HP -= 1;
+        if (collision.gameObject.tag == "Projectile") HP -= 5;
+    }
 }
-
-
-//        if (Input.GetAxis("Horizontal") != 0)
-//        {
-//            R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
-//        }
-//        else R *= 1 - K;
-//        if (Input.GetAxis("Vertical") < 0)
-//        {
-//            K = 0.99f;
-//            A = 0;
-//        }
-//        else if (Input.GetAxis("Vertical") == 0)
-//        {
-//            K = 0.5f;
-//            A = 0;
-//        }
-//        else {
-//            K = 0.4f;
-//        }
-//        V *= 1 - K;
-//        V += A;
-//        aVx = V* Mathf.Sin(R);
-//aVy = V* Mathf.Cos(R);
-
-//aVy += G;
-//        
-//        GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx* Ratio, transform.position.y - aVy* Ratio, transform.position.z));
-//        if (GetComponent<Rigidbody2D>().transform.position.x< -L) {
-//            GetComponent<Rigidbody2D>().MovePosition(new Vector3(- L + (-L - transform.position.x), transform.position.y, transform.position.z));
-//            aVx = Mathf.Abs(aVx);
-//            aHit = true;
-//        }
-//        if (GetComponent<Rigidbody2D>().transform.position.x > L)
-//        {
-//            GetComponent<Rigidbody2D>().MovePosition(new Vector3(L - (transform.position.x - L), transform.position.y, transform.position.z));
-//            aVx = -Mathf.Abs(aVx);
-//            aHit = true;
-//        }
-//        if (aHit) {
-//            aVx *= 0.5f;
-//            aVy *= 0.5f;
-//            A = 0;
-//        }
-//        V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
-//        R = Mathf.Asin(aVx / V);
-
-//        if (Input.GetAxis("Vertical") >= 0)
-//        {
-//            GetComponent<Rigidbody2D>().transform.Rotate(transform.rotation.x, transform.rotation.y, -R* 180 / Mathf.PI);
-//        }
-//        else {
-//            GetComponent<Rigidbody2D>().transform.Rotate(transform.rotation.x, transform.rotation.y, R* 180 / Mathf.PI);
-//        }
-
-
-
-//if (Input.GetAxis("Horizontal") != 0 && GetComponent<Rigidbody2D>().transform.rotation.z > -0.7 && GetComponent<Rigidbody2D>().transform.rotation.z < 0.7)
-//{
-//GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + Input.GetAxis("Horizontal") * horSpeed, transform.position.y, transform.position.z));
-//    GetComponent<Rigidbody2D>().transform.Rotate(transform.rotation.x, transform.rotation.y, Input.GetAxis("Horizontal") * rotateSpeed);
-//}
-//else GetComponent<Rigidbody2D>().transform.rotation = 
-//        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 0)), rotateSpeed);
-
-//if (Input.GetAxis("Vertical") != 0)
-//{
-//    vertSpeed = -Input.GetAxis("Vertical");
-//}

@@ -136,7 +136,10 @@ public class Mine : MonoBehaviour
         _mineDict.Add(_mineDictNumber, _vertebraDict);
         _mineDictNumber++;
     }
-
+    private void OnGUI()
+    {
+        GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(transform.position.y / 20) + " ft.");
+    }
     void OnDrawGizmos()
     {
         if (EditorApplication.isPlaying)

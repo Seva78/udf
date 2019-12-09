@@ -8,6 +8,8 @@ TagManager:
   - SP
   - SPL
   - SPR
+  - Projectile
+  - CP
   layers:
   - Default
   - TransparentFX

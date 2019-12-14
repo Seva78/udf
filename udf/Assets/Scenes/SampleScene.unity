@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   b: {fileID: 2069570061}
   s: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816, type: 3}
+  Controller: {fileID: 1111420317}
 --- !u!70 &419979424
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

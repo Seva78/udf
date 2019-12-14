@@ -80,6 +80,7 @@ public class B : MonoBehaviour
     {
         GUI.Box(new Rect(206, 10, 100, 30), "HP: " + HP);
         //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
+        //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
         //GUI.Box(new Rect(10, 50, 100, 30), "R = " + R.ToString());
         //GUI.Box(new Rect(10, 90, 100, 30), "A = " + A.ToString());
         //GUI.Box(new Rect(10, 130, 100, 30), "K = " + K.ToString());

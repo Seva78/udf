@@ -409,6 +409,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileSides: {fileID: 116270460717177464, guid: b6ed5b41246c13b4fa5a0587dc56e534,
     type: 3}
+  TileBackground: {fileID: 5423297530855525995, guid: 99ba24aa2a3bbde48a827f5f485e0c15,
+    type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
 --- !u!1 &2069570061

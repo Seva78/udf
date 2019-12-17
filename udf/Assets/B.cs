@@ -72,6 +72,7 @@ public class B : MonoBehaviour
             GetComponent<Rigidbody2D>().transform.rotation =
                     Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
         }
+        if (transform.position.y > 800) HP -= 1;
     }
     void BoostEvent(int v) {
         A_trigger = 1 * v;

@@ -13,7 +13,7 @@ public class Mine : MonoBehaviour
     public int SPPosLimit;
     public int SPConvLimit; // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
     public float CollLength; //параметр для передачи в скрипт коллайдера - задаёт его длину
-    private float speed;
+    public float speed;
     private int _CPPosLimitL;
     private int _CPPosLimitR;
     private int _SPPosLimitL;
@@ -31,7 +31,7 @@ public class Mine : MonoBehaviour
     public Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     private int _mineDictNumber;
     private int _vertebraToDelete;
-    public int SidesSpawnTrigger; //пока не включен, фоновую текстуру не генерим
+    public int TextureSpawnTrigger; //пока не включен, фоновую текстуру не генерим
 
     void Start()
     {
@@ -58,7 +58,7 @@ public class Mine : MonoBehaviour
         _yCP -= _yCPoffset;
         if (_yCP > -1200) GenerateVertebra(_xCP, _yCP);
         else {
-            SidesSpawnTrigger = 1;
+            TextureSpawnTrigger = 1;
             _yCP += _yCPoffset;
         }
 
@@ -140,23 +140,23 @@ public class Mine : MonoBehaviour
     {
         GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(transform.position.y / 20) + " ft.");
     }
-    void OnDrawGizmos()
-    {
-        if (EditorApplication.isPlaying)
-        {
-            foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
-            {
-                Gizmos.color = Color.blue;
-                Gizmos.DrawLine(vertebra.Value[1].transform.position, vertebra.Value[0].transform.position);
-                Gizmos.DrawLine(vertebra.Value[2].transform.position, vertebra.Value[0].transform.position);
-                if (_mineDict.ContainsKey(vertebra.Key - 1))
-                {
-                    Gizmos.DrawLine(_mineDict[vertebra.Key - 1][0].transform.position, vertebra.Value[0].transform.position);
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawLine(_mineDict[vertebra.Key - 1][2].transform.position, vertebra.Value[2].transform.position);
-                    Gizmos.DrawLine(_mineDict[vertebra.Key - 1][1].transform.position, vertebra.Value[1].transform.position);
-                }
-            }
-        }
-    }
+    //void OnDrawGizmos()
+    //{
+    //    if (EditorApplication.isPlaying)
+    //    {
+    //        foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
+    //        {
+    //            Gizmos.color = Color.blue;
+    //            Gizmos.DrawLine(vertebra.Value[1].transform.position, vertebra.Value[0].transform.position);
+    //            Gizmos.DrawLine(vertebra.Value[2].transform.position, vertebra.Value[0].transform.position);
+    //            if (_mineDict.ContainsKey(vertebra.Key - 1))
+    //            {
+    //                Gizmos.DrawLine(_mineDict[vertebra.Key - 1][0].transform.position, vertebra.Value[0].transform.position);
+    //                Gizmos.color = Color.red;
+    //                Gizmos.DrawLine(_mineDict[vertebra.Key - 1][2].transform.position, vertebra.Value[2].transform.position);
+    //                Gizmos.DrawLine(_mineDict[vertebra.Key - 1][1].transform.position, vertebra.Value[1].transform.position);
+    //            }
+    //        }
+    //    }
+    //}
 }

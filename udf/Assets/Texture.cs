@@ -5,46 +5,79 @@ using UnityEngine;
 public class Texture : MonoBehaviour
 {
     [SerializeField] public GameObject TileSides;
+    [SerializeField] public GameObject TileBackground;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public GameObject b;
     private float speed;
     private float _yTile;
+    private float _yBackgroundTile;
     private Dictionary<int, GameObject> _tileSidesDict;
+    private Dictionary<int, GameObject> _tileBackgroundDict;
     private int _tileSidesDictNumber;
-    private int _tileToDelete;
+    private int _tileBackgroundDictNumber;
+    private int _tileSidesToDelete;
+    private int _tileBackgroundToDelete;
     void Start()
     {
         _tileSidesDict = new Dictionary<int, GameObject>();
+        _tileBackgroundDict = new Dictionary<int, GameObject>();
         _yTile = MainCamera.pixelHeight + 256;
-        GenerateTile(256, _yTile);
+        _yBackgroundTile = MainCamera.pixelHeight + 256;
+        GenerateSidesTile(256, _yTile);
+        GenerateBackgroundTile(256, _yBackgroundTile);
     }
     void Update()
     {
         speed = b.GetComponent<B>().vertSpeed;
         _yTile += speed;
+        _yBackgroundTile += speed;
         _yTile -= TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
-        if (_yTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && GameObject.Find("Controller").GetComponent<Mine>().SidesSpawnTrigger == 1) GenerateTile(256, _yTile);
+        _yBackgroundTile -= TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height;
+
+        if (_yTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateSidesTile(256, _yTile);
         else _yTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
+        if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateBackgroundTile(256, _yBackgroundTile);
+        else _yBackgroundTile += TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height;
 
         foreach (KeyValuePair<int, GameObject> tile in _tileSidesDict)
         {
             if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
             {
-                _tileToDelete = tile.Key + 1;
+                _tileSidesToDelete = tile.Key + 1;
             }
         }
-        if (_tileToDelete != 0)
+        if (_tileSidesToDelete != 0)
         {
-            _tileSidesDict.Remove(_tileToDelete - 1);
-            _tileToDelete = 0;
+            _tileSidesDict.Remove(_tileSidesToDelete - 1);
+            _tileSidesToDelete = 0;
+        }
+        foreach (KeyValuePair<int, GameObject> tile in _tileBackgroundDict)
+        {
+            if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
+            {
+                _tileBackgroundToDelete = tile.Key + 1;
+            }
+        }
+        if (_tileBackgroundToDelete != 0)
+        {
+            _tileBackgroundDict.Remove(_tileBackgroundToDelete - 1);
+            _tileBackgroundToDelete = 0;
         }
     }
-    void GenerateTile(int _xTile, float _yTile)
+    void GenerateSidesTile(int _xTile, float _yTile)
     {
         var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 0), Quaternion.identity);
         TileSidesI.transform.parent = transform;
         TileSidesI.name = "SideTexture" + _tileSidesDictNumber;
         _tileSidesDict.Add(_tileSidesDictNumber, TileSidesI);
         _tileSidesDictNumber++;
+    }
+    void GenerateBackgroundTile(int _xTile, float _yTile)
+    {
+        var TileBackgroundI = Instantiate(TileBackground, new Vector3(_xTile, _yTile, 0), Quaternion.identity);
+        TileBackgroundI.transform.parent = transform;
+        TileBackgroundI.name = "BackgroundTexture" + _tileSidesDictNumber;
+        _tileBackgroundDict.Add(_tileBackgroundDictNumber, TileBackgroundI);
+        _tileBackgroundDictNumber++;
     }
 }

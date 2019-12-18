@@ -8,8 +8,9 @@ public class Texture : MonoBehaviour
     [SerializeField] public GameObject TileBackground;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public GameObject b;
+    public float backgroundLagCoeff; //отставание текстуры бэкграунда от текстуры стенок шахты
     private float speed;
-    private float _yTile;
+    private float _ySidesTile;
     private float _yBackgroundTile;
     private Dictionary<int, GameObject> _tileSidesDict;
     private Dictionary<int, GameObject> _tileBackgroundDict;
@@ -21,24 +22,23 @@ public class Texture : MonoBehaviour
     {
         _tileSidesDict = new Dictionary<int, GameObject>();
         _tileBackgroundDict = new Dictionary<int, GameObject>();
-        _yTile = MainCamera.pixelHeight + 256;
+        _ySidesTile = MainCamera.pixelHeight + 256;
         _yBackgroundTile = MainCamera.pixelHeight + 256;
-        GenerateSidesTile(256, _yTile);
+        GenerateSidesTile(256, _ySidesTile);
         GenerateBackgroundTile(256, _yBackgroundTile);
     }
     void Update()
     {
         speed = b.GetComponent<B>().vertSpeed;
-        _yTile += speed;
-        _yBackgroundTile += speed;
-        _yTile -= TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
+        _ySidesTile += speed;
+        _yBackgroundTile += speed - speed / backgroundLagCoeff;
+        _ySidesTile -= TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
         _yBackgroundTile -= TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height;
-
-        if (_yTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateSidesTile(256, _yTile);
-        else _yTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
+        if (_ySidesTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateSidesTile(256, _ySidesTile);
+        else _ySidesTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
         if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateBackgroundTile(256, _yBackgroundTile);
         else _yBackgroundTile += TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height;
-
+        //print(_ySidesTile + " " + _yBackgroundTile);
         foreach (KeyValuePair<int, GameObject> tile in _tileSidesDict)
         {
             if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
@@ -64,19 +64,21 @@ public class Texture : MonoBehaviour
             _tileBackgroundToDelete = 0;
         }
     }
-    void GenerateSidesTile(int _xTile, float _yTile)
+    void GenerateSidesTile(int _xTile, float _ySidesTile)
     {
-        var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _yTile, 0), Quaternion.identity);
+        var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _ySidesTile, 0), Quaternion.identity);
         TileSidesI.transform.parent = transform;
         TileSidesI.name = "SideTexture" + _tileSidesDictNumber;
+        //print(TileSidesI.name);
         _tileSidesDict.Add(_tileSidesDictNumber, TileSidesI);
         _tileSidesDictNumber++;
     }
-    void GenerateBackgroundTile(int _xTile, float _yTile)
+    void GenerateBackgroundTile(int _xTile, float _yBackgroundTile)
     {
-        var TileBackgroundI = Instantiate(TileBackground, new Vector3(_xTile, _yTile, 0), Quaternion.identity);
+        var TileBackgroundI = Instantiate(TileBackground, new Vector3(_xTile, _yBackgroundTile, 0), Quaternion.identity);
         TileBackgroundI.transform.parent = transform;
-        TileBackgroundI.name = "BackgroundTexture" + _tileSidesDictNumber;
+        TileBackgroundI.name = "BackgroundTexture" + _tileBackgroundDictNumber;
+        //print(TileBackgroundI.name);
         _tileBackgroundDict.Add(_tileBackgroundDictNumber, TileBackgroundI);
         _tileBackgroundDictNumber++;
     }

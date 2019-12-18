@@ -378,7 +378,8 @@ MonoBehaviour:
   SPPosLimit: 200
   SPConvLimit: 100
   CollLength: 0
-  SidesSpawnTrigger: 0
+  speed: 0
+  TextureSpawnTrigger: 0
 --- !u!4 &1111420319
 Transform:
   m_ObjectHideFlags: 0
@@ -413,6 +414,7 @@ MonoBehaviour:
     type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
+  backgroundLagCoeff: 3
 --- !u!1 &2069570061
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +443,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069570061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -655,5 +657,10 @@ PrefabInstance:
       propertyPath: b
       value: 
       objectReference: {fileID: 2069570061}
+    - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: backgroundLagCoeff
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65b21eb075529964fb1379f7fb23c4c4, type: 3}

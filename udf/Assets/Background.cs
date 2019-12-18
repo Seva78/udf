@@ -6,7 +6,7 @@ public class Background : MonoBehaviour
     void Update()
     {
         speed = transform.parent.gameObject.GetComponent<Mine>().speed;
-        transform.position = new Vector3(transform.position.x, transform.position.y - speed/2, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y - speed / transform.parent.gameObject.GetComponent<Texture>().backgroundLagCoeff, transform.position.z);
         if (transform.position.y > 1060) Destroy(gameObject);
     }
 }

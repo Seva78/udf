@@ -74,8 +74,10 @@ public class B : MonoBehaviour
         }
         if (transform.position.y > 800) HP -= 1;
     }
-    void BoostEvent(int v) {
+    void BoostEvent(int v)
+    {
         A_trigger = 1 * v;
+        HP += 1;
     }
     private void OnGUI()
     {
@@ -89,7 +91,7 @@ public class B : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "SPL" || collision.gameObject.tag == "SPR") HP -= 1;
-        if (collision.gameObject.tag == "Projectile") HP -= 5;
+        if (collision.gameObject.tag == "SPL" || collision.gameObject.tag == "SPR") HP -= Random.Range(1, 3);
+        if (collision.gameObject.tag == "Projectile") HP -= Random.Range(1, 2);
     }
 }

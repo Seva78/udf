@@ -33,12 +33,11 @@ public class Texture : MonoBehaviour
         _ySidesTile += speed;
         _yBackgroundTile += speed - speed / backgroundLagCoeff;
         _ySidesTile -= TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
-        _yBackgroundTile -= TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height;
+        _yBackgroundTile -= TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y;
         if (_ySidesTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateSidesTile(256, _ySidesTile);
         else _ySidesTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
-        if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateBackgroundTile(256, _yBackgroundTile);
-        else _yBackgroundTile += TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height;
-        //print(_ySidesTile + " " + _yBackgroundTile);
+        if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateBackgroundTile(256, _yBackgroundTile);
+        else _yBackgroundTile += TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y;
         foreach (KeyValuePair<int, GameObject> tile in _tileSidesDict)
         {
             if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)

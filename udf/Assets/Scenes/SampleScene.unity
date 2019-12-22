@@ -530,6 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vertSpeed: 0
   cam: {fileID: 519420028}
+  HP_text: {fileID: 4787586125774494781, guid: be1ca96ec2690274a8c23c1527a85afd, type: 3}
 --- !u!50 &2069570066
 Rigidbody2D:
   serializedVersion: 4

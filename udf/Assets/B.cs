@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections;
 public class B : MonoBehaviour
 {
     public float vertSpeed; //переменная для передачи в скрипт Mine
@@ -15,8 +17,11 @@ public class B : MonoBehaviour
     private float aVy;
     private float OC;
     public GameObject cam;
+    public TextMeshPro HP_text;
     private Animator _anim;
     private int HP = 100;
+    private int HP_delta;
+    private int hp_cooldown_trigger;
 
     void Start() {
         _anim = GetComponent<Animator>();
@@ -81,6 +86,7 @@ public class B : MonoBehaviour
     }
     private void OnGUI()
     {
+        //GUI.Label(new Rect(transform.position.x, transform.position.y, 200, 40), "Anlage in Ordnung");
         GUI.Box(new Rect(206, 10, 100, 30), "HP: " + HP);
         //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
         //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
@@ -91,7 +97,32 @@ public class B : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "SPL" || collision.gameObject.tag == "SPR") HP -= Random.Range(1, 3);
-        if (collision.gameObject.tag == "Projectile") HP -= Random.Range(1, 2);
+        if (collision.gameObject.tag == "SPL" || collision.gameObject.tag == "SPR")
+        {
+            HP_delta += Random.Range(1, 3);
+            HP -= HP_delta;
+        }
+        if (collision.gameObject.tag == "Projectile")
+        {
+            HP_delta += Random.Range(1, 2);
+            HP -= HP_delta;
+        }
+        if (hp_cooldown_trigger == 0) {
+            hp_cooldown_trigger = 1;
+            StartCoroutine(HP_Coroutine(HP_delta));
+        }
     }
+    IEnumerator HP_Coroutine(int HP_delta)
+    {
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(HP_text, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+        HP_text.GetComponent<TextMeshPro>().text = HP_delta.ToString();
+        HP_delta_0();
+        hp_cooldown_trigger = 0;
+    }
+    void HP_delta_0() {
+        HP_delta = 0;
+    }
+
+
 }

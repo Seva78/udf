@@ -115,8 +115,10 @@ public class B : MonoBehaviour
     IEnumerator HP_Coroutine(int HP_delta)
     {
         yield return new WaitForSeconds(0.1f);
-        Instantiate(HP_text, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-        HP_text.GetComponent<TextMeshPro>().text = HP_delta.ToString();
+        var HP_textI = Instantiate(HP_text, new Vector3(transform.position.x + 40, transform.position.y, 0), Quaternion.identity);
+        HP_textI.GetComponent<HP>().b = gameObject;
+        HP_textI.GetComponent<TextMeshPro>().text = (HP_delta*-1).ToString();
+        HP_textI.GetComponent<TextMeshPro>().color = new Color32(128, 0, 0, 255);
         HP_delta_0();
         hp_cooldown_trigger = 0;
     }

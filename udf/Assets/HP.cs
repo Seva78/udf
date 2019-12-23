@@ -16,6 +16,9 @@ public class HP : MonoBehaviour
     void Update()
     {
         speed = b.GetComponent<B>().vertSpeed;
-        transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+        if (transform.position.y - b.transform.position.y > 70) {
+            Destroy(gameObject);
+        }
     }
 }

@@ -82,7 +82,13 @@ public class B : MonoBehaviour
     void BoostEvent(int v)
     {
         A_trigger = 1 * v;
-        HP += 1;
+        HP_delta = 1;
+        HP += HP_delta;
+        var HP_textI = Instantiate(HP_text, new Vector3(transform.position.x + 40, transform.position.y, 0), Quaternion.identity);
+        HP_textI.GetComponent<HP>().b = gameObject;
+        HP_textI.GetComponent<TextMeshPro>().text = HP_delta.ToString();
+        HP_delta = 0;
+        HP_textI.GetComponent<TextMeshPro>().color = new Color32(0, 255, 0, 255);
     }
     private void OnGUI()
     {
@@ -118,7 +124,7 @@ public class B : MonoBehaviour
         var HP_textI = Instantiate(HP_text, new Vector3(transform.position.x + 40, transform.position.y, 0), Quaternion.identity);
         HP_textI.GetComponent<HP>().b = gameObject;
         HP_textI.GetComponent<TextMeshPro>().text = (HP_delta*-1).ToString();
-        HP_textI.GetComponent<TextMeshPro>().color = new Color32(128, 0, 0, 255);
+        HP_textI.GetComponent<TextMeshPro>().color = new Color32(255, 0, 0, 255);
         HP_delta_0();
         hp_cooldown_trigger = 0;
     }

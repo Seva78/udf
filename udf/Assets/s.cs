@@ -29,7 +29,7 @@ public class s : MonoBehaviour
     }
     IEnumerator ChangeTrajectory()
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.15f);
         change_trajectory_value = Random.Range(300,-300);
         change_trajectory_trigger = 0;
     }

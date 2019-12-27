@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 public class B : MonoBehaviour
@@ -22,62 +23,68 @@ public class B : MonoBehaviour
     private int HP = 100;
     private int HP_delta;
     private int hp_cooldown_trigger;
+    public int startButtonPressed;
 
-    void Start() {
+    void StartGame()
+    {
         _anim = GetComponent<Animator>();
+        startButtonPressed = 1;
     }
 
     void Update()
     {
         if (HP <= 0) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        if (Input.GetAxis("Horizontal") == 0) R *= 1 - K * Time.deltaTime; 
-        else R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
-
-        if (Input.GetAxis("Vertical") > 0)
+        if (startButtonPressed == 1)
         {
-            GetComponent<SpriteRenderer>().flipY = true;
-            K = 0.99f;
-            A = 0;
-            OC = (transform.position.y - (cam.transform.position.y + 200)) / 100;
-        }
-        else if (Input.GetAxis("Vertical") == 0)
-        {
-            GetComponent<SpriteRenderer>().flipY = false;
-            K = 0.5f;
-            A = 0;
-            OC = (transform.position.y - cam.transform.position.y) / 100;
-        }
-        else {
-            GetComponent<SpriteRenderer>().flipY = false;
-            K = 0.4f;
-            OC = (transform.position.y - (cam.transform.position.y - A_trigger * 200))/100;
-            A = A_trigger * 20;
-        }
-        V *= 1 - K * Time.deltaTime;
-        V += A * Time.deltaTime;
-        aVx = V* Mathf.Sin(R);
-        aVy = V* Mathf.Cos(R);
-        aVy += G * Time.deltaTime;
-        vertSpeed = aVy * Ratio * Time.deltaTime;
+            if (Input.GetAxis("Horizontal") == 0) R *= 1 - K * Time.deltaTime; 
+            else R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
 
-        GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y - OC, transform.position.z));
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                GetComponent<SpriteRenderer>().flipY = true;
+                K = 0.99f;
+                A = 0;
+                OC = (transform.position.y - (cam.transform.position.y + 200)) / 100;
+            }
+            else if (Input.GetAxis("Vertical") == 0)
+            {
+                GetComponent<SpriteRenderer>().flipY = false;
+                K = 0.5f;
+                A = 0;
+                OC = (transform.position.y - cam.transform.position.y) / 100;
+            }
+            else {
+                GetComponent<SpriteRenderer>().flipY = false;
+                K = 0.4f;
+                OC = (transform.position.y - (cam.transform.position.y - A_trigger * 200))/100;
+                A = A_trigger * 20;
+            }
+            V *= 1 - K * Time.deltaTime;
+            V += A * Time.deltaTime;
+            aVx = V* Mathf.Sin(R);
+            aVy = V* Mathf.Cos(R);
+            aVy += G * Time.deltaTime;
 
-        V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
-        _anim.SetFloat("speed", V);
-        _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-        R = Mathf.Asin(aVx / V);
-        if (Input.GetAxis("Vertical") <= 0)
-        {
-            GetComponent<Rigidbody2D>().transform.rotation =
-                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 180);
+                vertSpeed = aVy * Ratio * Time.deltaTime;
+                GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y - OC, transform.position.z));
+
+
+            V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
+            _anim.SetFloat("speed", V);
+            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+            R = Mathf.Asin(aVx / V);
+            if (Input.GetAxis("Vertical") <= 0)
+            {
+                GetComponent<Rigidbody2D>().transform.rotation =
+                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 180);
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().transform.rotation =
+                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
+            }
+            if (transform.position.y > 800) HP -= 1;
         }
-        else
-        {
-            GetComponent<Rigidbody2D>().transform.rotation =
-                    Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
-        }
-        if (transform.position.y > 800) HP -= 1;
     }
     void BoostEvent(int v)
     {

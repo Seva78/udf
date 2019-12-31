@@ -6,13 +6,7 @@ public class HP : MonoBehaviour
 {
     public GameObject b;
     public float speed;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         speed = b.GetComponent<B>().vertSpeed;

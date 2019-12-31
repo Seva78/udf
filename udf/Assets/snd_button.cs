@@ -7,10 +7,20 @@ public class snd_button : MonoBehaviour
     public Button snd;
     public Sprite snd_off;
     public Sprite snd_on;
+    public GameObject s;
+    public GameObject b;
     public void changePic() {
         counter++;
-        if (counter % 2 == 1) {
+        if (counter % 2 == 1)
+        {
             snd.GetComponent<Image>().sprite = snd_off;
-        } else snd.GetComponent<Image>().sprite = snd_on;
+            s.GetComponent<AudioSource>().mute = true;
+            b.GetComponent<AudioSource>().mute = true;
+        }
+        else {
+            snd.GetComponent<Image>().sprite = snd_on;
+            s.GetComponent<AudioSource>().mute = false;
+            b.GetComponent<AudioSource>().mute = false;
+        }
     }
 }

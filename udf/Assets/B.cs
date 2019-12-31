@@ -23,7 +23,7 @@ public class B : MonoBehaviour
     private int HP_delta;
     private int hp_cooldown_trigger;
     public int startButtonPressed;
-    public AudioClip sound_barlog_hit;
+    public AudioClip sound_barlog_hit2;
 
     void StartGame()
     {
@@ -116,7 +116,7 @@ public class B : MonoBehaviour
         {
             HP_delta += Random.Range(1, 3);
             HP -= HP_delta;
-            GetComponent<AudioSource>().PlayOneShot(sound_barlog_hit, 1f);
+            GetComponent<AudioSource>().PlayOneShot(sound_barlog_hit2, 1f);
         }
         if (collision.gameObject.tag == "Projectile")
         {

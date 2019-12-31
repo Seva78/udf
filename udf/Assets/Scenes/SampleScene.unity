@@ -960,6 +960,8 @@ MonoBehaviour:
   snd: {fileID: 1053324920}
   snd_off: {fileID: 21300000, guid: b49441af433e49844962f0c608ab278e, type: 3}
   snd_on: {fileID: 21300000, guid: 390f2140561630543b2e1e256de893d9, type: 3}
+  s: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816, type: 3}
+  b: {fileID: 2069570061}
 --- !u!1 &1111420317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,7 +1548,7 @@ MonoBehaviour:
   cam: {fileID: 519420028}
   HP_text: {fileID: 4787586125774494781, guid: be1ca96ec2690274a8c23c1527a85afd, type: 3}
   startButtonPressed: 0
-  sound_barlog_hit: {fileID: 8300000, guid: 53f515a1a34f4644bbc2b2118b09d5ea, type: 3}
+  sound_barlog_hit2: {fileID: 8300000, guid: 57d2e4dafe193fc4498192d77e936ca6, type: 3}
 --- !u!50 &2069570066
 Rigidbody2D:
   serializedVersion: 4
@@ -1597,7 +1599,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 53f515a1a34f4644bbc2b2118b09d5ea, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

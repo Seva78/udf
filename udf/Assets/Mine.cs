@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using TMPro;
 
 public class Mine : MonoBehaviour
 {
@@ -32,6 +31,7 @@ public class Mine : MonoBehaviour
     private int _mineDictNumber;
     private int _vertebraToDelete;
     public int TextureSpawnTrigger; //пока не включен, фоновую текстуру не генерим
+    public GameObject Depth_UI;
 
     void Start()
     {
@@ -73,6 +73,7 @@ public class Mine : MonoBehaviour
             _mineDict.Remove(_vertebraToDelete - 1);
             _vertebraToDelete = 0;
         }
+        Depth_UI.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20).ToString() + " m";
     }
     void GenerateVertebra(int _xCP, float _yCP)
     {
@@ -136,10 +137,7 @@ public class Mine : MonoBehaviour
         _mineDict.Add(_mineDictNumber, _vertebraDict);
         _mineDictNumber++;
     }
-    private void OnGUI()
-    {
-        GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(transform.position.y / 20) + " ft.");
-    }
+
     //void OnDrawGizmos()
     //{
     //    if (EditorApplication.isPlaying)

@@ -18,6 +18,7 @@ public class B : MonoBehaviour
     private float OC;
     public GameObject cam;
     public TextMeshPro HP_text;
+    public GameObject HP_UI;
     private Animator _anim;
     private int HP = 100;
     private int HP_delta;
@@ -84,6 +85,7 @@ public class B : MonoBehaviour
                         Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
             }
             if (transform.position.y > 800) HP -= 1;
+            HP_UI.GetComponent<TextMeshProUGUI>().text = "HP: " + HP.ToString();
         }
     }
     void BoostEvent(int v)
@@ -102,7 +104,7 @@ public class B : MonoBehaviour
     private void OnGUI()
     {
         //GUI.Label(new Rect(transform.position.x, transform.position.y, 200, 40), "Anlage in Ordnung");
-        GUI.Box(new Rect(206, 10, 100, 30), "HP: " + HP);
+        //GUI.Box(new Rect(206, 10, 100, 30), "HP: " + HP);
         //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
         //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
         //GUI.Box(new Rect(10, 50, 100, 30), "R = " + R.ToString());
@@ -123,6 +125,7 @@ public class B : MonoBehaviour
             HP_delta += Random.Range(1, 2);
             HP -= HP_delta;
         }
+        HP_UI.GetComponent<TextMeshProUGUI>().text = "HP: " + HP.ToString();
         if (hp_cooldown_trigger == 0) {
             hp_cooldown_trigger = 1;
             StartCoroutine(HP_Coroutine(HP_delta));

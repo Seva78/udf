@@ -1182,11 +1182,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileSides: {fileID: 116270460717177464, guid: b6ed5b41246c13b4fa5a0587dc56e534,
     type: 3}
+  TileSidesTexture: {fileID: 2626355242453834794, guid: 6499974fa9c7e7a439a86cac8d2c755c,
+    type: 3}
   TileBackground: {fileID: 5423297530855525995, guid: 99ba24aa2a3bbde48a827f5f485e0c15,
     type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
   backgroundLagCoeff: 3
+  sidesLagCoeff: 3
 --- !u!82 &1111420321
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2167,6 +2170,11 @@ PrefabInstance:
     - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
         type: 3}
       propertyPath: backgroundLagCoeff
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: sidesLagCoeff
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7023896550766544296, guid: 65b21eb075529964fb1379f7fb23c4c4,

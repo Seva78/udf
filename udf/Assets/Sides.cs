@@ -13,13 +13,15 @@ public class Sides : MonoBehaviour
     private int wall_right;
     private int mine_width;
     private int _mineDictNumberLocal;
-    SpriteRenderer rend;
+    //    SpriteRenderer rend;
+    SpriteMask rend;
     private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     private Dictionary<int, GameObject> _vertebraDictLocal;
     private Dictionary<int, Dictionary<int, GameObject>> _mineDictLocal;
     public void Start()
     {
-        rend = GetComponent<SpriteRenderer>();
+        //        rend = GetComponent<SpriteRenderer>();
+        rend = GetComponent<SpriteMask>();
         Texture2D tex = rend.sprite.texture;
         Color32[] pixels = new Color32[tex.width * tex.height];
         pixels = tex.GetPixels32();

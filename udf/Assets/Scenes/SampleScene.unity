@@ -1180,9 +1180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3073f012469544046b79c3337c787542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileSides: {fileID: 116270460717177464, guid: b6ed5b41246c13b4fa5a0587dc56e534,
-    type: 3}
-  TileSidesTexture: {fileID: 2626355242453834794, guid: 6499974fa9c7e7a439a86cac8d2c755c,
+  TileMask: {fileID: 116270460717177464, guid: b6ed5b41246c13b4fa5a0587dc56e534, type: 3}
+  TileSides: {fileID: 2626355242453834794, guid: 6499974fa9c7e7a439a86cac8d2c755c,
     type: 3}
   TileBackground: {fileID: 5423297530855525995, guid: 99ba24aa2a3bbde48a827f5f485e0c15,
     type: 3}

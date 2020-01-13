@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5730971685551298293}
   - component: {fileID: -659945150464617867}
   m_Layer: 0
-  m_Name: Sides_texture
+  m_Name: Sides
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

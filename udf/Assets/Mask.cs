@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using System.Linq;
-
-[RequireComponent(typeof(SpriteRenderer))]
 public class Mask : MonoBehaviour
 {
     private float y_top;

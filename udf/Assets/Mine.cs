@@ -73,7 +73,7 @@ public class Mine : MonoBehaviour
             _mineDict.Remove(_vertebraToDelete - 1);
             _vertebraToDelete = 0;
         }
-        Depth_UI.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20).ToString() + " m";
+        if (b.GetComponent<B>().startButtonPressed == 1) Depth_UI.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20).ToString() + " m";
     }
     void GenerateVertebra(int _xCP, float _yCP)
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEngine;
-using System.Linq;
+﻿using UnityEngine;
 public class Sides : MonoBehaviour
 {
     private float speed;

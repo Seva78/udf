@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 public class B : MonoBehaviour
 {
     public float vertSpeed; //переменная для передачи в скрипт Mine
     private float V = 0; //Скорость V полёта демона.
-    private float R = Mathf.PI / 2; //Направление R полёта демона.
+    private float R; //Направление R полёта демона.
     private int G = 8; //Ускорение G свободного падения.
     private float A = 0; //Ускорение A, которое демон создаёт в период маха крыла.
     private int A_trigger;
@@ -19,6 +18,8 @@ public class B : MonoBehaviour
     public GameObject cam;
     public TextMeshPro HP_text;
     public GameObject HP_UI;
+    public GameObject Deepboard;
+    public GameObject refall_button;
     private Animator _anim;
     private int HP = 100;
     private int HP_delta;
@@ -34,10 +35,17 @@ public class B : MonoBehaviour
 
     void Update()
     {
-        if (HP <= 0) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (HP <= 0) {
+            startButtonPressed = 0;
+            GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<CircleCollider2D>().enabled = false;
+            Deepboard.SetActive(true);
+            refall_button.SetActive(true);
+        }
+
         if (startButtonPressed == 1)
         {
-            if (Input.GetAxis("Horizontal") == 0) R *= 1 - K * Time.deltaTime; 
+            if (Input.GetAxis("Horizontal") == 0) R *= 1 - K * Time.deltaTime; //если юзер не жмёт ни вправо, ни влево, 
             else R += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
 
             if (Input.GetAxis("Vertical") > 0)
@@ -65,24 +73,22 @@ public class B : MonoBehaviour
             aVx = V* Mathf.Sin(R);
             aVy = V* Mathf.Cos(R);
             aVy += G * Time.deltaTime;
-
-                vertSpeed = aVy * Ratio * Time.deltaTime;
-                GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y - OC, transform.position.z));
-
-
-            V = Mathf.Sqrt(aVx* aVx + aVy* aVy);
+            vertSpeed = aVy * Ratio * Time.deltaTime;
+            if (vertSpeed < 3) vertSpeed = 3;
+            GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + aVx * Ratio * Time.deltaTime, transform.position.y - OC, transform.position.z));
+            V = Mathf.Sqrt(aVx * aVx + aVy * aVy);
             _anim.SetFloat("speed", V);
             _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
             R = Mathf.Asin(aVx / V);
             if (Input.GetAxis("Vertical") <= 0)
             {
                 GetComponent<Rigidbody2D>().transform.rotation =
-                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 180);
+                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, R * 180 / Mathf.PI)), 90);
             }
             else
             {
                 GetComponent<Rigidbody2D>().transform.rotation =
-                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 180);
+                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 90);
             }
             if (transform.position.y > 800) HP -= 1;
             HP_UI.GetComponent<TextMeshProUGUI>().text = "HP: " + HP.ToString();
@@ -144,6 +150,4 @@ public class B : MonoBehaviour
     void HP_delta_0() {
         HP_delta = 0;
     }
-
-
 }

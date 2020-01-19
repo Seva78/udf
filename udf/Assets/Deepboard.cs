@@ -46,10 +46,5 @@ public class Deepboard : MonoBehaviour
             deepboard_order[i].transform.localPosition = new Vector3(table_position.x, table_position.y - y);
             y += 25;
         }
-
-        for (int i = deepboard_order.Keys.Max() - 1; i >= deepboard_order.Keys.Min(); i--)
-        {
-
-        }
     }
 }

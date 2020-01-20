@@ -91,13 +91,14 @@ public class B : MonoBehaviour
                         Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -R * 180 / Mathf.PI)), 90);
             }
             if (transform.position.y > 800) HP -= 1;
+            if (HP < 0) HP = 0;
             HP_UI.GetComponent<TextMeshProUGUI>().text = "HP: " + HP.ToString();
         }
     }
     void BoostEvent(int v)
     {
         A_trigger = 1 * v;
-        if (v == 1) {
+        if (v == 1 && startButtonPressed == 1) {
             HP_delta = 5;
             HP += HP_delta;
             var HP_textI = Instantiate(HP_text, new Vector3(transform.position.x + 40, transform.position.y, 0), Quaternion.identity);
@@ -106,17 +107,6 @@ public class B : MonoBehaviour
             HP_delta = 0;
             HP_textI.GetComponent<TextMeshPro>().color = new Color32(0, 255, 0, 255);
         }
-    }
-    private void OnGUI()
-    {
-        //GUI.Label(new Rect(transform.position.x, transform.position.y, 200, 40), "Anlage in Ordnung");
-        //GUI.Box(new Rect(206, 10, 100, 30), "HP: " + HP);
-        //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
-        //GUI.Box(new Rect(10, 10, 100, 30), Mathf.Round(V).ToString() + " ft./s. (V)");
-        //GUI.Box(new Rect(10, 50, 100, 30), "R = " + R.ToString());
-        //GUI.Box(new Rect(10, 90, 100, 30), "A = " + A.ToString());
-        //GUI.Box(new Rect(10, 130, 100, 30), "K = " + K.ToString());
-        //GUI.Box(new Rect(10, 170, 100, 30), "D = " + D.ToString());
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -131,6 +121,7 @@ public class B : MonoBehaviour
             HP_delta += Random.Range(1, 2);
             HP -= HP_delta;
         }
+        if (HP < 0) HP = 0;
         HP_UI.GetComponent<TextMeshProUGUI>().text = "HP: " + HP.ToString();
         if (hp_cooldown_trigger == 0) {
             hp_cooldown_trigger = 1;

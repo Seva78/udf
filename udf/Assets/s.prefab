@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3494a0437d8db045b7b3b51993fd71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  s_explosion: {fileID: 8393785162882717243, guid: 9c1651b5de2818644afadda830c3b3bf,
+    type: 3}
   iceball_fire: {fileID: 8300000, guid: 9bcda5c23ec5fb541b9928ea97699d53, type: 3}
   iceball_explode: {fileID: 8300000, guid: 8f42c40b482cae24ca515ed348163ffa, type: 3}
   explode_trigger: 0
@@ -151,7 +153,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
-  Mute: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128

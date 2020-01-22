@@ -6,6 +6,7 @@ public class s : MonoBehaviour
 {
     GameObject b;
     GameObject g;
+    public GameObject s_explosion;
     Vector3 b_position;
     Vector3 g_position;
     int change_trajectory_trigger;
@@ -40,6 +41,7 @@ public class s : MonoBehaviour
     void OnCollisionEnter2D() {
         explode_trigger = 1;
         GetComponent<AudioSource>().PlayOneShot(iceball_explode, 1f);
+        Instantiate(s_explosion, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
         StartCoroutine("Destroy");
     }
     IEnumerator Destroy()

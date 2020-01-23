@@ -11,7 +11,6 @@ public class start_button : MonoBehaviour
         if (PlayerPrefs.GetInt("Restart", 0) == 1) {
             PlayerPrefs.SetInt("Restart", 0);
             GetComponent<Button>().onClick.Invoke();
-            //SendMessage("StartGame", );
         }
     }
 }

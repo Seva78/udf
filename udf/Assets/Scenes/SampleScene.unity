@@ -6041,6 +6041,8 @@ MonoBehaviour:
   SP: {fileID: 2302104410519513460, guid: 6dff2a13bb9df2c4d9bf8fec4aa69594, type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
+  vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
+    type: 3}
   CPPosLimit: 100
   SPPosLimit: 200
   SPConvLimit: 100

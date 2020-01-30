@@ -4,10 +4,11 @@ using TMPro;
 
 public class Mine : MonoBehaviour
 {
-    [SerializeField] public GameObject CP;
-    [SerializeField] public GameObject SP;
-    [SerializeField] public Camera MainCamera;
-    [SerializeField] public GameObject b;
+    public GameObject CP;
+    public GameObject SP;
+    public Camera MainCamera;
+    public GameObject b;
+    public GameObject vertebraSource;
     public int CPPosLimit;
     public int SPPosLimit;
     public int SPConvLimit; // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
@@ -135,6 +136,8 @@ public class Mine : MonoBehaviour
         }
         _vertebraDict.Add(2, SPRI);
         _mineDict.Add(_mineDictNumber, _vertebraDict);
+        var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
+        vertebra.transform.parent = transform;
         _mineDictNumber++;
     }
 

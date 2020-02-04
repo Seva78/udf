@@ -6048,6 +6048,11 @@ MonoBehaviour:
   SPConvLimit: 100
   CollLength: 0
   speed: 0
+  _xCP: 0
+  _xSPL: 0
+  _xSPR: 0
+  _yCP: 0
+  _ySPL: 0
   TextureSpawnTrigger: 0
   Depth_UI: {fileID: 1706314603}
 --- !u!4 &1111420319

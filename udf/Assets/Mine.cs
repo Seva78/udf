@@ -18,13 +18,13 @@ public class Mine : MonoBehaviour
     private int _CPPosLimitR;
     private int _SPPosLimitL;
     private int _SPPosLimitR;
-    private int _xCP;
-    private int _xSPL;
-    private int _xSPR;
-    private float _yCP;
-    private float _ySPL;
+    public int _xCP;
+    public int _xSPL;
+    public int _xSPR;
+    public float _yCP;
+    public float _ySPL;
     private float _last_ySPL;
-    private float _ySPR;
+    public float _ySPR;
     private float _last_ySPR;
     private int _yCPoffset;
     private Dictionary<int, GameObject> _vertebraDict;
@@ -137,7 +137,7 @@ public class Mine : MonoBehaviour
         _vertebraDict.Add(2, SPRI);
         _mineDict.Add(_mineDictNumber, _vertebraDict);
         var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
-        vertebra.transform.parent = transform;
+        vertebra.name = "vertebra" + _mineDictNumber.ToString();
         _mineDictNumber++;
     }
 

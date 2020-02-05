@@ -29,6 +29,10 @@ public class Mine : MonoBehaviour
     private int _yCPoffset;
     private Dictionary<int, GameObject> _vertebraDict;
     public Dictionary<int, Dictionary<int, GameObject>> _mineDict;
+    /// //////////////////////////////
+    public List<GameObject> _mineDictList;
+    private int _vertebraToDeleteL;
+    /// ///////////////////////////////
     private int _mineDictNumber;
     private int _vertebraToDelete;
     public int TextureSpawnTrigger; //пока не включен, фоновую текстуру не генерим
@@ -63,6 +67,21 @@ public class Mine : MonoBehaviour
             _yCP += _yCPoffset;
         }
 
+        ////////////////////////////
+        foreach (GameObject vertebra in _mineDictList)
+        {
+            if (vertebra.transform.position.y > MainCamera.pixelHeight + 200)
+            {
+                _vertebraToDeleteL = _mineDictList.IndexOf(vertebra) + 1;
+            }
+        }
+        if (_vertebraToDeleteL != 0) {
+            _mineDictList.RemoveAt(_vertebraToDeleteL - 1);
+            _vertebraToDeleteL = 0;
+        }
+        /////////////////////////
+        
+        
         foreach (KeyValuePair<int, Dictionary<int, GameObject>>  vertebra in _mineDict)
         {
             if (vertebra.Value[0].transform.position.y > MainCamera.pixelHeight + 200)
@@ -70,6 +89,7 @@ public class Mine : MonoBehaviour
                 _vertebraToDelete = vertebra.Key + 1;
             }
         }
+
         if (_vertebraToDelete != 0) {
             _mineDict.Remove(_vertebraToDelete - 1);
             _vertebraToDelete = 0;
@@ -136,8 +156,12 @@ public class Mine : MonoBehaviour
         }
         _vertebraDict.Add(2, SPRI);
         _mineDict.Add(_mineDictNumber, _vertebraDict);
+        ////////////////////////////////////////////
         var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
         vertebra.name = "vertebra" + _mineDictNumber.ToString();
+        _mineDictList.Add(vertebra);
+        /////////////////////////
+        // print(_mineDictList.Count);
         _mineDictNumber++;
     }
 

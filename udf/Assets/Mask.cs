@@ -16,6 +16,11 @@ public class Mask : MonoBehaviour
     private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     private Dictionary<int, GameObject> _vertebraDictLocal;
     private Dictionary<int, Dictionary<int, GameObject>> _mineDictLocal;
+
+    private List<GameObject> _mineList;
+    private List<GameObject> _mineListLocal;
+    private int _mineListNumberLocal;
+    public GameObject vertebraLocal;
     public void Start()
     {
         //        rend = GetComponent<SpriteRenderer>();
@@ -27,6 +32,32 @@ public class Mask : MonoBehaviour
         newTex.SetPixels32(pixels);
         Vector3 GlobalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         y_top = GlobalPos.y + tex.height; //вертикальная координата верхней части объекта 
+        
+        _mineList = GameObject.Find("Controller").GetComponent<Mine>()._mineList;
+        _mineListLocal = new List<GameObject>();
+
+
+        foreach (GameObject vertebra in _mineList) {
+            if (_mineList.ElementAtOrDefault(_mineListNumberLocal + 1) == null || _mineList.ElementAtOrDefault(_mineListNumberLocal - 1) == null)
+            {
+                _mineListNumberLocal++;
+            }
+            if (_mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
+                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
+                _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y ||
+                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y
+                )
+            {
+                vertebraLocal = Instantiate(_mineList[_mineListNumberLocal]);
+                vertebraLocal.name = "vert" + _mineListNumberLocal.ToString();
+                // var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
+                // vertebra.name = "vertebra" + _mineDictNumber.ToString();
+                _mineListLocal.Add(vertebraLocal);
+                _mineListNumberLocal++;
+            }
+        }
+        
+        
         _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict;
         _mineDictLocal = new Dictionary<int, Dictionary<int, GameObject>>();
         for (int i = _mineDict.Keys.Min() + 1; i < _mineDict.Keys.Max(); i++) {

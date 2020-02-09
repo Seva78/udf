@@ -30,7 +30,7 @@ public class Mine : MonoBehaviour
     private Dictionary<int, GameObject> _vertebraDict;
     public Dictionary<int, Dictionary<int, GameObject>> _mineDict;
     /// //////////////////////////////
-    public List<GameObject> _mineDictList;
+    public List<GameObject> _mineList;
     private int _vertebraToDeleteL;
     /// ///////////////////////////////
     private int _mineDictNumber;
@@ -68,15 +68,15 @@ public class Mine : MonoBehaviour
         }
 
         ////////////////////////////
-        foreach (GameObject vertebra in _mineDictList)
+        foreach (GameObject vertebra in _mineList)
         {
             if (vertebra.transform.position.y > MainCamera.pixelHeight + 200)
             {
-                _vertebraToDeleteL = _mineDictList.IndexOf(vertebra) + 1;
+                _vertebraToDeleteL = _mineList.IndexOf(vertebra) + 1;
             }
         }
         if (_vertebraToDeleteL != 0) {
-            _mineDictList.RemoveAt(_vertebraToDeleteL - 1);
+            _mineList.RemoveAt(_vertebraToDeleteL - 1);
             _vertebraToDeleteL = 0;
         }
         /////////////////////////
@@ -134,9 +134,9 @@ public class Mine : MonoBehaviour
         ////////////////////////////////////////////
         var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
         vertebra.name = "vertebra" + _mineDictNumber.ToString();
-        _mineDictList.Add(vertebra);
+        _mineList.Add(vertebra);
         /////////////////////////
-        // print(_mineDictList.Count);
+        // print(_mineList.Count);
         _mineDictNumber++;
     }
 

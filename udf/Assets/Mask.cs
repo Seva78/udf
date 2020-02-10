@@ -38,57 +38,79 @@ public class Mask : MonoBehaviour
 
 
         foreach (GameObject vertebra in _mineList) {
-            if (_mineList.ElementAtOrDefault(_mineListNumberLocal + 1) == null || _mineList.ElementAtOrDefault(_mineListNumberLocal - 1) == null)
+            if (_mineList.ElementAtOrDefault(_mineListNumberLocal + 1) && _mineList.ElementAtOrDefault(_mineListNumberLocal - 1))
             {
-                _mineListNumberLocal++;
+                print(name + " Верх:" + y_top + " Низ:" + GlobalPos.y + " Номер:" + _mineListNumberLocal 
+                      + " Лево верх:" + _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y 
+                      + " Лево низ:" + _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y
+                      + " Право верх:" + _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y 
+                      + " Право низ:" + _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y);
             }
-            if (_mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
-                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
-                _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y ||
-                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y< y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y
-                )
+            if (_mineList.ElementAtOrDefault(_mineListNumberLocal + 1) && 
+                _mineList.ElementAtOrDefault(_mineListNumberLocal - 1) && 
+                (_mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
+                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
+                _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y ||
+                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y))
             {
-                vertebraLocal = Instantiate(_mineList[_mineListNumberLocal]);
+                vertebraLocal = _mineList[_mineListNumberLocal];
                 vertebraLocal.name = "vert" + _mineListNumberLocal.ToString();
-                // var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
-                // vertebra.name = "vertebra" + _mineDictNumber.ToString();
+                print(vertebraLocal.name);
                 _mineListLocal.Add(vertebraLocal);
-                _mineListNumberLocal++;
             }
+            _mineListNumberLocal++;
         }
         
         
-        _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict;
-        _mineDictLocal = new Dictionary<int, Dictionary<int, GameObject>>();
-        for (int i = _mineDict.Keys.Min() + 1; i < _mineDict.Keys.Max(); i++) {
-            if (_mineDict[i + 1][1].transform.position.y < y_top && _mineDict[i + 1][1].transform.position.y > GlobalPos.y ||
-                _mineDict[i - 1][1].transform.position.y < y_top && _mineDict[i - 1][1].transform.position.y > GlobalPos.y ||
-                _mineDict[i + 1][2].transform.position.y < y_top && _mineDict[i + 1][2].transform.position.y > GlobalPos.y ||
-                _mineDict[i - 1][2].transform.position.y < y_top && _mineDict[i - 1][2].transform.position.y > GlobalPos.y)
-            {
-                _vertebraDictLocal = new Dictionary<int, GameObject>();
-                _vertebraDictLocal.Add(0, _mineDict[i][0]);
-                _vertebraDictLocal.Add(1, _mineDict[i][1]);
-                _vertebraDictLocal.Add(2, _mineDict[i][2]);
-                _mineDictLocal.Add(_mineDictNumberLocal, _vertebraDictLocal);
-                _mineDictNumberLocal++;
-            }
-        }
+        // _mineDict = GameObject.Find("Controller").GetComponent<Mine>()._mineDict;
+        // _mineDictLocal = new Dictionary<int, Dictionary<int, GameObject>>();
+        // for (int i = _mineDict.Keys.Min() + 1; i < _mineDict.Keys.Max(); i++) {
+        //     if (_mineDict[i + 1][1].transform.position.y < y_top && _mineDict[i + 1][1].transform.position.y > GlobalPos.y ||
+        //         _mineDict[i - 1][1].transform.position.y < y_top && _mineDict[i - 1][1].transform.position.y > GlobalPos.y ||
+        //         _mineDict[i + 1][2].transform.position.y < y_top && _mineDict[i + 1][2].transform.position.y > GlobalPos.y ||
+        //         _mineDict[i - 1][2].transform.position.y < y_top && _mineDict[i - 1][2].transform.position.y > GlobalPos.y)
+        //     {
+        //         _vertebraDictLocal = new Dictionary<int, GameObject>();
+        //         _vertebraDictLocal.Add(0, _mineDict[i][0]);
+        //         _vertebraDictLocal.Add(1, _mineDict[i][1]);
+        //         _vertebraDictLocal.Add(2, _mineDict[i][2]);
+        //         _mineDictLocal.Add(_mineDictNumberLocal, _vertebraDictLocal);
+        //         _mineDictNumberLocal++;
+        //     }
+        // }
         for (int y = (int)GlobalPos.y; y < (int)y_top; y++)
         {
-            foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDictLocal)
+            foreach (GameObject vertebra in _mineListLocal)
             {
-                for (int q = 1; q < 3; q++)
-                { //q принимает значения 1 и 2; 1 - это значения координат ключевых точек по левой стороне шахты, а 2 - по правой
-                    if (vertebra.Value[q].transform.position.y > y && _mineDictLocal[vertebra.Key + 1][q].transform.position.y < y)
-                    {
-                        wall = (int)(vertebra.Value[q].transform.position.x - (vertebra.Value[q].transform.position.x -
-                            _mineDictLocal[vertebra.Key + 1][q].transform.position.x) * ((vertebra.Value[q].transform.position.y - y) / (vertebra.Value[q].transform.position.y - _mineDictLocal[vertebra.Key + 1][q].transform.position.y)));
-                        if (q == 1) wall_left = wall;
-                        else wall_right = wall;
-                    }
+                if (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y > y && _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y)
+                {
+                    wall_left = (int)(vertebra.GetComponent<Vertebra>().leftPoint.transform.position.x - 
+                                      (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.x - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.x) * 
+                                      ((vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y - y) /
+                                (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.y)));
+                }
+                if (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y > y && _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y)
+                {
+                    wall_right = (int)(vertebra.GetComponent<Vertebra>().rightPoint.transform.position.x - 
+                                      (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.x - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.x) * 
+                                      ((vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y - y) /
+                                       (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.y)));
                 }
             }
+
+            // foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDictLocal)
+            // {
+            //     for (int q = 1; q < 3; q++)
+            //     { //q принимает значения 1 и 2; 1 - это значения координат ключевых точек по левой стороне шахты, а 2 - по правой
+            //         if (vertebra.Value[q].transform.position.y > y && _mineDictLocal[vertebra.Key + 1][q].transform.position.y < y)
+            //         {
+            //             wall = (int)(vertebra.Value[q].transform.position.x - (vertebra.Value[q].transform.position.x -
+            //                 _mineDictLocal[vertebra.Key + 1][q].transform.position.x) * ((vertebra.Value[q].transform.position.y - y) / (vertebra.Value[q].transform.position.y - _mineDictLocal[vertebra.Key + 1][q].transform.position.y)));
+            //             if (q == 1) wall_left = wall;
+            //             else wall_right = wall;
+            //         }
+            //     }
+            // }
             mine_width = wall_right - wall_left;
             newTex.SetPixels32(wall_left, y - (int)GlobalPos.y, mine_width, 1, GetRow(mine_width));
         }

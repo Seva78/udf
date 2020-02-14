@@ -69,3 +69,4 @@ public class Vertebra : MonoBehaviour
         if (transform.position.y > 1060) Destroy(gameObject);
     }
 }
+

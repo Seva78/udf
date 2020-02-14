@@ -4,15 +4,12 @@ using TMPro;
 
 public class Mine : MonoBehaviour
 {
-    public GameObject CP;
-    public GameObject SP;
     public Camera MainCamera;
     public GameObject b;
     public GameObject vertebraSource;
     public int CPPosLimit;
     public int SPPosLimit;
     public int SPConvLimit; // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
-    public float CollLength; //параметр для передачи в скрипт коллайдера - задаёт его длину
     public float speed;
     private int _CPPosLimitL;
     private int _CPPosLimitR;
@@ -27,21 +24,14 @@ public class Mine : MonoBehaviour
     public float _ySPR;
     private float _last_ySPR;
     private int _yCPoffset;
-    private Dictionary<int, GameObject> _vertebraDict;
-    public Dictionary<int, Dictionary<int, GameObject>> _mineDict;
-    /// //////////////////////////////
     public List<GameObject> _mineList;
     private int _vertebraToDeleteL;
-    /// ///////////////////////////////
-    private int _mineDictNumber;
-    private int _vertebraToDelete;
     public int TextureSpawnTrigger; //пока не включен, фоновую текстуру не генерим
     public GameObject Depth_UI;
 
     void Start()
     {
-        _vertebraDict = new Dictionary<int, GameObject>();
-        _mineDict = new Dictionary<int, Dictionary<int, GameObject>>();
+        _mineList = new List<GameObject>();
         _CPPosLimitL = MainCamera.pixelWidth / 2 - CPPosLimit;
         _CPPosLimitR = MainCamera.pixelWidth / 2 + CPPosLimit;
         _SPPosLimitL = MainCamera.pixelWidth / 2 - SPPosLimit;
@@ -67,7 +57,6 @@ public class Mine : MonoBehaviour
             _yCP += _yCPoffset;
         }
 
-        ////////////////////////////
         foreach (GameObject vertebra in _mineList)
         {
             if (vertebra.transform.position.y > MainCamera.pixelHeight + 200)
@@ -79,21 +68,6 @@ public class Mine : MonoBehaviour
             _mineList.RemoveAt(_vertebraToDeleteL - 1);
             _vertebraToDeleteL = 0;
         }
-        /////////////////////////
-        
-        
-        foreach (KeyValuePair<int, Dictionary<int, GameObject>>  vertebra in _mineDict)
-        {
-            if (vertebra.Value[0].transform.position.y > MainCamera.pixelHeight + 200)
-            {
-                _vertebraToDelete = vertebra.Key + 1;
-            }
-        }
-
-        if (_vertebraToDelete != 0) {
-            _mineDict.Remove(_vertebraToDelete - 1);
-            _vertebraToDelete = 0;
-        }
         if (b.GetComponent<B>().startButtonPressed == 1) Depth_UI.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20).ToString() + " m";
     }
     void GenerateVertebra(int _xCP, float _yCP)
@@ -103,41 +77,21 @@ public class Mine : MonoBehaviour
         if (_xCP > _CPPosLimitR) _xCP = _CPPosLimitR;
         _xSPL = _xCP - 50 - Random.Range(0, 150);
         _xSPL = Mathf.Clamp(_xSPL, _SPPosLimitL, 255);
-        if (_mineDictNumber > 0) while (Mathf.Abs(_xSPL - _mineDict[_mineDictNumber - 1][2].transform.position.x) < SPConvLimit) _xSPL -= 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
+        if (_mineList.Count > 0) while (Mathf.Abs(_xSPL - _mineList[_mineList.Count - 1].GetComponent<Vertebra>().rightPoint.transform.position.x) < SPConvLimit) _xSPL -= 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
         _ySPL = _yCP + Random.Range(-25, 25);
         if (_last_ySPL == MainCamera.pixelHeight * 2) _last_ySPL = _ySPL; // выставляем первое реальное значение y-координаты конца ребра для запоминания
         if (_ySPL > _last_ySPL) _ySPL = _last_ySPL; // проверяем, не пересекаются ли рёбра, и если да, исправляем
         _last_ySPL = _ySPL; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
         _xSPR = _xCP + 50 + Random.Range(0, 150);
         _xSPR = Mathf.Clamp(_xSPR, 256, _SPPosLimitR);
-        if (_mineDictNumber > 0) while (Mathf.Abs(_xSPR - _mineDict[_mineDictNumber - 1][1].transform.position.x) < SPConvLimit) _xSPR += 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
+        if (_mineList.Count > 0) while (Mathf.Abs(_xSPR - _mineList[_mineList.Count - 1].GetComponent<Vertebra>().leftPoint.transform.position.x) < SPConvLimit) _xSPR += 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
         _ySPR = _yCP + Random.Range(-25, 25);
         if (_last_ySPR == MainCamera.pixelHeight * 2) _last_ySPR = _ySPR; // выставляем первое реальное значение y-координаты конца ребра для запоминания
         if (_ySPR > _last_ySPR) _ySPR = _last_ySPR; // проверяем, не пересекаются ли рёбра, и если да, исправляем
         _last_ySPR = _ySPR; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
-        var CPI = Instantiate(CP, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
-        CPI.transform.parent = transform;
-        CPI.name = _mineDictNumber.ToString();
-        _vertebraDict = new Dictionary<int, GameObject>();
-        _vertebraDict.Add(0, CPI);
-        var SPLI = Instantiate(SP, new Vector3(_xSPL, _ySPL, 0), Quaternion.identity);
-        SPLI.transform.parent = CPI.transform;
-        SPLI.name = _mineDictNumber.ToString() + "L";
-        SPLI.tag = "SPL";
-        _vertebraDict.Add(1, SPLI);
-        var SPRI = Instantiate(SP, new Vector3(_xSPR, _ySPR, 0), Quaternion.identity);
-        SPRI.transform.parent = CPI.transform;
-        SPRI.name = _mineDictNumber.ToString() + "R";
-        SPRI.tag = "SPR";
-        _vertebraDict.Add(2, SPRI);
-        _mineDict.Add(_mineDictNumber, _vertebraDict);
-        ////////////////////////////////////////////
         var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
-        vertebra.name = "vertebra" + _mineDictNumber.ToString();
+        vertebra.name = "vertebra" + _mineList.Count.ToString();
         _mineList.Add(vertebra);
-        /////////////////////////
-        // print(_mineList.Count);
-        _mineDictNumber++;
     }
 
     //void OnDrawGizmos()

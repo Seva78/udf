@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd29306bbc13444d8cd305a2c034b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
+    type: 3}
+  vertebraLocal: {fileID: 0}
 --- !u!331 &3807561121825331600
 SpriteMask:
   m_ObjectHideFlags: 0

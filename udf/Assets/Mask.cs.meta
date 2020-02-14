@@ -3,7 +3,10 @@ guid: 1bd29306bbc13444d8cd305a2c034b36
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
+      type: 3}
+  - vertebraLocal: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

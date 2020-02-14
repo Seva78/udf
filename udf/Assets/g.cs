@@ -11,29 +11,27 @@ public class g : MonoBehaviour
     [SerializeField] public GameObject Controller;
     private int check_start;
     private int check_finish;
-    private Dictionary<int, Dictionary<int, GameObject>> _mineDict;
+    private List<GameObject> _mineList;
     int fire_cooldown_trigger;
-    void Start() {
-
-    }
     void Update()
     {
-        _mineDict = Controller.GetComponent<Mine>()._mineDict;
-        check_start = _mineDict.Keys.Min() + 2;
-        if (_mineDict.Count < 7) check_finish = _mineDict.Keys.Max();
-        else check_finish = _mineDict.Keys.Min() + 6;
-
+        _mineList = Controller.GetComponent<Mine>()._mineList;
+        check_start = _mineList.IndexOf(_mineList.First()) + 2;
+        if (_mineList.Count < 7) check_finish = _mineList.IndexOf(_mineList.Last());
+        else check_finish = _mineList.IndexOf(_mineList.First()) + 6;
+        
         for (int i = check_start; i < check_finish; i++)
         {
-            if (_mineDict[i][1].transform.position.x > transform.position.x - 20 && _mineDict[i][1].transform.position.y > transform.position.y - 90 && _mineDict[i][1].transform.position.y < transform.position.y)
+            if (_mineList[i].GetComponent<Vertebra>().leftPoint.transform.position.x > transform.position.x - 20 && _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position.y > transform.position.y - 90 && _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position.y < transform.position.y) 
             {
                 transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
             }
-            if (_mineDict[i][2].transform.position.x < transform.position.x + 20 && _mineDict[i][2].transform.position.y > transform.position.y - 90 && _mineDict[i][2].transform.position.y < transform.position.y)
+            if (_mineList[i].GetComponent<Vertebra>().rightPoint.transform.position.x < transform.position.x + 20 && _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position.y > transform.position.y - 90 && _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position.y < transform.position.y)
             {
                 transform.position = new Vector3(transform.position.x - 2, transform.position.y, transform.position.z);
             }
         }
+        
         speed = b.GetComponent<B>().vertSpeed;
         if (transform.position.y>780) {
             transform.position = new Vector3(transform.position.x, transform.position.y - speed, transform.position.z);
@@ -44,14 +42,6 @@ public class g : MonoBehaviour
             StartCoroutine(Fire());
         }
     }
-    //void OnCollisionExit2D(Collision2D other)
-    //{
-    //    StartCoroutine(CollisionExit());
-    //}
-    //IEnumerator CollisionExit() {
-    //    yield return new WaitForSeconds(2);
-    //    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), 360);
-    //}
     IEnumerator Fire()
     {
         yield return new WaitForSeconds(2);

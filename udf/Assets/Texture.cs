@@ -15,20 +15,18 @@ public class Texture : MonoBehaviour
     private float _yMaskTile;
     private float _ySidesTile;
     private float _yBackgroundTile;
-    private Dictionary<int, GameObject> _tileMaskDict;
-    private Dictionary<int, GameObject> _tileSidesDict;
-    private Dictionary<int, GameObject> _tileBackgroundDict;
-    private int _tileMaskDictNumber;
-    private int _tileSidesDictNumber;
-    private int _tileBackgroundDictNumber;
+    private List<GameObject> _tileMaskList;
+    private List<GameObject> _tileSidesList;
+    private List<GameObject> _tileBackgroundList;
     private int _tileMaskToDelete;
     private int _tileSidesToDelete;
     private int _tileBackgroundToDelete;
+    
     void Start()
     {
-        _tileMaskDict = new Dictionary<int, GameObject>();
-        _tileSidesDict = new Dictionary<int, GameObject>();
-        _tileBackgroundDict = new Dictionary<int, GameObject>();
+        _tileMaskList = new List<GameObject>();
+        _tileSidesList = new List<GameObject>();
+        _tileBackgroundList = new List<GameObject>();
         _yMaskTile = MainCamera.pixelHeight + 256;
         _ySidesTile = MainCamera.pixelHeight + 256;
         _yBackgroundTile = MainCamera.pixelHeight + 256;
@@ -51,40 +49,40 @@ public class Texture : MonoBehaviour
         else _ySidesTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
         if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateBackgroundTile(256, _yBackgroundTile);
         else _yBackgroundTile += TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y;
-        foreach (KeyValuePair<int, GameObject> tile in _tileMaskDict)
+        
+        foreach (GameObject tile in _tileMaskList)
         {
-            if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
+            if (tile.transform.position.y > MainCamera.pixelHeight + 200)
             {
-                _tileMaskToDelete = tile.Key + 1;
+                _tileMaskToDelete = _tileMaskList.IndexOf(tile) + 1;
             }
         }
-        if (_tileMaskToDelete != 0)
-        {
-            _tileMaskDict.Remove(_tileMaskToDelete - 1);
+        if (_tileMaskToDelete != 0) {
+            _tileMaskList.RemoveAt(_tileMaskToDelete - 1);
             _tileMaskToDelete = 0;
         }
-        foreach (KeyValuePair<int, GameObject> tile in _tileSidesDict)
+
+        foreach (GameObject tile in _tileSidesList)
         {
-            if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
+            if (tile.transform.position.y > MainCamera.pixelHeight + 200)
             {
-                _tileSidesToDelete = tile.Key + 1;
+                _tileSidesToDelete = _tileSidesList.IndexOf(tile) + 1;
             }
         }
-        if (_tileSidesToDelete != 0)
-        {
-            _tileSidesDict.Remove(_tileSidesToDelete - 1);
+        if (_tileSidesToDelete != 0) {
+            _tileSidesList.RemoveAt(_tileSidesToDelete - 1);
             _tileSidesToDelete = 0;
         }
-        foreach (KeyValuePair<int, GameObject> tile in _tileBackgroundDict)
+        
+        foreach (GameObject tile in _tileBackgroundList)
         {
-            if (tile.Value.transform.position.y > MainCamera.pixelHeight + 200)
+            if (tile.transform.position.y > MainCamera.pixelHeight + 200)
             {
-                _tileBackgroundToDelete = tile.Key + 1;
+                _tileBackgroundToDelete = _tileBackgroundList.IndexOf(tile) + 1;
             }
         }
-        if (_tileBackgroundToDelete != 0)
-        {
-            _tileBackgroundDict.Remove(_tileBackgroundToDelete - 1);
+        if (_tileBackgroundToDelete != 0) {
+            _tileBackgroundList.RemoveAt(_tileBackgroundToDelete - 1);
             _tileBackgroundToDelete = 0;
         }
     }
@@ -92,24 +90,21 @@ public class Texture : MonoBehaviour
     {
         var TileMaskI = Instantiate(TileMask, new Vector3(_xTile, _yMaskTile, 0), Quaternion.identity);
         TileMaskI.transform.parent = transform;
-        TileMaskI.name = "Mask" + _tileMaskDictNumber;
-        _tileMaskDict.Add(_tileMaskDictNumber, TileMaskI);
-        _tileMaskDictNumber++;
+        TileMaskI.name = "Mask" + _tileMaskList.Count.ToString();
+        _tileMaskList.Add(TileMaskI);
     }
     void GenerateSidesTile(int _xTile, float _ySidesTile)
     {
         var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _ySidesTile, 0), Quaternion.identity);
         TileSidesI.transform.parent = transform;
-        TileSidesI.name = "Side" + _tileSidesDictNumber;
-        _tileSidesDict.Add(_tileSidesDictNumber, TileSidesI);
-        _tileSidesDictNumber++;
+        TileSidesI.name = "Side" + _tileSidesList.Count.ToString();
+        _tileSidesList.Add(TileSidesI);
     }
     void GenerateBackgroundTile(int _xTile, float _yBackgroundTile)
     {
         var TileBackgroundI = Instantiate(TileBackground, new Vector3(_xTile, _yBackgroundTile, 0), Quaternion.identity);
         TileBackgroundI.transform.parent = transform;
-        TileBackgroundI.name = "Background" + _tileBackgroundDictNumber;
-        _tileBackgroundDict.Add(_tileBackgroundDictNumber, TileBackgroundI);
-        _tileBackgroundDictNumber++;
+        TileBackgroundI.name = "Background" + _tileBackgroundList.Count.ToString();
+        _tileBackgroundList.Add(TileBackgroundI);
     }
 }

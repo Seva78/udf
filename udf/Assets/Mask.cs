@@ -89,6 +89,6 @@ public class Mask : MonoBehaviour
 
     public void Update()
     {
-        if (transform.position.y > 1060) Destroy(gameObject);
+        if (transform.position.y > 2000) Destroy(gameObject);
     }
 }

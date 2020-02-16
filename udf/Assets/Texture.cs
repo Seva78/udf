@@ -18,10 +18,8 @@ public class Texture : MonoBehaviour
     private List<GameObject> _tileMaskList;
     private List<GameObject> _tileSidesList;
     private List<GameObject> _tileBackgroundList;
-    private int _tileMaskToDelete;
-    private int _tileSidesToDelete;
-    private int _tileBackgroundToDelete;
-    
+    private int _tileToDelete;
+   
     void Start()
     {
         _tileMaskList = new List<GameObject>();
@@ -30,9 +28,9 @@ public class Texture : MonoBehaviour
         _yMaskTile = MainCamera.pixelHeight + 256;
         _ySidesTile = MainCamera.pixelHeight + 256;
         _yBackgroundTile = MainCamera.pixelHeight + 256;
-        GenerateMaskTile(256, _yMaskTile);
-        GenerateSidesTile(256, _ySidesTile);
-        GenerateBackgroundTile(256, _yBackgroundTile);
+        GenerateTile(_yMaskTile, TileMask, "Mask", _tileMaskList);
+        GenerateTile(_ySidesTile, TileSides, "Sides", _tileSidesList);
+        GenerateTile(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList);
     }
     void Update()
     {
@@ -43,68 +41,36 @@ public class Texture : MonoBehaviour
         _yMaskTile -= TileMask.GetComponent<SpriteMask>().sprite.texture.height;
         _ySidesTile -= TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
         _yBackgroundTile -= TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y;
-        if (_yMaskTile > -TileMask.GetComponent<SpriteMask>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateMaskTile(256, _yMaskTile);
+        if (_yMaskTile > -TileMask.GetComponent<SpriteMask>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateTile(_yMaskTile, TileMask, "Mask", _tileMaskList);
         else _yMaskTile += TileMask.GetComponent<SpriteMask>().sprite.texture.height;
-        if (_ySidesTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateSidesTile(256, _ySidesTile);
+        if (_ySidesTile > -TileSides.GetComponent<SpriteRenderer>().sprite.texture.height && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateTile(_ySidesTile, TileSides, "Sides", _tileSidesList);
         else _ySidesTile += TileSides.GetComponent<SpriteRenderer>().sprite.texture.height;
-        if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateBackgroundTile(256, _yBackgroundTile);
+        if (_yBackgroundTile > -TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y && gameObject.GetComponent<Mine>().TextureSpawnTrigger == 1) GenerateTile(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList);
         else _yBackgroundTile += TileBackground.GetComponent<SpriteRenderer>().sprite.texture.height * TileBackground.transform.localScale.y;
-        
-        foreach (GameObject tile in _tileMaskList)
+        _tileListCut(_tileMaskList);
+        _tileListCut(_tileSidesList);
+        _tileListCut(_tileBackgroundList);
+    }
+    void GenerateTile(float _yTile, GameObject obj, string n, List<GameObject> _tileList)
+    {
+        var TileI = Instantiate(obj, new Vector3(256, _yTile, 0), Quaternion.identity);
+        TileI.transform.parent = transform;
+        TileI.name = n;
+        _tileList.Add(TileI);
+    }
+    void _tileListCut(List<GameObject> _tileList)
+    {
+        foreach (GameObject tile in _tileList)
         {
             if (tile.transform.position.y > MainCamera.pixelHeight + 200)
             {
-                _tileMaskToDelete = _tileMaskList.IndexOf(tile) + 1;
+                _tileToDelete = _tileList.IndexOf(tile) + 1;
             }
         }
-        if (_tileMaskToDelete != 0) {
-            _tileMaskList.RemoveAt(_tileMaskToDelete - 1);
-            _tileMaskToDelete = 0;
+        if (_tileToDelete != 0) {
+            _tileList.RemoveAt(_tileToDelete - 1);
+            _tileToDelete = 0;
         }
+    }
 
-        foreach (GameObject tile in _tileSidesList)
-        {
-            if (tile.transform.position.y > MainCamera.pixelHeight + 200)
-            {
-                _tileSidesToDelete = _tileSidesList.IndexOf(tile) + 1;
-            }
-        }
-        if (_tileSidesToDelete != 0) {
-            _tileSidesList.RemoveAt(_tileSidesToDelete - 1);
-            _tileSidesToDelete = 0;
-        }
-        
-        foreach (GameObject tile in _tileBackgroundList)
-        {
-            if (tile.transform.position.y > MainCamera.pixelHeight + 200)
-            {
-                _tileBackgroundToDelete = _tileBackgroundList.IndexOf(tile) + 1;
-            }
-        }
-        if (_tileBackgroundToDelete != 0) {
-            _tileBackgroundList.RemoveAt(_tileBackgroundToDelete - 1);
-            _tileBackgroundToDelete = 0;
-        }
-    }
-    void GenerateMaskTile(int _xTile, float _yMaskTile)
-    {
-        var TileMaskI = Instantiate(TileMask, new Vector3(_xTile, _yMaskTile, 0), Quaternion.identity);
-        TileMaskI.transform.parent = transform;
-        TileMaskI.name = "Mask" + _tileMaskList.Count.ToString();
-        _tileMaskList.Add(TileMaskI);
-    }
-    void GenerateSidesTile(int _xTile, float _ySidesTile)
-    {
-        var TileSidesI = Instantiate(TileSides, new Vector3(_xTile, _ySidesTile, 0), Quaternion.identity);
-        TileSidesI.transform.parent = transform;
-        TileSidesI.name = "Side" + _tileSidesList.Count.ToString();
-        _tileSidesList.Add(TileSidesI);
-    }
-    void GenerateBackgroundTile(int _xTile, float _yBackgroundTile)
-    {
-        var TileBackgroundI = Instantiate(TileBackground, new Vector3(_xTile, _yBackgroundTile, 0), Quaternion.identity);
-        TileBackgroundI.transform.parent = transform;
-        TileBackgroundI.name = "Background" + _tileBackgroundList.Count.ToString();
-        _tileBackgroundList.Add(TileBackgroundI);
-    }
 }

@@ -10,7 +10,7 @@ public class Mask : MonoBehaviour
     private int wall_left;
     private int wall_right;
     private int mine_width;
-    private int _mineDictNumberLocal;
+    private int wall_x;
     SpriteMask rend;
     private GameObject controller;
     private List<GameObject> _mineList;
@@ -47,17 +47,19 @@ public class Mask : MonoBehaviour
             {
                 if (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y > y && _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y)
                 {
-                    wall_left = (int)(vertebra.GetComponent<Vertebra>().leftPoint.transform.position.x - 
-                                      (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.x - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.x) * 
-                                      ((vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y - y) /
-                                (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.y)));
+                    wall_left = wall_x_value(y, 
+                        vertebra.GetComponent<Vertebra>().leftPoint.transform.position.x,
+                        vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y,
+                        _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.x,
+                        _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.y);
                 }
                 if (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y > y && _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y)
                 {
-                    wall_right = (int)(vertebra.GetComponent<Vertebra>().rightPoint.transform.position.x - 
-                                      (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.x - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.x) * 
-                                      ((vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y - y) /
-                                       (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y - _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.y)));
+                    wall_right = wall_x_value(y, 
+                        vertebra.GetComponent<Vertebra>().rightPoint.transform.position.x,
+                        vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y,
+                        _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.x,
+                        _mineListLocal[_mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.y);
                 }
             }
             mine_width = wall_right - wall_left;
@@ -66,6 +68,12 @@ public class Mask : MonoBehaviour
         newTex.Apply();
         Sprite newSprite = Sprite.Create(newTex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 1f);
         rend.sprite = newSprite;
+    }
+
+    int wall_x_value(int y, float upper_keypoint_x, float upper_keypoint_y, float lower_keypoint_x, float lower_keypoint_y)
+    {
+        wall_x = (int)(upper_keypoint_x - (upper_keypoint_x - lower_keypoint_x) * ((upper_keypoint_y - y) / (upper_keypoint_y - lower_keypoint_y)));
+        return wall_x;
     }
 
     public Color32[] GetRow(int length)

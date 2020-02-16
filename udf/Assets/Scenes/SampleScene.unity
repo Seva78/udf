@@ -6037,22 +6037,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44ba06e83ebc4947b1968a1fe20236a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CP: {fileID: 2302104410519513460, guid: e182ade8746322a439ac44eb875bc10e, type: 3}
-  SP: {fileID: 2302104410519513460, guid: 6dff2a13bb9df2c4d9bf8fec4aa69594, type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
   vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
     type: 3}
   CPPosLimit: 100
   SPPosLimit: 200
-  SPConvLimit: 100
-  CollLength: 0
+  SPConvLimit: 150
   speed: 0
   _xCP: 0
   _xSPL: 0
   _xSPR: 0
   _yCP: 0
   _ySPL: 0
+  _ySPR: 0
+  _mineList: []
   TextureSpawnTrigger: 0
   Depth_UI: {fileID: 1706314603}
 --- !u!4 &1111420319
@@ -11341,5 +11340,10 @@ PrefabInstance:
       propertyPath: b
       value: 
       objectReference: {fileID: 2069570061}
+    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: SPConvLimit
+      value: 150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65b21eb075529964fb1379f7fb23c4c4, type: 3}

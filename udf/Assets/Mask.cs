@@ -15,7 +15,7 @@ public class Mask : MonoBehaviour
     private GameObject controller;
     private List<GameObject> _mineList;
     private List<GameObject> _mineListLocal;
-    private int _mineListNumberLocal;
+//    private int _mineListNumberLocal;
     public void Start()
     {
         rend = GetComponent<SpriteMask>();
@@ -29,17 +29,28 @@ public class Mask : MonoBehaviour
         controller = GameObject.Find("Controller");
         _mineList = controller.GetComponent<Mine>()._mineList;
         _mineListLocal = new List<GameObject>();
-        foreach (GameObject vertebra in _mineList) {
-            if (_mineList.ElementAtOrDefault(_mineListNumberLocal + 1) && 
-                _mineList.ElementAtOrDefault(_mineListNumberLocal - 1) && 
-                (_mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
-                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
-                _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y ||
-                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y))
+//        foreach (GameObject vertebra in _mineList) {
+//            if (_mineList.ElementAtOrDefault(_mineListNumberLocal + 1) && 
+//                _mineList.ElementAtOrDefault(_mineListNumberLocal - 1) && 
+//                (_mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
+//                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().leftPoint.transform.position.y > GlobalPos.y ||
+//                _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal + 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y ||
+//                _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y_top && _mineList[_mineListNumberLocal - 1].GetComponent<Vertebra>().rightPoint.transform.position.y > GlobalPos.y))
+//            {
+//                _mineListLocal.Add(_mineList[_mineListNumberLocal].GetComponent<Vertebra>().gameObject);
+//            }
+//            _mineListNumberLocal++;
+//        }
+        for (var i = 1; i < _mineList.Count - 1; i++) {
+            var prevVert = _mineList[i - 1].GetComponent<Vertebra>();
+            var nextVert = _mineList[i + 1].GetComponent<Vertebra>();
+            if (nextVert.LeftY < y_top && nextVert.LeftY > GlobalPos.y ||
+                prevVert.LeftY < y_top && prevVert.LeftY > GlobalPos.y ||
+                nextVert.RightY < y_top && nextVert.RightY > GlobalPos.y ||
+                prevVert.RightY < y_top && prevVert.RightY > GlobalPos.y)
             {
-                _mineListLocal.Add(_mineList[_mineListNumberLocal].GetComponent<Vertebra>().gameObject);
+                _mineListLocal.Add(_mineList[i]);
             }
-            _mineListNumberLocal++;
         }
         for (int y = (int)GlobalPos.y; y < (int)y_top; y++)
         {

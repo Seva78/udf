@@ -18,8 +18,12 @@ public class Vertebra : MonoBehaviour
     public float _ySPL;
     public int _xSPR;
     public float _ySPR;
-    
-    
+
+    public float LeftX => leftPoint.transform.position.x;
+    public float LeftY => leftPoint.transform.position.y; 
+    public float RightX => rightPoint.transform.position.x;
+    public float RightY => rightPoint.transform.position.y;
+
     void Start()
     {
         // Stopwatch sw = new Stopwatch();

@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 public class Vertebra : MonoBehaviour
 {
-    private GameObject _controller;
     public GameObject centralPointSource;
     public GameObject sidePointSource;
     public GameObject centralPoint;
@@ -19,19 +18,13 @@ public class Vertebra : MonoBehaviour
     public int _xSPR;
     public float _ySPR;
 
-    public float LeftX => leftPoint.transform.position.x;
     public float LeftY => leftPoint.transform.position.y; 
-    public float RightX => rightPoint.transform.position.x;
     public float RightY => rightPoint.transform.position.y;
 
     void Start()
     {
-        // Stopwatch sw = new Stopwatch();
-        // sw.Start();
-        _controller = GameObject.Find("Controller");
-        transform.parent = _controller.transform;
-        // sw.Stop();
-        // print(sw.Elapsed.Milliseconds);
+        var controller = GameObject.Find("Controller");
+        transform.parent = controller.transform;
       
         _xCP = GetComponentInParent<Mine>()._xCP;
         _yCP = GetComponentInParent<Mine>()._yCP;

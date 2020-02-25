@@ -26,11 +26,11 @@ public class Vertebra : MonoBehaviour
         var controller = GameObject.Find("Controller");
         transform.parent = controller.transform;
       
-        _xCP = GetComponentInParent<Mine>()._xCP;
-        _yCP = GetComponentInParent<Mine>()._yCP;
-        _xSPL = GetComponentInParent<Mine>()._xSPL;
-        _ySPL = GetComponentInParent<Mine>()._ySPL;
-        _xSPR = GetComponentInParent<Mine>()._xSPR;
+        _xCP = GetComponentInParent<Mine>().centralPointX;
+        _yCP = GetComponentInParent<Mine>().centralPointY;
+        _xSPL = GetComponentInParent<Mine>().sidePointLeftX;
+        _ySPL = GetComponentInParent<Mine>().sidePointLeftY;
+        _xSPR = GetComponentInParent<Mine>().sidePointRightX;
         _ySPR = GetComponentInParent<Mine>()._ySPR;
         _mineList = GetComponentInParent<Mine>()._mineList;
         centralPoint = Instantiate(centralPointSource, new Vector3(_xCP, _yCP), Quaternion.identity);

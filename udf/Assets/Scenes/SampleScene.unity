@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -1947,6 +1948,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6037,13 +6039,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44ba06e83ebc4947b1968a1fe20236a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainCamera: {fileID: 519420031}
+  mainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
   vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
     type: 3}
-  CPPosLimit: 100
-  SPPosLimit: 200
-  SPConvLimit: 150
+  centralPointPosLimit: 100
+  sidePointPosLimit: 200
+  sidePointsMinDist: 150
   speed: 0
   _xCP: 0
   _xSPL: 0
@@ -10736,6 +10738,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -11343,6 +11346,21 @@ PrefabInstance:
     - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
         type: 3}
       propertyPath: SPConvLimit
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: centralPointPosLimit
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: sidePointPosLimit
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: sidePointsMinDist
       value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []

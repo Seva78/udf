@@ -10,35 +10,35 @@ public class Mine : MonoBehaviour
     public GameObject vertebraSource;
     public int centralPointPosLimit;
     public int sidePointPosLimit;
+    // Параметр, регулирующий минимальную степень сближения крайней точки с одной стороны
+    // и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта).
     public int sidePointsMinDist; 
-    // параметр, регулирующий минимальную степень сближения крайней точки с одной стороны и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта)
     public float speed;
     private int _centralPointPosLimitL;
     private int _centralPointPosLimitR;
-    private int _sidePointsPosLimitL;
-    [FormerlySerializedAs("_xCP")] public int centralPointX;
-    [FormerlySerializedAs("_xSPL")] public int sidePointLeftX;
-    [FormerlySerializedAs("_xSPR")] public int sidePointRightX;
-    [FormerlySerializedAs("_yCP")] public float centralPointY;
-    [FormerlySerializedAs("_ySPL")] public float sidePointLeftY;
-    private float _last_ySPL;
-    public float _ySPR;
-    private float _last_ySPR;
-    private int _yCPoffset;
-    public List<GameObject> _mineList;
-    private int _vertebraToDeleteL;
-    public int TextureSpawnTrigger; //пока не включен, фоновую текстуру не генерим
-    public GameObject Depth_UI;
+    public int centralPointX;
+    public int sidePointLeftX;
+    public int sidePointRightX;
+    public float centralPointY;
+    public float sidePointLeftY;
+    private float _prevSidePointLeftY;
+    public float sidePointRightY;
+    private float _prevSidePointRightY;
+    public List<GameObject> mineList;
+    private int _vertebraToDelete;
+    //пока не включен, фоновую текстуру не генерим
+    public int textureSpawnTrigger; 
+    public GameObject depthUi;
 
     void Start()
     {
-        _mineList = new List<GameObject>();
+        mineList = new List<GameObject>();
         _centralPointPosLimitL = mainCamera.pixelWidth / 2 - centralPointPosLimit;
         _centralPointPosLimitR = mainCamera.pixelWidth / 2 + centralPointPosLimit;
         centralPointX = _centralPointPosLimitL + (_centralPointPosLimitR - _centralPointPosLimitL) * Random.Range(0,200)/200;
         centralPointY = mainCamera.pixelHeight + 50 + 50 * Random.Range(0, 50)/50;
-        _last_ySPL = mainCamera.pixelHeight * 2;
-        _last_ySPR = _last_ySPL;
+        _prevSidePointLeftY = mainCamera.pixelHeight * 2;
+        _prevSidePointRightY = _prevSidePointLeftY;
         GenerateVertebra(centralPointX, centralPointY);
     }
     void Update()
@@ -46,51 +46,69 @@ public class Mine : MonoBehaviour
         speed = b.GetComponent<B>().vertSpeed;
         transform.position = new Vector3(transform.position.x, transform.position.y + speed, transform.position.z);
         centralPointY += speed;
-        _last_ySPL += speed;
-        _last_ySPR += speed;
-        _yCPoffset = Random.Range(50, 100);
-        centralPointY -= _yCPoffset;
+        _prevSidePointLeftY += speed;
+        _prevSidePointRightY += speed;
+        var centralPointYOffset = Random.Range(50, 100);
+        centralPointY -= centralPointYOffset;
         if (centralPointY > -1200) GenerateVertebra(centralPointX, centralPointY);
         else {
-            TextureSpawnTrigger = 1;
-            centralPointY += _yCPoffset;
+            textureSpawnTrigger = 1;
+            centralPointY += centralPointYOffset;
         }
-
-        foreach (GameObject vertebra in _mineList)
+        foreach (GameObject vertebra in mineList)
         {
             if (vertebra.transform.position.y > mainCamera.pixelHeight + 200)
             {
-                _vertebraToDeleteL = _mineList.IndexOf(vertebra) + 1;
+                _vertebraToDelete = mineList.IndexOf(vertebra) + 1;
             }
         }
-        if (_vertebraToDeleteL != 0) {
-            _mineList.RemoveAt(_vertebraToDeleteL - 1);
-            _vertebraToDeleteL = 0;
+        if (_vertebraToDelete != 0) {
+            mineList.RemoveAt(_vertebraToDelete - 1);
+            _vertebraToDelete = 0;
         }
-        if (b.GetComponent<B>().startButtonPressed == 1) Depth_UI.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20).ToString() + " m";
+        if (b.GetComponent<B>().startButtonPressed == 1)
+        {
+            depthUi.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20) + " m";
+        }
     }
-    void GenerateVertebra(int _xCP, float _yCP)
+    void GenerateVertebra(int x, float y)
     {
-        _xCP += Random.Range(-100, 100);
-        if (_xCP < _centralPointPosLimitL) _xCP = _centralPointPosLimitL;
-        if (_xCP > _centralPointPosLimitR) _xCP = _centralPointPosLimitR;
-        sidePointLeftX = _xCP - 50 - Random.Range(0, 150);
+        x += Random.Range(-100, 100);
+        if (x < _centralPointPosLimitL) x = _centralPointPosLimitL;
+        if (x > _centralPointPosLimitR) x = _centralPointPosLimitR;
+        sidePointLeftX = x - 50 - Random.Range(0, 150);
         sidePointLeftX = Mathf.Clamp(sidePointLeftX, mainCamera.pixelWidth / 2 - sidePointPosLimit, 255);
-        if (_mineList.Count > 0) while (Mathf.Abs(sidePointLeftX - _mineList[_mineList.Count - 1].GetComponent<Vertebra>().rightPoint.transform.position.x) < sidePointsMinDist) sidePointLeftX -= 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
-        sidePointLeftY = _yCP + Random.Range(-25, 25);
-        if (_last_ySPL == mainCamera.pixelHeight * 2) _last_ySPL = sidePointLeftY; // выставляем первое реальное значение y-координаты конца ребра для запоминания
-        if (sidePointLeftY > _last_ySPL) sidePointLeftY = _last_ySPL; // проверяем, не пересекаются ли рёбра, и если да, исправляем
-        _last_ySPL = sidePointLeftY; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
-        sidePointRightX = _xCP + 50 + Random.Range(0, 150);
+        if (mineList.Count > 0) 
+            while (Mathf.Abs(sidePointLeftX - mineList[mineList.Count - 1].GetComponent<Vertebra>().RightX) < sidePointsMinDist) 
+                //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
+                sidePointLeftX -= 10; 
+        sidePointLeftY = y + Random.Range(-25, 25);
+        if (_prevSidePointLeftY == mainCamera.pixelHeight * 2) 
+            // выставляем первое реальное значение y-координаты конца левого ребра для запоминания
+            _prevSidePointLeftY = sidePointLeftY; 
+        if (sidePointLeftY > _prevSidePointLeftY) 
+            // проверяем, не пересекаются ли рёбра, и если да, исправляем
+            sidePointLeftY = _prevSidePointLeftY;
+        // запоминаем у-координату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
+        _prevSidePointLeftY = sidePointLeftY; 
+        sidePointRightX = x + 50 + Random.Range(0, 150);
         sidePointRightX = Mathf.Clamp(sidePointRightX, 256, mainCamera.pixelWidth / 2 + sidePointPosLimit);
-        if (_mineList.Count > 0) while (Mathf.Abs(sidePointRightX - _mineList[_mineList.Count - 1].GetComponent<Vertebra>().leftPoint.transform.position.x) < sidePointsMinDist) sidePointRightX += 10; //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
-        _ySPR = _yCP + Random.Range(-25, 25);
-        if (_last_ySPR == mainCamera.pixelHeight * 2) _last_ySPR = _ySPR; // выставляем первое реальное значение y-координаты конца ребра для запоминания
-        if (_ySPR > _last_ySPR) _ySPR = _last_ySPR; // проверяем, не пересекаются ли рёбра, и если да, исправляем
-        _last_ySPR = _ySPR; // запоминаем у-коррдинату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
-        var vertebra = Instantiate(vertebraSource, new Vector3(_xCP, _yCP, 0), Quaternion.identity);
-        vertebra.name = "vertebra" + _mineList.Count.ToString();
-        _mineList.Add(vertebra);
+        if (mineList.Count > 0) 
+            while (Mathf.Abs(sidePointRightX - mineList[mineList.Count - 1].GetComponent<Vertebra>().LeftX) < sidePointsMinDist) 
+                //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
+                sidePointRightX += 10; 
+        sidePointRightY = y + Random.Range(-25, 25);
+        if (_prevSidePointRightY == mainCamera.pixelHeight * 2) 
+            // выставляем первое реальное значение y-координаты конца правого ребра для запоминания
+            _prevSidePointRightY = sidePointRightY; 
+        if (sidePointRightY > _prevSidePointRightY) 
+            // проверяем, не пересекаются ли рёбра, и если да, исправляем
+            sidePointRightY = _prevSidePointRightY;
+        // запоминаем у-координату конца ребра, чтобы при следующей генерации позвонка проверить, не пересекутся ли рёбра
+        _prevSidePointRightY = sidePointRightY; 
+        var vertebra = Instantiate(vertebraSource, new Vector3(x, y, 0), Quaternion.identity);
+        vertebra.name = "vertebra" + mineList.Count.ToString();
+        mineList.Add(vertebra);
     }
 
     //void OnDrawGizmos()

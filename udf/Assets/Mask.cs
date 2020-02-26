@@ -16,7 +16,7 @@ public class Mask : MonoBehaviour
         Vector3 GlobalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         var yTop = GlobalPos.y + tex.height; //вертикальная координата верхней части объекта 
         var controller = GameObject.Find("Controller");
-        var mineList = controller.GetComponent<Mine>()._mineList;
+        var mineList = controller.GetComponent<Mine>().mineList;
         var mineListLocal = new List<GameObject>();
         for (var i = 1; i < mineList.Count - 1; i++) {
             var prevVert = mineList[i - 1].GetComponent<Vertebra>();

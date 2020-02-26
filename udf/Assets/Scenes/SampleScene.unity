@@ -6047,15 +6047,15 @@ MonoBehaviour:
   sidePointPosLimit: 200
   sidePointsMinDist: 150
   speed: 0
-  _xCP: 0
-  _xSPL: 0
-  _xSPR: 0
-  _yCP: 0
-  _ySPL: 0
-  _ySPR: 0
-  _mineList: []
-  TextureSpawnTrigger: 0
-  Depth_UI: {fileID: 1706314603}
+  centralPointX: 0
+  sidePointLeftX: 0
+  sidePointRightX: 0
+  centralPointY: 0
+  sidePointLeftY: 0
+  sidePointRightY: 0
+  mineList: []
+  textureSpawnTrigger: 0
+  depthUi: {fileID: 1706314603}
 --- !u!4 &1111420319
 Transform:
   m_ObjectHideFlags: 0

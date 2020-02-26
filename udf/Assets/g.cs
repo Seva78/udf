@@ -15,7 +15,7 @@ public class g : MonoBehaviour
     int fire_cooldown_trigger;
     void Update()
     {
-        _mineList = Controller.GetComponent<Mine>()._mineList;
+        _mineList = Controller.GetComponent<Mine>().mineList;
         check_start = _mineList.IndexOf(_mineList.First()) + 2;
         if (_mineList.Count < 7) check_finish = _mineList.IndexOf(_mineList.Last());
         else check_finish = _mineList.IndexOf(_mineList.First()) + 6;

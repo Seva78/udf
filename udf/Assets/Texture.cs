@@ -47,7 +47,7 @@ public class Texture : MonoBehaviour
         if (tile.GetComponent<SpriteMask>())
         {
             _yTile -= tile.GetComponent<SpriteMask>().sprite.texture.height * tile.transform.localScale.y;
-            if (_yTile > -tile.GetComponent<SpriteMask>().sprite.texture.height && GetComponent<Mine>().TextureSpawnTrigger == 1)
+            if (_yTile > -tile.GetComponent<SpriteMask>().sprite.texture.height && GetComponent<Mine>().textureSpawnTrigger == 1)
             {
                 GenerateTile(_yTile, tileSource, n, _tileList);
             }
@@ -59,7 +59,7 @@ public class Texture : MonoBehaviour
         else
         {
             _yTile -= tile.GetComponent<SpriteRenderer>().sprite.texture.height * tile.transform.localScale.y;
-            if (_yTile > -tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y && GetComponent<Mine>().TextureSpawnTrigger == 1)
+            if (_yTile > -tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y && GetComponent<Mine>().textureSpawnTrigger == 1)
             {
                 GenerateTile(_yTile, tileSource, n, _tileList);
             }

@@ -18,7 +18,9 @@ public class Vertebra : MonoBehaviour
     public int _xSPR;
     public float _ySPR;
 
+    public float LeftX => leftPoint.transform.position.x; 
     public float LeftY => leftPoint.transform.position.y; 
+    public float RightX => rightPoint.transform.position.x; 
     public float RightY => rightPoint.transform.position.y;
 
     void Start()
@@ -31,8 +33,8 @@ public class Vertebra : MonoBehaviour
         _xSPL = GetComponentInParent<Mine>().sidePointLeftX;
         _ySPL = GetComponentInParent<Mine>().sidePointLeftY;
         _xSPR = GetComponentInParent<Mine>().sidePointRightX;
-        _ySPR = GetComponentInParent<Mine>()._ySPR;
-        _mineList = GetComponentInParent<Mine>()._mineList;
+        _ySPR = GetComponentInParent<Mine>().sidePointRightY;
+        _mineList = GetComponentInParent<Mine>().mineList;
         centralPoint = Instantiate(centralPointSource, new Vector3(_xCP, _yCP), Quaternion.identity);
         leftPoint = Instantiate(sidePointSource, new Vector3(_xSPL, _ySPL), Quaternion.identity);
         rightPoint = Instantiate(sidePointSource, new Vector3(_xSPR, _ySPR), Quaternion.identity);

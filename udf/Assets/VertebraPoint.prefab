@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7085927193273203594}
   - component: {fileID: 8440249742285745592}
   m_Layer: 0
-  m_Name: SP
-  m_TagString: SP
+  m_Name: VertebraPoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -8,7 +8,6 @@
       <e p="Assets" t="Include">
         <e p="B.cs" t="Include" />
         <e p="Background.cs" t="Include" />
-        <e p="CP.cs" t="Include" />
         <e p="Deepboard.cs" t="Include" />
         <e p="g.cs" t="Include" />
         <e p="HP.cs" t="Include" />

@@ -17,12 +17,12 @@ public class Mine : MonoBehaviour
     private int _centralPointPosLimitL;
     private int _centralPointPosLimitR;
     public int centralPointX;
-    public int sidePointLeftX;
-    public int sidePointRightX;
     public float centralPointY;
+    public int sidePointLeftX;
     public float sidePointLeftY;
-    private float _prevSidePointLeftY;
+    public int sidePointRightX;
     public float sidePointRightY;
+    private float _prevSidePointLeftY;
     private float _prevSidePointRightY;
     public List<GameObject> mineList;
     private int _vertebraToDelete;

@@ -1,22 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using UnityEngine.Serialization;
 
 public class Vertebra : MonoBehaviour
 {
-    public GameObject centralPointSource;
-    public GameObject sidePointSource;
-    public GameObject centralPoint;
+    public GameObject point;
     public GameObject leftPoint;
     public GameObject rightPoint;
-    public List<GameObject> _mineList;
-    public float CollLength; //параметр для передачи в скрипт коллайдера - задаёт его длину
-    public int _xCP;
-    public float _yCP;
-    public int _xSPL;
-    public float _ySPL;
-    public int _xSPR;
-    public float _ySPR;
 
     public float LeftX => leftPoint.transform.position.x; 
     public float LeftY => leftPoint.transform.position.y; 
@@ -27,41 +18,58 @@ public class Vertebra : MonoBehaviour
     {
         var controller = GameObject.Find("Controller");
         transform.parent = controller.transform;
-      
-        _xCP = GetComponentInParent<Mine>().centralPointX;
-        _yCP = GetComponentInParent<Mine>().centralPointY;
-        _xSPL = GetComponentInParent<Mine>().sidePointLeftX;
-        _ySPL = GetComponentInParent<Mine>().sidePointLeftY;
-        _xSPR = GetComponentInParent<Mine>().sidePointRightX;
-        _ySPR = GetComponentInParent<Mine>().sidePointRightY;
-        _mineList = GetComponentInParent<Mine>().mineList;
-        centralPoint = Instantiate(centralPointSource, new Vector3(_xCP, _yCP), Quaternion.identity);
-        leftPoint = Instantiate(sidePointSource, new Vector3(_xSPL, _ySPL), Quaternion.identity);
-        rightPoint = Instantiate(sidePointSource, new Vector3(_xSPR, _ySPR), Quaternion.identity);
+        var centralPointX = GetComponentInParent<Mine>().centralPointX;
+        var centralPointY = GetComponentInParent<Mine>().centralPointY;
+        var sidePointLeftX = GetComponentInParent<Mine>().sidePointLeftX;
+        var sidePointLeftY = GetComponentInParent<Mine>().sidePointLeftY;
+        var sidePointRightX = GetComponentInParent<Mine>().sidePointRightX;
+        var sidePointRightY = GetComponentInParent<Mine>().sidePointRightY;
+        var mineList = GetComponentInParent<Mine>().mineList;
+        var centralPoint = Instantiate(point, new Vector3(centralPointX, centralPointY), Quaternion.identity);
+        leftPoint = Instantiate(point, new Vector3(sidePointLeftX, sidePointLeftY), Quaternion.identity);
+        rightPoint = Instantiate(point, new Vector3(sidePointRightX, sidePointRightY), Quaternion.identity);
         centralPoint.transform.parent = transform;
         leftPoint.transform.parent = transform;
         rightPoint.transform.parent = transform;
-        if (_mineList.Count > 2)
+        if (mineList.Count > 2)
         {
-            float CollLengthX = Mathf.Abs(_xSPL - _mineList[_mineList.Count - 2].GetComponent<Vertebra>().leftPoint.transform.position.x);
-            float CollLengthY = Mathf.Abs(_ySPL - _mineList[_mineList.Count - 2].GetComponent<Vertebra>().leftPoint.transform.position.y);
-            CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
-            var MineCollL = leftPoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            MineCollL.size = new Vector2(CollLength/10, 0.5f);
-            MineCollL.offset = new Vector2(CollLength / 20, 0.25f);
-            float sin = (_xSPL - _mineList[_mineList.Count - 2].GetComponent<Vertebra>().leftPoint.transform.position.x) / CollLength;
+
+            
+            var collLengthX = Mathf.Abs(sidePointLeftX - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX);
+            var collLengthY = Mathf.Abs(sidePointLeftY - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftY);
+            var collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
+            var colliderLeft = leftPoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            colliderLeft.size = new Vector2(collLength/10, 0.5f);
+            colliderLeft.offset = new Vector2(collLength / 20, 0.25f);
+            float sin = (sidePointLeftX - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX) / collLength;
             float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
-            leftPoint.transform.rotation = Quaternion.RotateTowards(leftPoint.transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
-            CollLengthX = Mathf.Abs(_xSPR - _mineList[_mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.x);
-            CollLengthY = Mathf.Abs(_ySPR - _mineList[_mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.y);
-            CollLength = Mathf.Sqrt(Mathf.Pow(CollLengthX, 2) + Mathf.Pow(CollLengthY, 2));
-            var MineCollR = rightPoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            MineCollR.size = new Vector2(CollLength / 10, 0.5f);
-            MineCollR.offset = new Vector2(CollLength / 20, -0.25f);
-            sin = (_xSPR - _mineList[_mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.x) / CollLength;
+            leftPoint.transform.rotation = Quaternion.RotateTowards(leftPoint.transform.rotation, 
+                Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
+            collLengthX = Mathf.Abs(sidePointRightX - mineList[mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.x);
+            collLengthY = Mathf.Abs(sidePointRightY - mineList[mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.y);
+            collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
+            var colliderRight = rightPoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            colliderRight.size = new Vector2(collLength / 10, 0.5f);
+            colliderRight.offset = new Vector2(collLength / 20, -0.25f);
+            sin = (sidePointRightX - mineList[mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.x) / collLength;
             angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
-            rightPoint.transform.rotation = Quaternion.RotateTowards(rightPoint.transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
+            rightPoint.transform.rotation = Quaternion.RotateTowards(rightPoint.transform.rotation, 
+                Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
         }
+    }
+
+    void ColliderGeneration(GameObject sidePoint, List<GameObject> mineList, int sidePointX, float sidePointY, float prevSidePointX, float prevSidePointY)
+    {
+        // var collLengthX = Mathf.Abs(sidePointX - mineList[mineList.Count - 2].GetComponent<Vertebra>().sidePoint.);
+        // var collLengthY = Mathf.Abs(sidePointY - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftY);
+        // var collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
+        // var coll = sidePoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        // coll.size = new Vector2(collLength/10, 0.5f);
+        // coll.offset = new Vector2(collLength / 20, 0.25f);
+        // float sin = (sidePointX - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX) / collLength;
+        // float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
+        // leftPoint.transform.rotation = Quaternion.RotateTowards(leftPoint.transform.rotation, 
+        //     Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
     }
     void Update()
     {

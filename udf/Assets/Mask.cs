@@ -35,8 +35,8 @@ public class Mask : MonoBehaviour
         {
             foreach (GameObject vertebra in mineListLocal)
             {
-                if (vertebra.GetComponent<Vertebra>().leftPoint.transform.position.y > y && 
-                    mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().leftPoint.transform.position.y < y)
+                if (vertebra.GetComponent<Vertebra>().LeftY > y && 
+                    mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().LeftY < y)
                 {
                     var leftPoint = vertebra.GetComponent<Vertebra>().leftPoint.transform.position;
                     var leftPointNext = 
@@ -44,8 +44,8 @@ public class Mask : MonoBehaviour
                     wallLeft = WallXValue(y, leftPoint.x,leftPoint.y, 
                         leftPointNext.x, leftPointNext.y);
                 }
-                if (vertebra.GetComponent<Vertebra>().rightPoint.transform.position.y > y && 
-                    mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().rightPoint.transform.position.y < y)
+                if (vertebra.GetComponent<Vertebra>().RightY > y && 
+                    mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().RightY < y)
                 {
                     var rightPoint = vertebra.GetComponent<Vertebra>().rightPoint.transform.position;
                     var rightPointNext = 

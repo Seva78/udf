@@ -34,42 +34,29 @@ public class Vertebra : MonoBehaviour
         if (mineList.Count > 2)
         {
 
-            
-            var collLengthX = Mathf.Abs(sidePointLeftX - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX);
-            var collLengthY = Mathf.Abs(sidePointLeftY - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftY);
-            var collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
-            var colliderLeft = leftPoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            colliderLeft.size = new Vector2(collLength/10, 0.5f);
-            colliderLeft.offset = new Vector2(collLength / 20, 0.25f);
-            float sin = (sidePointLeftX - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX) / collLength;
-            float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
-            leftPoint.transform.rotation = Quaternion.RotateTowards(leftPoint.transform.rotation, 
-                Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
-            collLengthX = Mathf.Abs(sidePointRightX - mineList[mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.x);
-            collLengthY = Mathf.Abs(sidePointRightY - mineList[mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.y);
-            collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
-            var colliderRight = rightPoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            colliderRight.size = new Vector2(collLength / 10, 0.5f);
-            colliderRight.offset = new Vector2(collLength / 20, -0.25f);
-            sin = (sidePointRightX - mineList[mineList.Count - 2].GetComponent<Vertebra>().rightPoint.transform.position.x) / collLength;
-            angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
-            rightPoint.transform.rotation = Quaternion.RotateTowards(rightPoint.transform.rotation, 
-                Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
+            float prevSidePointX = mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX;
+            float prevSidePointY = mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftY;
+            float collOffsetY = 0.25f;
+            ColliderGeneration(leftPoint, sidePointLeftX, sidePointLeftY, prevSidePointX, prevSidePointY, collOffsetY);
+            prevSidePointX = mineList[mineList.Count - 2].GetComponent<Vertebra>().RightX;
+            prevSidePointY = mineList[mineList.Count - 2].GetComponent<Vertebra>().RightY;
+            collOffsetY = -0.25f;
+            ColliderGeneration(rightPoint, sidePointRightX, sidePointRightY, prevSidePointX, prevSidePointY, collOffsetY);
         }
     }
 
-    void ColliderGeneration(GameObject sidePoint, List<GameObject> mineList, int sidePointX, float sidePointY, float prevSidePointX, float prevSidePointY)
+    void ColliderGeneration(GameObject sidePoint, int sidePointX, float sidePointY, float prevSidePointX, float prevSidePointY, float collOffsetY)
     {
-        // var collLengthX = Mathf.Abs(sidePointX - mineList[mineList.Count - 2].GetComponent<Vertebra>().sidePoint.);
-        // var collLengthY = Mathf.Abs(sidePointY - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftY);
-        // var collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
-        // var coll = sidePoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-        // coll.size = new Vector2(collLength/10, 0.5f);
-        // coll.offset = new Vector2(collLength / 20, 0.25f);
-        // float sin = (sidePointX - mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX) / collLength;
-        // float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
-        // leftPoint.transform.rotation = Quaternion.RotateTowards(leftPoint.transform.rotation, 
-        //     Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
+        var collLengthX = Mathf.Abs(sidePointX - prevSidePointX);
+        var collLengthY = Mathf.Abs(sidePointY - prevSidePointY);
+        var collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
+        var coll = sidePoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        coll.size = new Vector2(collLength/10, 0.5f);
+        coll.offset = new Vector2(collLength / 20, collOffsetY);
+        float sin = (sidePointX - prevSidePointX) / collLength;
+        float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
+        sidePoint.transform.rotation = Quaternion.RotateTowards(sidePoint.transform.rotation, 
+            Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, 90 + angle)), 360);
     }
     void Update()
     {

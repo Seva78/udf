@@ -33,25 +33,25 @@ public class Mask : MonoBehaviour
         var wallRight = 0;
         for (int y = (int)globalPos.y; y < (int)yTop; y++)
         {
-            foreach (GameObject vertebra in mineListLocal)
+            for (int i = 0; i < mineListLocal.Count - 1; i++)
             {
-                if (vertebra.GetComponent<Vertebra>().LeftY > y && 
-                    mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().LeftY < y)
+                var vertebra = mineListLocal[i].GetComponent<Vertebra>();
+                var nextVertebra = mineListLocal[i+1].GetComponent<Vertebra>();
+                if (vertebra.LeftY > y && nextVertebra.LeftY < y)
                 {
                     wallLeft = WallXValue(y,
-                        vertebra.GetComponent<Vertebra>().LeftX, 
-                        vertebra.GetComponent<Vertebra>().LeftY, 
-                        mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().LeftX, 
-                        mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().LeftY);
+                        vertebra.LeftX, 
+                        vertebra.LeftY, 
+                        nextVertebra.LeftX, 
+                        nextVertebra.LeftY);
                 }
-                if (vertebra.GetComponent<Vertebra>().RightY > y && 
-                    mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().RightY < y)
+                if (vertebra.RightY > y && nextVertebra.RightY < y)
                 {
                     wallRight = WallXValue(y,
-                        vertebra.GetComponent<Vertebra>().RightX, 
-                        vertebra.GetComponent<Vertebra>().RightY, 
-                        mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().RightX, 
-                        mineListLocal[mineListLocal.IndexOf(vertebra) + 1].GetComponent<Vertebra>().RightY);
+                        vertebra.RightX, 
+                        vertebra.RightY, 
+                        nextVertebra.RightX, 
+                        nextVertebra.RightY);
                 }
             }
             var mineWidth = wallRight - wallLeft;

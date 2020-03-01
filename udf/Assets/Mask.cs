@@ -14,7 +14,8 @@ public class Mask : MonoBehaviour
         Texture2D newTex = new Texture2D(tex.width, tex.height, tex.format, mipChain: false);
         newTex.SetPixels32(pixels);
         Vector3 globalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
-        var yTop = globalPos.y + tex.height; //вертикальная координата верхней части объекта 
+        //вертикальная координата верхней части объекта
+        var yTop = globalPos.y + tex.height; 
         var controller = GameObject.Find("Controller");
         var mineList = controller.GetComponent<Mine>().mineList;
         var mineListLocal = new List<GameObject>();
@@ -40,18 +41,14 @@ public class Mask : MonoBehaviour
                 if (vertebra.LeftY > y && nextVertebra.LeftY < y)
                 {
                     wallLeft = WallXValue(y,
-                        vertebra.LeftX, 
-                        vertebra.LeftY, 
-                        nextVertebra.LeftX, 
-                        nextVertebra.LeftY);
+                        vertebra.LeftX, vertebra.LeftY, 
+                        nextVertebra.LeftX, nextVertebra.LeftY);
                 }
                 if (vertebra.RightY > y && nextVertebra.RightY < y)
                 {
                     wallRight = WallXValue(y,
-                        vertebra.RightX, 
-                        vertebra.RightY, 
-                        nextVertebra.RightX, 
-                        nextVertebra.RightY);
+                        vertebra.RightX,vertebra.RightY, 
+                        nextVertebra.RightX,nextVertebra.RightY);
                 }
             }
             var mineWidth = wallRight - wallLeft;

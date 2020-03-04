@@ -6,8 +6,8 @@
     <e p="C:\Users\vsevo\Documents\GitHub\udf\udf" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="B.cs" t="Include" />
         <e p="Background.cs" t="Include" />
+        <e p="Barlog.cs" t="Include" />
         <e p="Deepboard.cs" t="Include" />
         <e p="g.cs" t="Include" />
         <e p="HP.cs" t="Include" />

@@ -17,7 +17,7 @@ public class s : MonoBehaviour
 
     void Start()
     {
-        b = GameObject.Find("b");
+        b = GameObject.Find("Barlog");
         g = GameObject.Find("g");
         b_position = b.transform.position;
         g_position = g.transform.position;

@@ -32,11 +32,11 @@ public class g : MonoBehaviour
             }
         }
         
-        speed = b.GetComponent<B>().vertSpeed;
+        speed = b.GetComponent<Barlog>().vertSpeed;
         if (transform.position.y>780) {
             transform.position = new Vector3(transform.position.x, transform.position.y - speed, transform.position.z);
         }
-        if (fire_cooldown_trigger == 0 && b.GetComponent<B>().startButtonPressed == 1)
+        if (fire_cooldown_trigger == 0 && b.GetComponent<Barlog>().startButtonPressed == 1)
         {
             fire_cooldown_trigger = 1;
             StartCoroutine(Fire());

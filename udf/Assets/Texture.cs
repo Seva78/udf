@@ -34,7 +34,7 @@ public class Texture : MonoBehaviour
     }
     void Update()
     {
-        speed = b.GetComponent<B>().vertSpeed;
+        speed = b.GetComponent<Barlog>().vertSpeed;
         _yMaskTile = TileMovement(_yMaskTile, TileMask, "Mask", _tileMaskList, 0);
         _ySidesTile = TileMovement(_ySidesTile, TileSides, "Sides", _tileSidesList, speed / sidesLagCoeff);
         _yBackgroundTile = TileMovement(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList, - speed / backgroundLagCoeff);

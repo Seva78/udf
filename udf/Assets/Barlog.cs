@@ -27,7 +27,12 @@ public class Barlog : MonoBehaviour
     private int _healthPointsCooldownTrigger;
     public int startButtonPressed;
     public AudioClip soundBarlogHit2;
-
+    private float BarlogX => transform.position.x;
+    private float BarlogY => transform.position.y;
+    private float BarlogZ => transform.position.z;
+    private Quaternion BarlogRot => transform.rotation;
+    private Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
+    
     void StartGame()
     {
         _anim = GetComponent<Animator>();
@@ -45,7 +50,8 @@ public class Barlog : MonoBehaviour
         }
         if (startButtonPressed == 1)
         {
-            if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime; //если юзер не жмёт ни вправо, ни влево 
+            //если юзер не жмёт ни вправо, ни влево
+            if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
             else _r += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
 
             if (Input.GetAxis("Vertical") > 0)
@@ -53,19 +59,19 @@ public class Barlog : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipY = true;
                 _k = 0.99f;
                 _a = 0;
-                _centerTendencyCoefficient = (transform.position.y - (cam.transform.position.y + 200)) / 100;
+                _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
             }
             else if (Input.GetAxis("Vertical") == 0)
             {
                 GetComponent<SpriteRenderer>().flipY = false;
                 _k = 0.5f;
                 _a = 0;
-                _centerTendencyCoefficient = (transform.position.y - cam.transform.position.y) / 100;
+                _centerTendencyCoefficient = (BarlogY - cam.transform.position.y) / 100;
             }
             else {
                 GetComponent<SpriteRenderer>().flipY = false;
                 _k = 0.4f;
-                _centerTendencyCoefficient = (transform.position.y - (cam.transform.position.y - _aTrigger * 200))/100;
+                _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _aTrigger * 200))/100;
                 _a = _aTrigger * 20;
             }
             _v *= 1 - _k * Time.deltaTime;
@@ -75,37 +81,41 @@ public class Barlog : MonoBehaviour
             _aVy += 8 * Time.deltaTime;
             vertSpeed = _aVy * _ratio * Time.deltaTime;
             if (vertSpeed < 3) vertSpeed = 3;
-            GetComponent<Rigidbody2D>().MovePosition(new Vector3(transform.position.x + _aVx * _ratio * Time.deltaTime, transform.position.y - _centerTendencyCoefficient, transform.position.z));
+            Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
+                BarlogY - _centerTendencyCoefficient, BarlogZ));
             _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
             _anim.SetFloat("speed", _v);
             _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
             _r = Mathf.Asin(_aVx / _v);
-            if (Input.GetAxis("Vertical") <= 0)
-            {
-                GetComponent<Rigidbody2D>().transform.rotation =
-                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, _r * 180 / Mathf.PI)), 90);
-            }
-            else
-            {
-                GetComponent<Rigidbody2D>().transform.rotation =
-                        Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, -_r * 180 / Mathf.PI)), 90);
-            }
-            if (transform.position.y > 800) _healthPoints -= 1;
+            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                                 _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
+            if (BarlogY > 800) _healthPoints -= 1;
             if (_healthPoints < 0) _healthPoints = 0;
             hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
         }
     }
+
+    int RotationDirection(float GetAxisVertical)
+    {
+        if (GetAxisVertical > 0)
+        {
+            return -1;
+        }
+        else return 1;
+    }
+
     void BoostEvent(int v)
     {
         _aTrigger = 1 * v;
         if (v == 1 && startButtonPressed == 1) {
             _healthPointsDelta = 5;
             _healthPoints += _healthPointsDelta;
-            var HP_textI = Instantiate(hpText, new Vector3(transform.position.x + 40, transform.position.y, 0), Quaternion.identity);
-            HP_textI.GetComponent<HP>().b = gameObject;
-            HP_textI.GetComponent<TextMeshPro>().text = _healthPointsDelta.ToString();
+            var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
+            hpTextI.GetComponent<HP>().b = gameObject;
+            hpTextI.GetComponent<TextMeshPro>().text = _healthPointsDelta.ToString();
             _healthPointsDelta = 0;
-            HP_textI.GetComponent<TextMeshPro>().color = new Color32(0, 255, 0, 255);
+            hpTextI.GetComponent<TextMeshPro>().color = new Color32(0, 255, 0, 255);
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
@@ -122,19 +132,19 @@ public class Barlog : MonoBehaviour
             _healthPoints -= _healthPointsDelta;
         }
         if (_healthPoints < 0) _healthPoints = 0;
-        hpUi.GetComponent<TextMeshProUGUI>().text = "_healthPoints: " + _healthPoints.ToString();
+        hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
         if (_healthPointsCooldownTrigger == 0) {
             _healthPointsCooldownTrigger = 1;
-            StartCoroutine(HP_Coroutine(_healthPointsDelta));
+            StartCoroutine(HealthPointsRedCoroutine(_healthPointsDelta));
         }
     }
-    IEnumerator HP_Coroutine(int HP_delta)
+    IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
     {
         yield return new WaitForSeconds(0.1f);
-        var HP_textI = Instantiate(hpText, new Vector3(transform.position.x + 40, transform.position.y, 0), Quaternion.identity);
-        HP_textI.GetComponent<HP>().b = gameObject;
-        HP_textI.GetComponent<TextMeshPro>().text = (HP_delta*-1).ToString();
-        HP_textI.GetComponent<TextMeshPro>().color = new Color32(255, 0, 0, 255);
+        var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
+        hpTextI.GetComponent<HP>().b = gameObject;
+        hpTextI.GetComponent<TextMeshPro>().text = (healthPointsDelta*-1).ToString();
+        hpTextI.GetComponent<TextMeshPro>().color = new Color32(255, 0, 0, 255);
         HP_delta_0();
         _healthPointsCooldownTrigger = 0;
     }

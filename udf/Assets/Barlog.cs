@@ -111,26 +111,21 @@ public class Barlog : MonoBehaviour
         if (v == 1 && startButtonPressed == 1) {
             _healthPointsDelta = 5;
             _healthPoints += _healthPointsDelta;
-            var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
-            hpTextI.GetComponent<HP>().b = gameObject;
-            hpTextI.GetComponent<TextMeshPro>().text = _healthPointsDelta.ToString();
-            _healthPointsDelta = 0;
-            hpTextI.GetComponent<TextMeshPro>().color = new Color32(0, 255, 0, 255);
+            HealthPointsSpawn(_healthPointsDelta, new Color32(0, 255, 0, 255));
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "SPL" || collision.gameObject.tag == "SPR")
+        if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
             _healthPointsDelta += Random.Range(1, 3);
-            _healthPoints -= _healthPointsDelta;
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
         }
         if (collision.gameObject.tag == "Projectile")
         {
             _healthPointsDelta += Random.Range(1, 2);
-            _healthPoints -= _healthPointsDelta;
         }
+        _healthPoints -= _healthPointsDelta;
         if (_healthPoints < 0) _healthPoints = 0;
         hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
         if (_healthPointsCooldownTrigger == 0) {
@@ -141,14 +136,18 @@ public class Barlog : MonoBehaviour
     IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
     {
         yield return new WaitForSeconds(0.1f);
-        var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
-        hpTextI.GetComponent<HP>().b = gameObject;
-        hpTextI.GetComponent<TextMeshPro>().text = (healthPointsDelta*-1).ToString();
-        hpTextI.GetComponent<TextMeshPro>().color = new Color32(255, 0, 0, 255);
-        HP_delta_0();
+        HealthPointsSpawn(healthPointsDelta*-1, new Color32(255, 0, 0, 255));
         _healthPointsCooldownTrigger = 0;
     }
-    void HP_delta_0() {
+
+    void HealthPointsSpawn(int healthPointsValue, Color32 healthPointsColor)
+    {
+        var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
+        hpTextI.GetComponent<HP>().b = gameObject;
+        hpTextI.GetComponent<TextMeshPro>().text = healthPointsValue.ToString();
+        hpTextI.GetComponent<TextMeshPro>().color = healthPointsColor;
         _healthPointsDelta = 0;
     }
+
+
 }

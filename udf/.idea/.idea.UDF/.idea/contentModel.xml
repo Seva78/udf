@@ -9,14 +9,14 @@
         <e p="Background.cs" t="Include" />
         <e p="Barlog.cs" t="Include" />
         <e p="Deepboard.cs" t="Include" />
-        <e p="g.cs" t="Include" />
+        <e p="Gandalf.cs" t="Include" />
         <e p="HP.cs" t="Include" />
         <e p="Mask.cs" t="Include" />
         <e p="Mine.cs" t="Include" />
         <e p="music_button.cs" t="Include" />
+        <e p="Projectile.cs" t="Include" />
+        <e p="ProjectileExplosion.cs" t="Include" />
         <e p="refall_button.cs" t="Include" />
-        <e p="s.cs" t="Include" />
-        <e p="s_explosion.cs" t="Include" />
         <e p="Sides.cs" t="Include" />
         <e p="snd_button.cs" t="Include" />
         <e p="start_button.cs" t="Include" />

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class s_explosion : MonoBehaviour
+public class ProjectileExplosion : MonoBehaviour
 {
     void Start()
     {

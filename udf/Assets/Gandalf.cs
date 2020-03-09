@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class g : MonoBehaviour
+public class Gandalf : MonoBehaviour
 {
     private float speed;
     [SerializeField] public GameObject b;

@@ -151,10 +151,10 @@ namespace TMPro.Examples
                     // Get a reference to the meshInfo of the selected character.
                     TMP_MeshInfo meshInfo = m_TextMeshPro.textInfo.meshInfo[materialIndex];
 
-                    // Get the index of the last character's vertex attributes.
+                    // Get the index of the last character'Projectile vertex attributes.
                     int lastVertexIndex = vertices.Length - 4;
 
-                    // Swap the current character's vertex attributes with those of the last element in the vertex attribute arrays.
+                    // Swap the current character'Projectile vertex attributes with those of the last element in the vertex attribute arrays.
                     // We do this to make sure this character is rendered last and over other characters.
                     meshInfo.SwapVertexData(vertexIndex, lastVertexIndex);
 

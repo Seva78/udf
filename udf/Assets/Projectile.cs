@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class s : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     GameObject b;
     GameObject g;
@@ -18,7 +18,7 @@ public class s : MonoBehaviour
     void Start()
     {
         b = GameObject.Find("Barlog");
-        g = GameObject.Find("g");
+        g = GameObject.Find("Gandalf");
         b_position = b.transform.position;
         g_position = g.transform.position;
         GetComponent<AudioSource>().PlayOneShot(iceball_fire, 1f);

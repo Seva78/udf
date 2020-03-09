@@ -1907,7 +1907,7 @@ GameObject:
   - component: {fileID: 419979420}
   - component: {fileID: 419979424}
   m_Layer: 0
-  m_Name: g
+  m_Name: Gandalf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

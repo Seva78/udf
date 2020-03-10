@@ -13,12 +13,12 @@
         <e p="HP.cs" t="Include" />
         <e p="Mask.cs" t="Include" />
         <e p="Mine.cs" t="Include" />
-        <e p="music_button.cs" t="Include" />
+        <e p="MusicButton.cs" t="Include" />
         <e p="Projectile.cs" t="Include" />
         <e p="ProjectileExplosion.cs" t="Include" />
         <e p="refall_button.cs" t="Include" />
         <e p="Sides.cs" t="Include" />
-        <e p="snd_button.cs" t="Include" />
+        <e p="SoundButton.cs" t="Include" />
         <e p="start_button.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Examples &amp; Extras" t="Include">

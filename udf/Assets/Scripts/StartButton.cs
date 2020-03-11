@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class start_button : MonoBehaviour
+public class StartButton : MonoBehaviour
 {
     public GUI button;
     void Start()

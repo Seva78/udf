@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class refall_button : MonoBehaviour
+public class ReFallButton : MonoBehaviour
 {
-    void restart()
+    void Restart()
     {
         PlayerPrefs.SetInt("Restart", 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -223,7 +223,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 540782115}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -734,7 +734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 147605354}
   m_Layer: 5
-  m_Name: Sauron
+  m_Name: SauronProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1219,7 +1219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 276690534}
   m_Layer: 5
-  m_Name: Barlog
+  m_Name: BarlogProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1787,7 +1787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360921862}
   m_Layer: 5
-  m_Name: Beorn
+  m_Name: BeornProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2588,8 +2588,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1699407307}
   - {fileID: 35891819}
+  - {fileID: 1699407307}
   - {fileID: 1053324919}
   - {fileID: 152058733}
   - {fileID: 1963383472}
@@ -2686,7 +2686,7 @@ GameObject:
   m_Component:
   - component: {fileID: 610042175}
   m_Layer: 5
-  m_Name: Gollum
+  m_Name: GollumProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6039,7 +6039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 519420031}
-  b: {fileID: 2069570061}
+  barlog: {fileID: 2069570061}
   vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
     type: 3}
   centralPointPosLimit: 100
@@ -6355,7 +6355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1181015979}
   m_Layer: 5
-  m_Name: Saruman
+  m_Name: SarumanProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6465,7 +6465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1199617390}
   m_Layer: 5
-  m_Name: Smaug
+  m_Name: SmaugProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6588,16 +6588,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6454688b9c85c41829fed9464ec630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Barlog: {fileID: 276690533}
-  Gollum: {fileID: 610042174}
-  Wormtongue: {fileID: 1304580587}
-  Beorn: {fileID: 360921861}
-  BertTheTroll: {fileID: 2031515379}
-  Smaug: {fileID: 1199617389}
-  Saruman: {fileID: 1181015978}
-  NazgulKing: {fileID: 1665492761}
-  Sauron: {fileID: 147605353}
-  Controller: {fileID: 1111420317}
+  barlog: {fileID: 276690533}
+  gollum: {fileID: 610042174}
+  wormtongue: {fileID: 1304580587}
+  beorn: {fileID: 360921861}
+  bertTheTroll: {fileID: 2031515379}
+  smaug: {fileID: 1199617389}
+  saruman: {fileID: 1181015978}
+  nazgulKing: {fileID: 1665492761}
+  sauron: {fileID: 147605353}
+  controller: {fileID: 1111420317}
 --- !u!1 &1209824629
 GameObject:
   m_ObjectHideFlags: 0
@@ -6968,7 +6968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1304580588}
   m_Layer: 5
-  m_Name: Wormtongue
+  m_Name: WormtongueProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8310,7 +8310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1665492762}
   m_Layer: 5
-  m_Name: NazgulKing
+  m_Name: NazgulKingProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8371,7 +8371,7 @@ RectTransform:
   m_Children:
   - {fileID: 1909376889}
   m_Father: {fileID: 540782115}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10500,7 +10500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2031515380}
   m_Layer: 5
-  m_Name: BertTheTroll
+  m_Name: BertTheTrollProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

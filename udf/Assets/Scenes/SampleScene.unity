@@ -2009,9 +2009,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63f9a25039c6a74e9dae17fcb152a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  b: {fileID: 2069570061}
-  s: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816, type: 3}
-  Controller: {fileID: 1111420317}
+  gandalfY: 780
+  barlog: {fileID: 2069570061}
+  projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
+    type: 3}
+  controller: {fileID: 1111420317}
 --- !u!70 &419979424
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -6090,8 +6092,8 @@ MonoBehaviour:
     type: 3}
   MainCamera: {fileID: 519420031}
   b: {fileID: 2069570061}
-  backgroundLagCoeff: 3
-  sidesLagCoeff: 3
+  backgroundLagCoefficient: 1.5
+  sidesLagCoefficient: 3
 --- !u!82 &1111420321
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11270,6 +11272,16 @@ PrefabInstance:
     - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
         type: 3}
       propertyPath: sidesLagCoeff
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: backgroundLagCoefficient
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023896550766544277, guid: 65b21eb075529964fb1379f7fb23c4c4,
+        type: 3}
+      propertyPath: sidesLagCoefficient
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7023896550766544296, guid: 65b21eb075529964fb1379f7fb23c4c4,

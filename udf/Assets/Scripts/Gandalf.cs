@@ -5,47 +5,57 @@ using System.Linq;
 
 public class Gandalf : MonoBehaviour
 {
-    private float speed;
-    [SerializeField] public GameObject b;
-    [SerializeField] public GameObject s;
-    [SerializeField] public GameObject Controller;
-    private int check_start;
-    private int check_finish;
+    private float _speed;
+    public int gandalfY;
+    public GameObject barlog;
+    public GameObject projectile;
+    public GameObject controller;
     private List<GameObject> _mineList;
-    int fire_cooldown_trigger;
+    int _fireCooldownTrigger;
     void Update()
     {
-        _mineList = Controller.GetComponent<Mine>().mineList;
-        check_start = _mineList.IndexOf(_mineList.First()) + 2;
-        if (_mineList.Count < 7) check_finish = _mineList.IndexOf(_mineList.Last());
-        else check_finish = _mineList.IndexOf(_mineList.First()) + 6;
-        
-        for (int i = check_start; i < check_finish; i++)
+        _mineList = controller.GetComponent<Mine>().mineList;
+        int checkStart = _mineList.IndexOf(_mineList.First()) + 2;
+        int checkFinish;
+        if (_mineList.Count < 7) checkFinish = _mineList.IndexOf(_mineList.Last());
+        else checkFinish = _mineList.IndexOf(_mineList.First()) + 6;
+        var position = transform.position;
+        for (int i = checkStart; i < checkFinish; i++)
         {
-            if (_mineList[i].GetComponent<Vertebra>().leftPoint.transform.position.x > transform.position.x - 20 && _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position.y > transform.position.y - 90 && _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position.y < transform.position.y) 
+            var leftPointPosition = _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position;
+            var rightPointPosition = _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position;
+            
+            if (leftPointPosition.x > position.x - 20 && 
+                leftPointPosition.y > position.y - 90 && 
+                leftPointPosition.y < position.y) 
             {
-                transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
+                transform.position = new Vector3(position.x + 2, position.y);
             }
-            if (_mineList[i].GetComponent<Vertebra>().rightPoint.transform.position.x < transform.position.x + 20 && _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position.y > transform.position.y - 90 && _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position.y < transform.position.y)
+            if (rightPointPosition.x < position.x + 20 && 
+                rightPointPosition.y > position.y - 90 && 
+                rightPointPosition.y < position.y)
             {
-                transform.position = new Vector3(transform.position.x - 2, transform.position.y, transform.position.z);
+                transform.position = new Vector3(position.x - 2, position.y);
             }
         }
         
-        speed = b.GetComponent<Barlog>().vertSpeed;
-        if (transform.position.y>780) {
-            transform.position = new Vector3(transform.position.x, transform.position.y - speed, transform.position.z);
+        _speed = barlog.GetComponent<Barlog>().vertSpeed;
+        if (position.y > gandalfY) {
+            transform.position = new Vector3(position.x, position.y - _speed);
         }
-        if (fire_cooldown_trigger == 0 && b.GetComponent<Barlog>().startButtonPressed == 1)
+        if (_fireCooldownTrigger == 0 && barlog.GetComponent<Barlog>().startButtonPressed == 1)
         {
-            fire_cooldown_trigger = 1;
-            StartCoroutine(Fire());
+            _fireCooldownTrigger = 1;
+            StartCoroutine(Fire(position));
         }
     }
-    IEnumerator Fire()
+    
+    
+    
+    IEnumerator Fire(Vector3 position)
     {
         yield return new WaitForSeconds(2);
-        var snowball = Instantiate(s, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        fire_cooldown_trigger = 0;
+        Instantiate(projectile, new Vector3(position.x, position.y), Quaternion.identity);
+        _fireCooldownTrigger = 0;
     }
 }

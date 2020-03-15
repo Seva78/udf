@@ -9,8 +9,8 @@ public class Texture : MonoBehaviour
     [SerializeField] public GameObject TileBackground;
     [SerializeField] public Camera MainCamera;
     [SerializeField] public GameObject b;
-    public float backgroundLagCoeff; //отставание текстуры бэкграунда от маски
-    public float sidesLagCoeff; //отставание текстуры стенок от маски
+    public float backgroundLagCoefficient; //отставание текстуры бэкграунда от маски
+    public float sidesLagCoefficient; //отставание текстуры стенок от маски
     private float speed;
     private float _yMaskTile;
     private float _ySidesTile;
@@ -36,39 +36,39 @@ public class Texture : MonoBehaviour
     {
         speed = b.GetComponent<Barlog>().vertSpeed;
         _yMaskTile = TileMovement(_yMaskTile, TileMask, "Mask", _tileMaskList, 0);
-        _ySidesTile = TileMovement(_ySidesTile, TileSides, "Sides", _tileSidesList, speed / sidesLagCoeff);
-        _yBackgroundTile = TileMovement(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList, - speed / backgroundLagCoeff);
+        _ySidesTile = TileMovement(_ySidesTile, TileSides, "Sides", _tileSidesList, speed / sidesLagCoefficient);
+        _yBackgroundTile = TileMovement(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList, - speed / backgroundLagCoefficient);
     }
 
-    float TileMovement(float _yTile, GameObject tileSource, string n, List<GameObject> _tileList, float speedCorrective)
+    float TileMovement(float tileY, GameObject tileSource, string n, List<GameObject> tileList, float speedCorrective)
     {
-        GameObject tile = _tileList[_tileList.Count - 1];
-        _yTile += speed + speedCorrective;
+        GameObject tile = tileList[tileList.Count - 1];
+        tileY += speed + speedCorrective;
         if (tile.GetComponent<SpriteMask>())
         {
-            _yTile -= tile.GetComponent<SpriteMask>().sprite.texture.height * tile.transform.localScale.y;
-            if (_yTile > -tile.GetComponent<SpriteMask>().sprite.texture.height && GetComponent<Mine>().textureSpawnTrigger == 1)
+            tileY -= tile.GetComponent<SpriteMask>().sprite.texture.height * tile.transform.localScale.y;
+            if (tileY > -tile.GetComponent<SpriteMask>().sprite.texture.height && GetComponent<Mine>().textureSpawnTrigger == 1)
             {
-                GenerateTile(_yTile, tileSource, n, _tileList);
+                GenerateTile(tileY, tileSource, n, tileList);
             }
             else
             {
-                _yTile += tile.GetComponent<SpriteMask>().sprite.texture.height;
+                tileY += tile.GetComponent<SpriteMask>().sprite.texture.height;
             }            
         }
         else
         {
-            _yTile -= tile.GetComponent<SpriteRenderer>().sprite.texture.height * tile.transform.localScale.y;
-            if (_yTile > -tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y && GetComponent<Mine>().textureSpawnTrigger == 1)
+            tileY -= tile.GetComponent<SpriteRenderer>().sprite.texture.height * tile.transform.localScale.y;
+            if (tileY > -tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y && GetComponent<Mine>().textureSpawnTrigger == 1)
             {
-                GenerateTile(_yTile, tileSource, n, _tileList);
+                GenerateTile(tileY, tileSource, n, tileList);
             }
             else
             {
-                _yTile += tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y;
+                tileY += tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y;
             }
         }
-        return _yTile;
+        return tileY;
     }
     List<GameObject> GenerateTile(float _yTile, GameObject tile, string n, List<GameObject> _tileList)
     {

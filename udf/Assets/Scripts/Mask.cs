@@ -15,24 +15,24 @@ public class Mask : MonoBehaviour
         newTex.SetPixels32(pixels);
         Vector3 globalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         //вертикальная координата верхней части объекта
-        var yTop = globalPos.y + tex.height; 
+        var topGlobalPosY = globalPos.y + tex.height; 
         var controller = GameObject.Find("Controller");
         var mineList = controller.GetComponent<Mine>().mineList;
         var mineListLocal = new List<GameObject>();
         for (var i = 1; i < mineList.Count - 1; i++) {
             var prevVert = mineList[i - 1].GetComponent<Vertebra>();
             var nextVert = mineList[i + 1].GetComponent<Vertebra>();
-            if (nextVert.LeftY < yTop && nextVert.LeftY > globalPos.y ||
-                prevVert.LeftY < yTop && prevVert.LeftY > globalPos.y ||
-                nextVert.RightY < yTop && nextVert.RightY > globalPos.y ||
-                prevVert.RightY < yTop && prevVert.RightY > globalPos.y)
+            if (nextVert.LeftY < topGlobalPosY && nextVert.LeftY > globalPos.y ||
+                prevVert.LeftY < topGlobalPosY && prevVert.LeftY > globalPos.y ||
+                nextVert.RightY < topGlobalPosY && nextVert.RightY > globalPos.y ||
+                prevVert.RightY < topGlobalPosY && prevVert.RightY > globalPos.y)
             {
                 mineListLocal.Add(mineList[i]);
             }
         }
         var wallLeft = 0;
         var wallRight = 0;
-        for (int y = (int)globalPos.y; y < (int)yTop; y++)
+        for (int y = (int)globalPos.y; y < (int)topGlobalPosY; y++)
         {
             for (int i = 0; i < mineListLocal.Count - 1; i++)
             {

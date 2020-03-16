@@ -12,9 +12,9 @@ public class Texture : MonoBehaviour
     public float backgroundLagCoefficient; //отставание текстуры бэкграунда от маски
     public float sidesLagCoefficient; //отставание текстуры стенок от маски
     private float speed;
-    private float _yMaskTile;
-    private float _ySidesTile;
-    private float _yBackgroundTile;
+    private float _maskGenerateCheckPoint;
+    private float _sidesGenerateCheckPoint;
+    private float _backgroundGenerateCheckPoint;
     private List<GameObject> _tileMaskList;
     private List<GameObject> _tileSidesList;
     private List<GameObject> _tileBackgroundList;
@@ -22,62 +22,68 @@ public class Texture : MonoBehaviour
 
     void Start()
     {
+
         _tileMaskList = new List<GameObject>();
         _tileSidesList = new List<GameObject>();
         _tileBackgroundList = new List<GameObject>();
-        _yMaskTile = MainCamera.pixelHeight + 256;
-        _ySidesTile = MainCamera.pixelHeight + 256;
-        _yBackgroundTile = MainCamera.pixelHeight + 256;
-        _tileMaskList = GenerateTile(_yMaskTile, TileMask, "Mask", _tileMaskList);
-        _tileSidesList = GenerateTile(_ySidesTile, TileSides, "Sides", _tileSidesList);
-        _tileBackgroundList = GenerateTile(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList);
+        _maskGenerateCheckPoint = MainCamera.pixelHeight + 256;
+        _sidesGenerateCheckPoint = MainCamera.pixelHeight + 256;
+        _backgroundGenerateCheckPoint = MainCamera.pixelHeight + 256;
+        _tileMaskList = GenerateTile(_maskGenerateCheckPoint, TileMask, "Mask", _tileMaskList);
+        _tileSidesList = GenerateTile(_sidesGenerateCheckPoint, TileSides, "Sides", _tileSidesList);
+        _tileBackgroundList = GenerateTile(_backgroundGenerateCheckPoint, TileBackground, "Background", _tileBackgroundList);
     }
     void Update()
     {
         speed = b.GetComponent<Barlog>().vertSpeed;
-        _yMaskTile = TileMovement(_yMaskTile, TileMask, "Mask", _tileMaskList, 0);
-        _ySidesTile = TileMovement(_ySidesTile, TileSides, "Sides", _tileSidesList, speed / sidesLagCoefficient);
-        _yBackgroundTile = TileMovement(_yBackgroundTile, TileBackground, "Background", _tileBackgroundList, - speed / backgroundLagCoefficient);
+        _maskGenerateCheckPoint = TileMovement(_maskGenerateCheckPoint, TileMask, "Mask", 
+            _tileMaskList, 0);
+        _sidesGenerateCheckPoint = TileMovement(_sidesGenerateCheckPoint, TileSides, "Sides", 
+            _tileSidesList, speed / sidesLagCoefficient);
+        _backgroundGenerateCheckPoint = TileMovement(_backgroundGenerateCheckPoint, TileBackground, "Background",
+            _tileBackgroundList, - speed / backgroundLagCoefficient);
     }
 
-    float TileMovement(float tileY, GameObject tileSource, string n, List<GameObject> tileList, float speedCorrective)
+    float TileMovement(float tileGenerateCheckPoint, GameObject tileSource, string n, List<GameObject> tileList, float speedCorrective)
     {
         GameObject tile = tileList[tileList.Count - 1];
-        tileY += speed + speedCorrective;
+        tileGenerateCheckPoint += speed + speedCorrective;
         if (tile.GetComponent<SpriteMask>())
         {
-            tileY -= tile.GetComponent<SpriteMask>().sprite.texture.height * tile.transform.localScale.y;
-            if (tileY > -tile.GetComponent<SpriteMask>().sprite.texture.height && GetComponent<Mine>().textureSpawnTrigger == 1)
+            var tileHeight = tile.GetComponent<SpriteMask>().sprite.texture.height;
+            tileGenerateCheckPoint -= tileHeight * tile.transform.localScale.y;
+            if (tileGenerateCheckPoint > -tileHeight && GetComponent<Mine>().textureSpawnTrigger == 1)
             {
-                GenerateTile(tileY, tileSource, n, tileList);
+                GenerateTile(tileGenerateCheckPoint, tileSource, n, tileList);
             }
             else
             {
-                tileY += tile.GetComponent<SpriteMask>().sprite.texture.height;
+                tileGenerateCheckPoint += tileHeight;
             }            
         }
         else
         {
-            tileY -= tile.GetComponent<SpriteRenderer>().sprite.texture.height * tile.transform.localScale.y;
-            if (tileY > -tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y && GetComponent<Mine>().textureSpawnTrigger == 1)
+            var tileHeight = tile.GetComponent<SpriteRenderer>().sprite.texture.height;
+            tileGenerateCheckPoint -= tileHeight * tile.transform.localScale.y;
+            if (tileGenerateCheckPoint > -tileHeight * tileSource.transform.localScale.y && GetComponent<Mine>().textureSpawnTrigger == 1)
             {
-                GenerateTile(tileY, tileSource, n, tileList);
+                GenerateTile(tileGenerateCheckPoint, tileSource, n, tileList);
             }
             else
             {
-                tileY += tile.GetComponent<SpriteRenderer>().sprite.texture.height * tileSource.transform.localScale.y;
+                tileGenerateCheckPoint += tileHeight * tileSource.transform.localScale.y;
             }
         }
-        return tileY;
+        return tileGenerateCheckPoint;
     }
-    List<GameObject> GenerateTile(float _yTile, GameObject tile, string n, List<GameObject> _tileList)
+    List<GameObject> GenerateTile(float tileGenerateCheckPoint, GameObject tile, string n, List<GameObject> tileList)
     {
-        var TileI = Instantiate(tile, new Vector3(256, _yTile, 0), Quaternion.identity);
+        var TileI = Instantiate(tile, new Vector3(256, tileGenerateCheckPoint, 0), Quaternion.identity);
         TileI.transform.parent = transform;
         TileI.name = n;
-        _tileList.Add(TileI);
-        _tileListCut(_tileList);
-        return _tileList;
+        tileList.Add(TileI);
+        _tileListCut(tileList);
+        return tileList;
     }
     void _tileListCut(List<GameObject> _tileList)
     {

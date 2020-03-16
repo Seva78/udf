@@ -4,44 +4,45 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    GameObject b;
-    GameObject g;
-    public GameObject s_explosion;
-    Vector3 b_position;
-    Vector3 g_position;
-    int change_trajectory_trigger;
-    int change_trajectory_value;
-    public AudioClip iceball_fire;
-    public AudioClip iceball_explode;
-    public int explode_trigger;
+    public GameObject projectileExplosion;
+    Vector3 _barlogPosition;
+    Vector3 _gandalfPosition;
+    int _changeTrajectoryTrigger;
+    int _changeTrajectoryValue;
+    public AudioClip iceBallFire;
+    public AudioClip iceBallExplode;
+    public int explodeTrigger;
 
     void Start()
     {
-        b = GameObject.Find("Barlog");
-        g = GameObject.Find("Gandalf");
-        b_position = b.transform.position;
-        g_position = g.transform.position;
-        GetComponent<AudioSource>().PlayOneShot(iceball_fire, 1f);
+        _barlogPosition = GameObject.Find("Barlog").transform.position;
+        _gandalfPosition = GameObject.Find("Gandalf").transform.position;
+        GetComponent<AudioSource>().PlayOneShot(iceBallFire, 1f);
     }
 
     void Update()
     {
-        if(explode_trigger == 0) transform.position = new Vector3(transform.position.x - (g_position.x - (b_position.x + change_trajectory_value)) / 50, transform.position.y - (g_position.y - b_position.y) / 50, transform.position.z);
-        if (change_trajectory_trigger == 0) {
-            change_trajectory_trigger = 1;
+        if (explodeTrigger == 0)
+        {
+            transform.position = 
+                new Vector3(transform.position.x - (_gandalfPosition.x - (_barlogPosition.x + _changeTrajectoryValue)) / 50, 
+                    transform.position.y - (_gandalfPosition.y - _barlogPosition.y) / 50);
+        }
+        if (_changeTrajectoryTrigger == 0) {
+            _changeTrajectoryTrigger = 1;
             StartCoroutine("ChangeTrajectory");
         }
     }
     IEnumerator ChangeTrajectory()
     {
         yield return new WaitForSeconds(0.15f);
-        change_trajectory_value = Random.Range(300,-300);
-        change_trajectory_trigger = 0;
+        _changeTrajectoryValue = Random.Range(300,-300);
+        _changeTrajectoryTrigger = 0;
     }
     void OnCollisionEnter2D() {
-        explode_trigger = 1;
-        GetComponent<AudioSource>().PlayOneShot(iceball_explode, 1f);
-        Instantiate(s_explosion, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
+        explodeTrigger = 1;
+        GetComponent<AudioSource>().PlayOneShot(iceBallExplode, 1f);
+        Instantiate(projectileExplosion, _gandalfPosition, Quaternion.identity);
         StartCoroutine("Destroy");
     }
     IEnumerator Destroy()

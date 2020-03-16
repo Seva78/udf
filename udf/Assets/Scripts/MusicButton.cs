@@ -9,6 +9,7 @@ public class MusicButton : MonoBehaviour
     public Sprite musicOn;
     public GameObject controller;
 
+    
     void Start()
     {
         if (PlayerPrefs.GetInt("musicOff", 0) == 1)
@@ -20,6 +21,7 @@ public class MusicButton : MonoBehaviour
     public void SwitchButton()
     {
         _counter++;
+
         if (_counter % 2 == 1)
         {
             musicButton.GetComponent<Image>().sprite = musicOff;

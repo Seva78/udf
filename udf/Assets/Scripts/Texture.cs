@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Texture : MonoBehaviour
 {
-    [SerializeField] public GameObject TileMask;
-    [SerializeField] public GameObject TileSides;
-    [SerializeField] public GameObject TileBackground;
-    [SerializeField] public Camera MainCamera;
-    [SerializeField] public GameObject b;
+    public GameObject mask;
+    public GameObject sides;
+    public GameObject background;
+    public Camera mainCamera;
+    public GameObject barlog;
     public float backgroundLagCoefficient; //отставание текстуры бэкграунда от маски
     public float sidesLagCoefficient; //отставание текстуры стенок от маски
-    private float speed;
+    private float _speed;
     private float _maskGenerateCheckPoint;
     private float _sidesGenerateCheckPoint;
     private float _backgroundGenerateCheckPoint;
@@ -26,28 +26,28 @@ public class Texture : MonoBehaviour
         _tileMaskList = new List<GameObject>();
         _tileSidesList = new List<GameObject>();
         _tileBackgroundList = new List<GameObject>();
-        _maskGenerateCheckPoint = MainCamera.pixelHeight + 256;
-        _sidesGenerateCheckPoint = MainCamera.pixelHeight + 256;
-        _backgroundGenerateCheckPoint = MainCamera.pixelHeight + 256;
-        _tileMaskList = GenerateTile(_maskGenerateCheckPoint, TileMask, "Mask", _tileMaskList);
-        _tileSidesList = GenerateTile(_sidesGenerateCheckPoint, TileSides, "Sides", _tileSidesList);
-        _tileBackgroundList = GenerateTile(_backgroundGenerateCheckPoint, TileBackground, "Background", _tileBackgroundList);
+        _maskGenerateCheckPoint = mainCamera.pixelHeight + 256;
+        _sidesGenerateCheckPoint = mainCamera.pixelHeight + 256;
+        _backgroundGenerateCheckPoint = mainCamera.pixelHeight + 256;
+        _tileMaskList = GenerateTile(_maskGenerateCheckPoint, mask, "Mask", _tileMaskList);
+        _tileSidesList = GenerateTile(_sidesGenerateCheckPoint, sides, "Sides", _tileSidesList);
+        _tileBackgroundList = GenerateTile(_backgroundGenerateCheckPoint, background, "Background", _tileBackgroundList);
     }
     void Update()
     {
-        speed = b.GetComponent<Barlog>().vertSpeed;
-        _maskGenerateCheckPoint = TileMovement(_maskGenerateCheckPoint, TileMask, "Mask", 
+        _speed = barlog.GetComponent<Barlog>().vertSpeed;
+        _maskGenerateCheckPoint = TileMovement(_maskGenerateCheckPoint, mask, "Mask", 
             _tileMaskList, 0);
-        _sidesGenerateCheckPoint = TileMovement(_sidesGenerateCheckPoint, TileSides, "Sides", 
-            _tileSidesList, speed / sidesLagCoefficient);
-        _backgroundGenerateCheckPoint = TileMovement(_backgroundGenerateCheckPoint, TileBackground, "Background",
-            _tileBackgroundList, - speed / backgroundLagCoefficient);
+        _sidesGenerateCheckPoint = TileMovement(_sidesGenerateCheckPoint, sides, "Sides", 
+            _tileSidesList, _speed / sidesLagCoefficient);
+        _backgroundGenerateCheckPoint = TileMovement(_backgroundGenerateCheckPoint, background, "Background",
+            _tileBackgroundList, - _speed / backgroundLagCoefficient);
     }
 
     float TileMovement(float tileGenerateCheckPoint, GameObject tileSource, string n, List<GameObject> tileList, float speedCorrective)
     {
         GameObject tile = tileList[tileList.Count - 1];
-        tileGenerateCheckPoint += speed + speedCorrective;
+        tileGenerateCheckPoint += _speed + speedCorrective;
         if (tile.GetComponent<SpriteMask>())
         {
             var tileHeight = tile.GetComponent<SpriteMask>().sprite.texture.height;
@@ -78,24 +78,24 @@ public class Texture : MonoBehaviour
     }
     List<GameObject> GenerateTile(float tileGenerateCheckPoint, GameObject tile, string n, List<GameObject> tileList)
     {
-        var TileI = Instantiate(tile, new Vector3(256, tileGenerateCheckPoint, 0), Quaternion.identity);
-        TileI.transform.parent = transform;
-        TileI.name = n;
-        tileList.Add(TileI);
+        var tileObj = Instantiate(tile, new Vector3(256, tileGenerateCheckPoint, 0), Quaternion.identity);
+        tileObj.transform.parent = transform;
+        tileObj.name = n;
+        tileList.Add(tileObj);
         _tileListCut(tileList);
         return tileList;
     }
-    void _tileListCut(List<GameObject> _tileList)
+    void _tileListCut(List<GameObject> tileList)
     {
-        foreach (GameObject tile in _tileList)
+        foreach (GameObject tile in tileList)
         {
-            if (tile.transform.position.y > MainCamera.pixelHeight + 400)
+            if (tile.transform.position.y > mainCamera.pixelHeight + 400)
             {
-                _tileToDelete = _tileList.IndexOf(tile) + 1;
+                _tileToDelete = tileList.IndexOf(tile) + 1;
             }
         }
         if (_tileToDelete != 0) {
-            _tileList.RemoveAt(_tileToDelete - 1);
+            tileList.RemoveAt(_tileToDelete - 1);
             _tileToDelete = 0;
         }
     }

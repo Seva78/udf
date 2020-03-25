@@ -14,22 +14,21 @@ public class Mine : MonoBehaviour
     // и крайней точки с другой стороны в предыдущем позвонке (чтобы не было очень крутых изломов лабиринта).
     public int sidePointsMinDist; 
     public float speed;
-    private int _centralPointPosLimitL;
-    private int _centralPointPosLimitR;
     public int centralPointX;
     public float centralPointY;
     public int sidePointLeftX;
     public float sidePointLeftY;
     public int sidePointRightX;
     public float sidePointRightY;
-    private float _prevSidePointLeftY;
-    private float _prevSidePointRightY;
     public List<GameObject> mineList;
-    private int _vertebraToDelete;
     //пока не включен, фоновую текстуру не генерим
     public int textureSpawnTrigger; 
     public GameObject depthUi;
-
+    private int _centralPointPosLimitL;
+    private int _centralPointPosLimitR;
+    private float _prevSidePointLeftY;
+    private float _prevSidePointRightY;
+    private int _vertebraToDelete;
     void Start()
     {
         mineList = new List<GameObject>();

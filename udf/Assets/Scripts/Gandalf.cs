@@ -5,11 +5,11 @@ using System.Linq;
 
 public class Gandalf : MonoBehaviour
 {
-    private float _speed;
     public int gandalfY;
     public GameObject barlog;
     public GameObject projectile;
     public GameObject controller;
+    private float _speed;
     private List<GameObject> _mineList;
     int _fireCooldownTrigger;
     void Update()

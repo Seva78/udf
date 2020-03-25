@@ -6,6 +6,13 @@ using UnityEngine.Serialization;
 public class Barlog : MonoBehaviour
 {
     public float vertSpeed; //переменная для передачи в скрипт Mine
+    public GameObject cam;
+    public TextMeshPro hpText;
+    public GameObject hpUi;
+    public GameObject deepBoard;
+    public GameObject reFallButton;
+    public int startButtonPressed;
+    public AudioClip soundBarlogHit2;
     private float _v; //Скорость _v полёта демона.
     private float _r; //Направление _r полёта демона.
     private float _a; //Ускорение A, которое демон создаёт в период маха крыла.
@@ -16,17 +23,10 @@ public class Barlog : MonoBehaviour
     private float _aVx;
     private float _aVy;
     private float _centerTendencyCoefficient;
-    public GameObject cam;
-    public TextMeshPro hpText;
-    public GameObject hpUi;
-    public GameObject deepBoard;
-    public GameObject reFallButton;
     private Animator _anim;
     private int _healthPoints = 100;
     private int _healthPointsDelta;
     private int _healthPointsCooldownTrigger;
-    public int startButtonPressed;
-    public AudioClip soundBarlogHit2;
     private float BarlogX => transform.position.x;
     private float BarlogY => transform.position.y;
     private float BarlogZ => transform.position.z;

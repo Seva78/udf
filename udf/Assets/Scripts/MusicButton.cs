@@ -8,7 +8,6 @@ public class MusicButton : MonoBehaviour
     public Sprite musicOff;
     public Sprite musicOn;
     public GameObject controller;
-
     
     void Start()
     {

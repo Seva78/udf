@@ -22,7 +22,6 @@ public class Texture : MonoBehaviour
 
     void Start()
     {
-
         _tileMaskList = new List<GameObject>();
         _tileSidesList = new List<GameObject>();
         _tileBackgroundList = new List<GameObject>();

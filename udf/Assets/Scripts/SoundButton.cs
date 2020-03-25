@@ -3,13 +3,12 @@ using UnityEngine.UI;
 
 public class SoundButton : MonoBehaviour
 {
-    int _counter;
     public Button soundButton;
     public Sprite soundOff;
     public Sprite soundOn;
     public GameObject projectile;
     public GameObject balrog;
-
+    int _counter;
     void Start()
     {
         if (PlayerPrefs.GetInt("sndOff", 0) == 1)

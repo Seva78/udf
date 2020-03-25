@@ -5,14 +5,13 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public GameObject projectileExplosion;
+    public AudioClip iceBallFire;
+    public AudioClip iceBallExplode;
+    public int explodeTrigger;
     Vector3 _barlogPosition;
     Vector3 _gandalfPosition;
     int _changeTrajectoryTrigger;
     int _changeTrajectoryValue;
-    public AudioClip iceBallFire;
-    public AudioClip iceBallExplode;
-    public int explodeTrigger;
-
     void Start()
     {
         _barlogPosition = GameObject.Find("Barlog").transform.position;

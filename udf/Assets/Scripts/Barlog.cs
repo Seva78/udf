@@ -13,25 +13,24 @@ public class Barlog : MonoBehaviour
     public GameObject reFallButton;
     public int startButtonPressed;
     public AudioClip soundBarlogHit2;
-    private float _v; //Скорость _v полёта демона.
-    private float _r; //Направление _r полёта демона.
-    private float _a; //Ускорение A, которое демон создаёт в период маха крыла.
-    private int _aTrigger;
-    private float _k; //Коэффициент _k трения об воздух (не константа, т.к. зависит от того, как сильно у Б расправлены крылья).
-    private float _d; //переменная для вывода всякого в служебное меню
-    private int _ratio = 20;
-    private float _aVx;
-    private float _aVy;
-    private float _centerTendencyCoefficient;
-    private Animator _anim;
-    private int _healthPoints = 100;
-    private int _healthPointsDelta;
-    private int _healthPointsCooldownTrigger;
-    private float BarlogX => transform.position.x;
-    private float BarlogY => transform.position.y;
-    private float BarlogZ => transform.position.z;
-    private Quaternion BarlogRot => transform.rotation;
-    private Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
+    float _v; //Скорость _v полёта демона.
+    float _r; //Направление _r полёта демона.
+    float _a; //Ускорение A, которое демон создаёт в период маха крыла.
+    int _aTrigger;
+    float _k; //Коэффициент _k трения об воздух (не константа, т.к. зависит от того, как сильно расправлены крылья).
+    float _d; //переменная для вывода всякого в служебное меню
+    int _ratio = 20;
+    float _aVx;
+    float _aVy;
+    float _centerTendencyCoefficient;
+    Animator _anim;
+    int _healthPoints = 100;
+    int _healthPointsDelta;
+    int _healthPointsCooldownTrigger;
+    float BarlogX => transform.position.x;
+    float BarlogY => transform.position.y;
+    Quaternion BarlogRot => transform.rotation;
+    Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
     
     void StartGame()
     {
@@ -82,7 +81,7 @@ public class Barlog : MonoBehaviour
             vertSpeed = _aVy * _ratio * Time.deltaTime;
             if (vertSpeed < 3) vertSpeed = 3;
             Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
-                BarlogY - _centerTendencyCoefficient, BarlogZ));
+                BarlogY - _centerTendencyCoefficient));
             _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
             _anim.SetFloat("speed", _v);
             _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
@@ -93,6 +92,7 @@ public class Barlog : MonoBehaviour
             if (BarlogY > 800) _healthPoints -= 1;
             if (_healthPoints < 0) _healthPoints = 0;
             hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
+            print(Mathf.Round(_v).ToString() + " ft./s.");
         }
     }
 

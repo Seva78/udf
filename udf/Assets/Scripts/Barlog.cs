@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class Barlog : MonoBehaviour
 {
-    public float vertSpeed; //переменная для передачи в скрипт Mine
+    public float VertSpeed; //переменная для передачи в скрипт Mine
     public GameObject cam;
     public TextMeshPro hpText;
     public GameObject hpUi;
@@ -38,7 +38,7 @@ public class Barlog : MonoBehaviour
         startButtonPressed = 1;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_healthPoints <= 0) {
             startButtonPressed = 0;
@@ -78,8 +78,8 @@ public class Barlog : MonoBehaviour
             _aVx = _v* Mathf.Sin(_r);
             _aVy = _v* Mathf.Cos(_r);
             _aVy += 8 * Time.deltaTime;
-            vertSpeed = _aVy * _ratio * Time.deltaTime;
-            if (vertSpeed < 3) vertSpeed = 3;
+            VertSpeed = _aVy * _ratio;
+            if (VertSpeed < 3) VertSpeed = 3;
             Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
                 BarlogY - _centerTendencyCoefficient));
             _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
@@ -92,7 +92,7 @@ public class Barlog : MonoBehaviour
             if (BarlogY > 800) _healthPoints -= 1;
             if (_healthPoints < 0) _healthPoints = 0;
             hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
-            print(Mathf.Round(_v).ToString() + " ft./s.");
+            // print(Mathf.Round(_v).ToString() + " ft./s.");
         }
     }
 

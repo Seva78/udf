@@ -24,8 +24,8 @@ public class Projectile : MonoBehaviour
         if (explodeTrigger == 0)
         {
             transform.position = 
-                new Vector3(transform.position.x - (_gandalfPosition.x - (_barlogPosition.x + _changeTrajectoryValue)) / 50, 
-                    transform.position.y - (_gandalfPosition.y - _barlogPosition.y) / 50);
+                new Vector3(transform.position.x - (_gandalfPosition.x - (_barlogPosition.x + _changeTrajectoryValue)) * Time.deltaTime, 
+                    transform.position.y - (_gandalfPosition.y - _barlogPosition.y) * Time.deltaTime);
         }
         if (_changeTrajectoryTrigger == 0) {
             _changeTrajectoryTrigger = 1;
@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
     void OnCollisionEnter2D() {
         explodeTrigger = 1;
         GetComponent<AudioSource>().PlayOneShot(iceBallExplode, 1f);
-        Instantiate(projectileExplosion, _gandalfPosition, Quaternion.identity);
+        Instantiate(projectileExplosion, transform.position, Quaternion.identity);
         StartCoroutine("Destroy");
     }
     IEnumerator Destroy()

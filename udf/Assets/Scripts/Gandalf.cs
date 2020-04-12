@@ -41,7 +41,7 @@ namespace Assets.Scripts
                 }
             }
         
-            _speed = barlog.GetComponent<Barlog>().vertSpeed;
+            _speed = barlog.GetComponent<Barlog>().VertSpeed*Time.deltaTime;
             if (position.y > gandalfY) {
                 transform.position = new Vector3(position.x, position.y - _speed);
             }

@@ -42,7 +42,7 @@ public class Mine : MonoBehaviour
     }
     void Update()
     {
-        speed = barlog.GetComponent<Barlog>().vertSpeed;
+        speed = barlog.GetComponent<Barlog>().VertSpeed*Time.deltaTime;
         transform.position = new Vector3(transform.position.x, transform.position.y + speed);
         centralPointY += speed;
         _prevSidePointLeftY += speed;

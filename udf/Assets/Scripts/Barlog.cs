@@ -143,7 +143,7 @@ public class Barlog : MonoBehaviour
     void HealthPointsSpawn(int healthPointsValue, Color32 healthPointsColor)
     {
         var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
-        hpTextI.GetComponent<HealthPointsPopup>().balrog = gameObject;
+        hpTextI.GetComponent<HealthPointsPopup>().Balrog = gameObject;
         hpTextI.GetComponent<TextMeshPro>().text = healthPointsValue.ToString();
         hpTextI.GetComponent<TextMeshPro>().color = healthPointsColor;
         _healthPointsDelta = 0;

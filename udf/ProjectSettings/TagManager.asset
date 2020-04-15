@@ -10,6 +10,8 @@ TagManager:
   - SPR
   - Projectile
   - CP
+  - LeftWall
+  - RightWall
   layers:
   - Default
   - TransparentFX

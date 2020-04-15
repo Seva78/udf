@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine.Serialization;
 
+[SuppressMessage("ReSharper", "CommentTypo")]
 public class Barlog : MonoBehaviour
 {
     public float VertSpeed; //переменная для передачи в скрипт Mine
@@ -27,6 +29,7 @@ public class Barlog : MonoBehaviour
     int _healthPoints = 100;
     int _healthPointsDelta;
     int _healthPointsCooldownTrigger;
+    bool _collided;
     float BarlogX => transform.position.x;
     float BarlogY => transform.position.y;
     Quaternion BarlogRot => transform.rotation;
@@ -38,7 +41,7 @@ public class Barlog : MonoBehaviour
         startButtonPressed = 1;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (_healthPoints <= 0) {
             startButtonPressed = 0;
@@ -49,46 +52,63 @@ public class Barlog : MonoBehaviour
         }
         if (startButtonPressed == 1)
         {
-            //если юзер не жмёт ни вправо, ни влево
-            if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
-            else _r += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
+            if (_collided)
+            {
+                print(_aVx);
+                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
+                    BarlogY));
+                _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+                _anim.SetFloat("speed", _v);
+                _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+                _r = Mathf.Asin(_aVx / _v);
+                Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                    Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                        _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
+                // StartCoroutine(Rebound());
+                _collided = false;
+            }
+            else{
+                //если юзер не жмёт ни вправо, ни влево
+                if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
+                else _r += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
 
-            if (Input.GetAxis("Vertical") > 0)
-            {
-                GetComponent<SpriteRenderer>().flipY = true;
-                _k = 0.99f;
-                _a = 0;
-                _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
+                if (Input.GetAxis("Vertical") > 0)
+                {
+                    GetComponent<SpriteRenderer>().flipY = true;
+                    _k = 0.99f;
+                    _a = 0;
+                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
+                }
+                else if (Input.GetAxis("Vertical") == 0)
+                {
+                    GetComponent<SpriteRenderer>().flipY = false;
+                    _k = 0.5f;
+                    _a = 0;
+                    _centerTendencyCoefficient = (BarlogY - cam.transform.position.y) / 100;
+                }
+                else {
+                    GetComponent<SpriteRenderer>().flipY = false;
+                    _k = 0.4f;
+                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _aTrigger * 200))/100;
+                    _a = _aTrigger * 20;
+                }
+                _v *= 1 - _k * Time.deltaTime;
+                _v += _a * Time.deltaTime;
+                _aVx = _v* Mathf.Sin(_r);
+                _aVy = _v* Mathf.Cos(_r);
+                _aVy += 8 * Time.deltaTime;
+                VertSpeed = _aVy * _ratio;
+                if (VertSpeed < 3) VertSpeed = 3;
+                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
+                    BarlogY - _centerTendencyCoefficient));
+                _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+                _anim.SetFloat("speed", _v);
+                _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+                _r = Mathf.Asin(_aVx / _v);
+                Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                                 Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                                     _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
             }
-            else if (Input.GetAxis("Vertical") == 0)
-            {
-                GetComponent<SpriteRenderer>().flipY = false;
-                _k = 0.5f;
-                _a = 0;
-                _centerTendencyCoefficient = (BarlogY - cam.transform.position.y) / 100;
-            }
-            else {
-                GetComponent<SpriteRenderer>().flipY = false;
-                _k = 0.4f;
-                _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _aTrigger * 200))/100;
-                _a = _aTrigger * 20;
-            }
-            _v *= 1 - _k * Time.deltaTime;
-            _v += _a * Time.deltaTime;
-            _aVx = _v* Mathf.Sin(_r);
-            _aVy = _v* Mathf.Cos(_r);
-            _aVy += 8 * Time.deltaTime;
-            VertSpeed = _aVy * _ratio;
-            if (VertSpeed < 3) VertSpeed = 3;
-            Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
-                BarlogY - _centerTendencyCoefficient));
-            _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-            _anim.SetFloat("speed", _v);
-            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-            _r = Mathf.Asin(_aVx / _v);
-            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                                 _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
             if (BarlogY > 800) _healthPoints -= 1;
             if (_healthPoints < 0) _healthPoints = 0;
             hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
@@ -118,8 +138,13 @@ public class Barlog : MonoBehaviour
     {
         if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
-            _healthPointsDelta += Random.Range(1, 3);
+            _collided = true;
+            // _healthPointsDelta += Random.Range(1, 3);
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
+            if (collision.gameObject.tag == "LeftWall" && _aVx < 0 || collision.gameObject.tag == "RightWall" && _aVx > 0)
+            {
+                _aVx *= -1;
+            }
         }
         if (collision.gameObject.tag == "Projectile")
         {
@@ -136,7 +161,7 @@ public class Barlog : MonoBehaviour
     IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
     {
         yield return new WaitForSeconds(0.1f);
-        HealthPointsSpawn(healthPointsDelta*-1, new Color32(255, 0, 0, 255));
+        HealthPointsSpawn(healthPointsDelta * -1, new Color32(255, 0, 0, 255));
         _healthPointsCooldownTrigger = 0;
     }
 
@@ -148,6 +173,11 @@ public class Barlog : MonoBehaviour
         hpTextI.GetComponent<TextMeshPro>().color = healthPointsColor;
         _healthPointsDelta = 0;
     }
-
+    IEnumerator Rebound()
+    {
+        VertSpeed *= -1;
+        yield return new WaitForSeconds(10f);
+        _collided = false;
+    }
 
 }

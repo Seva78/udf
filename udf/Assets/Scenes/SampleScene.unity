@@ -10801,7 +10801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd4455d28e43844da5a3d783b9b5aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vertSpeed: 0
+  VertSpeed: 0
   cam: {fileID: 519420028}
   hpText: {fileID: 4787586125774494781, guid: be1ca96ec2690274a8c23c1527a85afd, type: 3}
   hpUi: {fileID: 1963383471}

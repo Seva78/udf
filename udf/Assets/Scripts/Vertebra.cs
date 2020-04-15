@@ -27,7 +27,9 @@ public class Vertebra : MonoBehaviour
         var mineList = GetComponentInParent<Mine>().mineList;
         var centralPoint = Instantiate(point, new Vector3(centralPointX, centralPointY), Quaternion.identity);
         leftPoint = Instantiate(point, new Vector3(sidePointLeftX, sidePointLeftY), Quaternion.identity);
+        leftPoint.tag = "LeftWall";
         rightPoint = Instantiate(point, new Vector3(sidePointRightX, sidePointRightY), Quaternion.identity);
+        rightPoint.tag = "RightWall";
         centralPoint.transform.parent = transform;
         leftPoint.transform.parent = transform;
         rightPoint.transform.parent = transform;

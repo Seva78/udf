@@ -45,7 +45,7 @@ namespace Assets.Scripts
             if (position.y > gandalfY) {
                 transform.position = new Vector3(position.x, position.y - _speed);
             }
-            if (_fireCooldownTrigger == 0 && barlog.GetComponent<Barlog>().startButtonPressed == 1)
+            if (_fireCooldownTrigger == 0 && barlog.GetComponent<Barlog>().StartButtonPressed == 1)
             {
                 _fireCooldownTrigger = 1;
                 StartCoroutine(Fire(position));

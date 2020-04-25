@@ -67,7 +67,7 @@ public class Mine : MonoBehaviour
             mineList.RemoveAt(_vertebraToDelete - 1);
             _vertebraToDelete = 0;
         }
-        if (barlog.GetComponent<Barlog>().startButtonPressed == 1)
+        if (barlog.GetComponent<Barlog>().StartButtonPressed == 1)
         {
             depthUi.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20) + " m";
         }

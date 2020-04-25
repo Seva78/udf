@@ -13,50 +13,58 @@ public class Barlog : MonoBehaviour
     public GameObject hpUi;
     public GameObject deepBoard;
     public GameObject reFallButton;
-    public int startButtonPressed;
+    public int StartButtonPressed;
     public AudioClip soundBarlogHit2;
-    float _v; //Скорость _v полёта демона.
-    float _r; //Направление _r полёта демона.
-    float _a; //Ускорение A, которое демон создаёт в период маха крыла.
-    int _aTrigger;
-    float _k; //Коэффициент _k трения об воздух (не константа, т.к. зависит от того, как сильно расправлены крылья).
-    float _d; //переменная для вывода всякого в служебное меню
-    int _ratio = 20;
-    float _aVx;
-    float _aVy;
-    float _centerTendencyCoefficient;
-    Animator _anim;
-    int _healthPoints = 100;
-    int _healthPointsDelta;
-    int _healthPointsCooldownTrigger;
-    bool _collided;
-    float BarlogX => transform.position.x;
-    float BarlogY => transform.position.y;
-    Quaternion BarlogRot => transform.rotation;
+    private float _v; //Скорость _v полёта демона.
+    private float _r; //Направление _r полёта демона.
+    private float _a; //Ускорение A, которое демон создаёт в период маха крыла.
+    private int _aTrigger;
+    private float _k; //Коэффициент _k трения об воздух (не константа, т.к. зависит от того, как сильно расправлены крылья).
+    private float _d; //переменная для вывода всякого в служебное меню
+    private const int Ratio = 20;
+    private float _aVx;
+    private float _aVy;
+    private float _centerTendencyCoefficient;
+    private Animator _anim;
+    private int _healthPoints = 100;
+    private int _healthPointsDelta;
+    private int _healthPointsCooldownTrigger;
+    private bool _collided;
+    private float BarlogX => transform.position.x;
+    private float BarlogY => transform.position.y;
+    private Quaternion BarlogRot => transform.rotation;
+    private bool _reboundWingsBlockTrigger;
     Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
     
-    void StartGame()
+    private void StartGame()
     {
         _anim = GetComponent<Animator>();
-        startButtonPressed = 1;
+        StartButtonPressed = 1;
     }
-
-    void Update()
+    private void Update()
     {
         if (_healthPoints <= 0) {
-            startButtonPressed = 0;
+            StartButtonPressed = 0;
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<CircleCollider2D>().enabled = false;
             deepBoard.SetActive(true);
             reFallButton.SetActive(true);
         }
-        if (startButtonPressed == 1)
+        if (StartButtonPressed == 1)
         {
             if (_collided)
             {
-                print(_aVx);
-                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
-                    BarlogY));
+                // print(_aVx);
+                _anim.SetBool("Collided", true);
+                _v *= 1 - _k * Time.deltaTime;
+                // _v += _a * Time.deltaTime;
+                // _aVx = _v* Mathf.Sin(_r);
+                _aVy = _v* Mathf.Cos(_r);
+                _aVy += 8 * Time.deltaTime;
+                VertSpeed = _aVy * Ratio;
+                if (VertSpeed < 3) VertSpeed = 3;
+                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * Ratio * Time.deltaTime, 
+                    BarlogY - _centerTendencyCoefficient));
                 _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
                 _anim.SetFloat("speed", _v);
                 _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
@@ -64,8 +72,12 @@ public class Barlog : MonoBehaviour
                 Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
                     Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
                         _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
-                // StartCoroutine(Rebound());
-                _collided = false;
+                StartCoroutine(Rebound());
+                if (_reboundWingsBlockTrigger == false)
+                {
+                    _reboundWingsBlockTrigger = true;
+                    StartCoroutine(ReboundWingsBlock());
+                }
             }
             else{
                 //если юзер не жмёт ни вправо, ни влево
@@ -97,9 +109,9 @@ public class Barlog : MonoBehaviour
                 _aVx = _v* Mathf.Sin(_r);
                 _aVy = _v* Mathf.Cos(_r);
                 _aVy += 8 * Time.deltaTime;
-                VertSpeed = _aVy * _ratio;
+                VertSpeed = _aVy * Ratio;
                 if (VertSpeed < 3) VertSpeed = 3;
-                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * _ratio * Time.deltaTime, 
+                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * Ratio * Time.deltaTime, 
                     BarlogY - _centerTendencyCoefficient));
                 _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
                 _anim.SetFloat("speed", _v);
@@ -125,16 +137,16 @@ public class Barlog : MonoBehaviour
         else return 1;
     }
 
-    void BoostEvent(int v)
+    private void BoostEvent(int v)
     {
         _aTrigger = 1 * v;
-        if (v == 1 && startButtonPressed == 1) {
+        if (v == 1 && StartButtonPressed == 1) {
             _healthPointsDelta = 5;
             _healthPoints += _healthPointsDelta;
             HealthPointsSpawn(_healthPointsDelta, new Color32(0, 255, 0, 255));
         }
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
@@ -158,14 +170,14 @@ public class Barlog : MonoBehaviour
             StartCoroutine(HealthPointsRedCoroutine(_healthPointsDelta));
         }
     }
-    IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
+    private IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
     {
         yield return new WaitForSeconds(0.1f);
         HealthPointsSpawn(healthPointsDelta * -1, new Color32(255, 0, 0, 255));
         _healthPointsCooldownTrigger = 0;
     }
 
-    void HealthPointsSpawn(int healthPointsValue, Color32 healthPointsColor)
+    private void HealthPointsSpawn(int healthPointsValue, Color32 healthPointsColor)
     {
         var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
         hpTextI.GetComponent<HealthPointsPopup>().Balrog = gameObject;
@@ -173,11 +185,16 @@ public class Barlog : MonoBehaviour
         hpTextI.GetComponent<TextMeshPro>().color = healthPointsColor;
         _healthPointsDelta = 0;
     }
-    IEnumerator Rebound()
+    private IEnumerator Rebound()
     {
-        VertSpeed *= -1;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(0.25f);
         _collided = false;
     }
-
+    
+    private IEnumerator ReboundWingsBlock()
+    {
+        yield return new WaitForSeconds(10f);
+        _anim.SetBool("Collided", false);
+        _reboundWingsBlockTrigger = false;
+    }
 }

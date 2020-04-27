@@ -54,30 +54,8 @@ public class Barlog : MonoBehaviour
         {
             if (_collided)
             {
-                // print(_aVx);
                 _anim.SetBool("Collided", true);
-                _v *= 1 - _k * Time.deltaTime;
-                // _v += _a * Time.deltaTime;
-                // _aVx = _v* Mathf.Sin(_r);
-                _aVy = _v* Mathf.Cos(_r);
-                _aVy += 8 * Time.deltaTime;
-                VertSpeed = _aVy * Ratio;
-                if (VertSpeed < 3) VertSpeed = 3;
-                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * Ratio * Time.deltaTime, 
-                    BarlogY - _centerTendencyCoefficient));
-                _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-                _anim.SetFloat("speed", _v);
-                _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-                _r = Mathf.Asin(_aVx / _v);
-                Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                    Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                        _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
-                StartCoroutine(Rebound());
-                if (_reboundWingsBlockTrigger == false)
-                {
-                    _reboundWingsBlockTrigger = true;
-                    StartCoroutine(ReboundWingsBlock());
-                }
+                BarlogMovementAndRotation(true, 2);
             }
             else{
                 //если юзер не жмёт ни вправо, ни влево
@@ -104,30 +82,56 @@ public class Barlog : MonoBehaviour
                     _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _aTrigger * 200))/100;
                     _a = _aTrigger * 20;
                 }
-                _v *= 1 - _k * Time.deltaTime;
-                _v += _a * Time.deltaTime;
-                _aVx = _v* Mathf.Sin(_r);
-                _aVy = _v* Mathf.Cos(_r);
-                _aVy += 8 * Time.deltaTime;
-                VertSpeed = _aVy * Ratio;
-                if (VertSpeed < 3) VertSpeed = 3;
-                Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * Ratio * Time.deltaTime, 
-                    BarlogY - _centerTendencyCoefficient));
-                _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-                _anim.SetFloat("speed", _v);
-                _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-                _r = Mathf.Asin(_aVx / _v);
-                Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                                 Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                                     _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
+                BarlogMovementAndRotation(false, 1);
             }
             if (BarlogY > 800) _healthPoints -= 1;
             if (_healthPoints < 0) _healthPoints = 0;
             hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
-            // print(Mathf.Round(_v).ToString() + " ft./s.");
         }
     }
-
+    private void BarlogMovementAndRotation(bool collidedStatus, int speedCoefficient)
+    {
+        _v *= 1 - _k * Time.deltaTime;
+        _v += _a * Time.deltaTime;
+        if (!collidedStatus)
+        {
+            _aVx = _v* Mathf.Sin(_r);
+        }
+        _aVy = _v* Mathf.Cos(_r);
+        _aVy += 8 * Time.deltaTime;
+        VertSpeed = _aVy * Ratio / speedCoefficient;
+        if (VertSpeed < 3) VertSpeed = 3;
+        Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * Ratio / speedCoefficient * Time.deltaTime, 
+            BarlogY - _centerTendencyCoefficient));
+        _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+        _anim.SetFloat("speed", _v);
+        _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+        _r = Mathf.Asin(_aVx / _v);
+        Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+            Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
+        if (collidedStatus)
+        {
+            StartCoroutine(Rebound());
+            if (_reboundWingsBlockTrigger == false)
+            {
+                _reboundWingsBlockTrigger = true;
+                StartCoroutine(ReboundWingsBlock());
+            }
+        }
+    }
+    private IEnumerator Rebound()
+    {
+        yield return new WaitForSeconds(0.25f);
+        _collided = false;
+    }
+    
+    private IEnumerator ReboundWingsBlock()
+    {
+        yield return new WaitForSeconds(2f);
+        _anim.SetBool("Collided", false);
+        _reboundWingsBlockTrigger = false;
+    }
     int RotationDirection(float GetAxisVertical)
     {
         if (GetAxisVertical > 0)
@@ -151,7 +155,8 @@ public class Barlog : MonoBehaviour
         if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
             _collided = true;
-            // _healthPointsDelta += Random.Range(1, 3);
+            _a = 0;
+            _healthPointsDelta += Random.Range(1, 3);
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             if (collision.gameObject.tag == "LeftWall" && _aVx < 0 || collision.gameObject.tag == "RightWall" && _aVx > 0)
             {
@@ -184,17 +189,5 @@ public class Barlog : MonoBehaviour
         hpTextI.GetComponent<TextMeshPro>().text = healthPointsValue.ToString();
         hpTextI.GetComponent<TextMeshPro>().color = healthPointsColor;
         _healthPointsDelta = 0;
-    }
-    private IEnumerator Rebound()
-    {
-        yield return new WaitForSeconds(0.25f);
-        _collided = false;
-    }
-    
-    private IEnumerator ReboundWingsBlock()
-    {
-        yield return new WaitForSeconds(10f);
-        _anim.SetBool("Collided", false);
-        _reboundWingsBlockTrigger = false;
     }
 }

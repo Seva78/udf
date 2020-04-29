@@ -109,7 +109,7 @@ public class Barlog : MonoBehaviour
         _r = Mathf.Asin(_aVx / _v);
         Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
+                _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical") * Time.deltaTime))), 90);
         if (collidedStatus)
         {
             StartCoroutine(Rebound());

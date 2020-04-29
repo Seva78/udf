@@ -60,7 +60,7 @@ public class Barlog : MonoBehaviour
             else{
                 //если юзер не жмёт ни вправо, ни влево
                 if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
-                else _r += 3 * Input.GetAxis("Horizontal") * Mathf.PI / 180;
+                else _r += 2 * Input.GetAxis("Horizontal") * Mathf.PI * Time.deltaTime;
 
                 if (Input.GetAxis("Vertical") > 0)
                 {
@@ -109,7 +109,7 @@ public class Barlog : MonoBehaviour
         _r = Mathf.Asin(_aVx / _v);
         Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical") * Time.deltaTime))), 90);
+                _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
         if (collidedStatus)
         {
             StartCoroutine(Rebound());
@@ -132,9 +132,9 @@ public class Barlog : MonoBehaviour
         _anim.SetBool("Collided", false);
         _reboundWingsBlockTrigger = false;
     }
-    int RotationDirection(float GetAxisVertical)
+    int RotationDirection(float getAxisVertical)
     {
-        if (GetAxisVertical > 0)
+        if (getAxisVertical > 0)
         {
             return -1;
         }

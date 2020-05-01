@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
@@ -24,6 +24,7 @@ public class Barlog : MonoBehaviour
     private const int Ratio = 20;
     private float _aVx;
     private float _aVy;
+    private Vector3 _moveTo; // Куда стремится барлог средствами Rigidbody.MovePosition 
     private float _centerTendencyCoefficient;
     private Animator _anim;
     private int _healthPoints = 100;
@@ -40,6 +41,8 @@ public class Barlog : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         StartButtonPressed = 1;
+//        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+//        Application.targetFrameRate = 45;
     }
     private void Update()
     {
@@ -101,8 +104,14 @@ public class Barlog : MonoBehaviour
         _aVy += 8 * Time.deltaTime;
         VertSpeed = _aVy * Ratio / speedCoefficient;
         if (VertSpeed < 3) VertSpeed = 3;
-        Rigidbody.MovePosition(new Vector3(BarlogX + _aVx * Ratio / speedCoefficient * Time.deltaTime, 
-            BarlogY - _centerTendencyCoefficient));
+
+        // В начале полёта и после столкновения начинаем с фактического местоположения
+        if (_moveTo == Vector3.zero) _moveTo = transform.position;
+        // Корректируем позицию куда стремится барлог
+        _moveTo += new Vector3(_aVx * Ratio / speedCoefficient * Time.deltaTime, - _centerTendencyCoefficient);
+        // Направляем барлога в расчётную позицию
+        Rigidbody.MovePosition(_moveTo);
+        
         _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
         _anim.SetFloat("speed", _v);
         _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
@@ -158,6 +167,7 @@ public class Barlog : MonoBehaviour
             _a = 0;
             _healthPointsDelta += Random.Range(1, 3);
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
+            _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
             if (collision.gameObject.tag == "LeftWall" && _aVx < 0 || collision.gameObject.tag == "RightWall" && _aVx > 0)
             {
                 _aVx *= -1;

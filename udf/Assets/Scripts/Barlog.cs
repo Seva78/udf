@@ -41,8 +41,8 @@ public class Barlog : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         StartButtonPressed = 1;
-//        QualitySettings.vSyncCount = 0;  // VSync must be disabled
-//        Application.targetFrameRate = 45;
+        // QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        // Application.targetFrameRate = 15;
     }
     private void Update()
     {
@@ -108,7 +108,8 @@ public class Barlog : MonoBehaviour
         // В начале полёта и после столкновения начинаем с фактического местоположения
         if (_moveTo == Vector3.zero) _moveTo = transform.position;
         // Корректируем позицию куда стремится барлог
-        _moveTo += new Vector3(_aVx * Ratio / speedCoefficient * Time.deltaTime, - _centerTendencyCoefficient);
+        _moveTo += new Vector3(_aVx * Ratio / speedCoefficient * Time.deltaTime,
+            - _centerTendencyCoefficient * Time.deltaTime * 100);
         // Направляем барлога в расчётную позицию
         Rigidbody.MovePosition(_moveTo);
         
@@ -152,7 +153,7 @@ public class Barlog : MonoBehaviour
 
     private void BoostEvent(int v)
     {
-        _aTrigger = 1 * v;
+        _aTrigger = v;
         if (v == 1 && StartButtonPressed == 1) {
             _healthPointsDelta = 5;
             _healthPoints += _healthPointsDelta;
@@ -165,7 +166,7 @@ public class Barlog : MonoBehaviour
         {
             _collided = true;
             _a = 0;
-            _healthPointsDelta += Random.Range(1, 3);
+            _healthPointsDelta += Random.Range(1,3);
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
             if (collision.gameObject.tag == "LeftWall" && _aVx < 0 || collision.gameObject.tag == "RightWall" && _aVx > 0)

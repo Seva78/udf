@@ -171,7 +171,21 @@ public class Barlog : MonoBehaviour
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
             if (collision.gameObject.tag == "LeftWall" && _aVx < 0 || collision.gameObject.tag == "RightWall" && _aVx > 0)
             {
-                _aVx *= -1;
+                var wallRotation = collision.gameObject.transform.eulerAngles.z - 90;
+                if (wallRotation > 180) wallRotation = (360 - wallRotation) * -1;
+                if (wallRotation < -180) wallRotation = (-360 - wallRotation) * -1;
+                var balrogRotation = transform.eulerAngles.z;
+                if (balrogRotation > 180) balrogRotation = (360 - balrogRotation) * -1;
+                if (balrogRotation < -180) balrogRotation = (-360 - balrogRotation) * -1;
+
+                print(wallRotation + " " + balrogRotation);
+                var angleAfterRebound = balrogRotation * -1 + wallRotation * 2;
+                print(angleAfterRebound);
+                Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                    Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                        angleAfterRebound)), 180);
+                // _aVx *= -1;
+
             }
         }
         if (collision.gameObject.tag == "Projectile")

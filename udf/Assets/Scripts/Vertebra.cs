@@ -52,9 +52,9 @@ public class Vertebra : MonoBehaviour
         var collLengthX = Mathf.Abs(sidePointX - prevSidePointX);
         var collLengthY = Mathf.Abs(sidePointY - prevSidePointY);
         var collLength = Mathf.Sqrt(Mathf.Pow(collLengthX, 2) + Mathf.Pow(collLengthY, 2));
-        // var coll = sidePoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-        // coll.size = new Vector2(collLength/10, 0.5f);
-        // coll.offset = new Vector2(collLength / 20, collOffsetY);
+        var coll = sidePoint.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        coll.size = new Vector2(collLength/10, 0.5f);
+        coll.offset = new Vector2(collLength / 20, collOffsetY);
         float sin = (sidePointX - prevSidePointX) / collLength;
         float angle = Mathf.Asin(sin) * Mathf.Rad2Deg;
         sidePoint.transform.rotation = Quaternion.RotateTowards(sidePoint.transform.rotation, 

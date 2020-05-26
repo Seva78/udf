@@ -31,6 +31,7 @@ public class Barlog : MonoBehaviour
     private int _healthPointsDelta;
     private int _healthPointsCooldownTrigger;
     private bool _collided;
+    private float _angleAfterRebound;
     private float BarlogX => transform.position.x;
     private float BarlogY => transform.position.y;
     private Quaternion BarlogRot => transform.rotation;
@@ -58,7 +59,7 @@ public class Barlog : MonoBehaviour
             if (_collided)
             {
                 _anim.SetBool("Collided", true);
-                BarlogMovementAndRotation(true, 2);
+                BarlogMovementAndRotation(true, 1);
             }
             else{
                 //если юзер не жмёт ни вправо, ни влево
@@ -96,12 +97,21 @@ public class Barlog : MonoBehaviour
     {
         _v *= 1 - _k * Time.deltaTime;
         _v += _a * Time.deltaTime;
-        if (!collidedStatus)
+        if (collidedStatus)
+        {
+            _aVx = _v* Mathf.Sin(_angleAfterRebound * Mathf.Deg2Rad);
+            _aVy = _v* Mathf.Cos(_angleAfterRebound * Mathf.Deg2Rad);
+            // _aVy += 8 * Time.deltaTime;
+            print("_aVx2 " + _aVx + " _aVy2 " + _aVy);
+
+        }
+        else
         {
             _aVx = _v* Mathf.Sin(_r);
+            _aVy = _v* Mathf.Cos(_r);
+            _aVy += 8 * Time.deltaTime;
         }
-        _aVy = _v* Mathf.Cos(_r);
-        _aVy += 8 * Time.deltaTime;
+
         VertSpeed = _aVy * Ratio / speedCoefficient;
         if (VertSpeed < 3) VertSpeed = 3;
 
@@ -177,13 +187,10 @@ public class Barlog : MonoBehaviour
                 var balrogRotation = transform.eulerAngles.z;
                 if (balrogRotation > 180) balrogRotation = (360 - balrogRotation) * -1;
                 if (balrogRotation < -180) balrogRotation = (-360 - balrogRotation) * -1;
-
-                print(wallRotation + " " + balrogRotation);
-                var angleAfterRebound = balrogRotation * -1 + wallRotation * 2;
-                print(angleAfterRebound);
-                Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                    Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                        angleAfterRebound)), 180);
+                print("_r " + _r + " _aVx " + _aVx + " _aVy " + _aVy);
+                print("wallRotation " + wallRotation + " balrogRotation " + balrogRotation);
+                _angleAfterRebound = balrogRotation * -1 + wallRotation * 2;
+                print("_angleAfterRebound " + _angleAfterRebound);
                 // _aVx *= -1;
 
             }

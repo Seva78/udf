@@ -170,6 +170,12 @@ public class Barlog : MonoBehaviour
             HealthPointsSpawn(_healthPointsDelta, new Color32(0, 255, 0, 255));
         }
     }
+
+    private float MakeDegreePositive(float degree)
+    {
+        return (degree + 360) % 360;
+    }
+    
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "VertebraPoint(Clone)")
@@ -179,21 +185,11 @@ public class Barlog : MonoBehaviour
             _healthPointsDelta += Random.Range(1,3);
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
-            if (collision.gameObject.tag == "LeftWall" && _aVx < 0 || collision.gameObject.tag == "RightWall" && _aVx > 0)
-            {
-                var wallRotation = collision.gameObject.transform.eulerAngles.z - 90;
-                if (wallRotation > 180) wallRotation = (360 - wallRotation) * -1;
-                if (wallRotation < -180) wallRotation = (-360 - wallRotation) * -1;
-                var balrogRotation = transform.eulerAngles.z;
-                if (balrogRotation > 180) balrogRotation = (360 - balrogRotation) * -1;
-                if (balrogRotation < -180) balrogRotation = (-360 - balrogRotation) * -1;
-                print("_r " + _r + " _aVx " + _aVx + " _aVy " + _aVy);
-                print("wallRotation " + wallRotation + " balrogRotation " + balrogRotation);
-                _angleAfterRebound = balrogRotation * -1 + wallRotation * 2;
-                print("_angleAfterRebound " + _angleAfterRebound);
-                // _aVx *= -1;
-
-            }
+            
+            var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
+            var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
+            var rotationDifference = wallRotation - balrogRotation;
+            _angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
         }
         if (collision.gameObject.tag == "Projectile")
         {

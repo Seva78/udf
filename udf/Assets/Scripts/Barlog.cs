@@ -102,18 +102,33 @@ public class Barlog : MonoBehaviour
             _aVx = _v* Mathf.Sin(_angleAfterRebound * Mathf.Deg2Rad);
             _aVy = _v* Mathf.Cos(_angleAfterRebound * Mathf.Deg2Rad);
             // _aVy += 8 * Time.deltaTime;
-            print("_aVx2 " + _aVx + " _aVy2 " + _aVy);
-
+            // print("_aVx2 " + _aVx + " _aVy2 " + _aVy);
+            print(_angleAfterRebound); 
+            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                    _angleAfterRebound)), 180);
+            StartCoroutine(Rebound());
+            if (_reboundWingsBlockTrigger == false)
+            {
+                _reboundWingsBlockTrigger = true;
+                StartCoroutine(ReboundWingsBlock());
+            }
         }
         else
         {
             _aVx = _v* Mathf.Sin(_r);
             _aVy = _v* Mathf.Cos(_r);
             _aVy += 8 * Time.deltaTime;
+            _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+            _anim.SetFloat("speed", _v);
+            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+            _r = Mathf.Asin(_aVx / _v);
+            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                    _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 180);
         }
-
         VertSpeed = _aVy * Ratio / speedCoefficient;
-        if (VertSpeed < 3) VertSpeed = 3;
+        if (!collidedStatus && VertSpeed < 3) VertSpeed = 3;
 
         // В начале полёта и после столкновения начинаем с фактического местоположения
         if (_moveTo == Vector3.zero) _moveTo = transform.position;
@@ -122,28 +137,12 @@ public class Barlog : MonoBehaviour
             - _centerTendencyCoefficient * Time.deltaTime * 100);
         // Направляем барлога в расчётную позицию
         Rigidbody.MovePosition(_moveTo);
-        
-        _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-        _anim.SetFloat("speed", _v);
-        _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-        _r = Mathf.Asin(_aVx / _v);
-        Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-            Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 90);
-        if (collidedStatus)
-        {
-            StartCoroutine(Rebound());
-            if (_reboundWingsBlockTrigger == false)
-            {
-                _reboundWingsBlockTrigger = true;
-                StartCoroutine(ReboundWingsBlock());
-            }
-        }
     }
     private IEnumerator Rebound()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
         _collided = false;
+        _r = _angleAfterRebound * Mathf.Deg2Rad;
     }
     
     private IEnumerator ReboundWingsBlock()
@@ -178,7 +177,7 @@ public class Barlog : MonoBehaviour
     
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "VertebraPoint(Clone)")
+        if (collision.gameObject.name == "VertebraPoint(Clone)" && !_collided)
         {
             _collided = true;
             _a = 0;

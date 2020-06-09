@@ -65,7 +65,6 @@ public class Barlog : MonoBehaviour
                 //если юзер не жмёт ни вправо, ни влево
                 if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
                 else _r += 2 * Input.GetAxis("Horizontal") * Mathf.PI * Time.deltaTime;
-
                 if (Input.GetAxis("Vertical") > 0)
                 {
                     GetComponent<SpriteRenderer>().flipY = true;
@@ -103,7 +102,6 @@ public class Barlog : MonoBehaviour
             _aVy = _v* Mathf.Cos(_angleAfterRebound * Mathf.Deg2Rad);
             // _aVy += 8 * Time.deltaTime;
             // print("_aVx2 " + _aVx + " _aVy2 " + _aVy);
-            print(_angleAfterRebound); 
             Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
                 Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
                     _angleAfterRebound)), 180);
@@ -114,7 +112,7 @@ public class Barlog : MonoBehaviour
                 StartCoroutine(ReboundWingsBlock());
             }
         }
-        else
+        else if (transform.rotation.eulerAngles.z <= 90 || transform.rotation.eulerAngles.z >= 270)
         {
             _aVx = _v* Mathf.Sin(_r);
             _aVy = _v* Mathf.Cos(_r);
@@ -126,7 +124,25 @@ public class Barlog : MonoBehaviour
             Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
                 Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
                     _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 180);
+            print("fallingAngle " + transform.rotation.eulerAngles.z);
         }
+        else if (transform.rotation.eulerAngles.z > 90 && transform.rotation.eulerAngles.z < 180)
+        {
+            var correctedAngle1 = transform.rotation.eulerAngles.z - 2f;
+            print("correctedAngle1 " + transform.rotation.eulerAngles.z);
+            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                    correctedAngle1)), 180);
+        }
+        else if (transform.rotation.eulerAngles.z < 270 && transform.rotation.eulerAngles.z > 180)
+        {
+            var correctedAngle2 = transform.rotation.eulerAngles.z + 2f;
+            print("correctedAngle2 " + transform.rotation.eulerAngles.z);
+            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+                    correctedAngle2)), 180);
+        }
+
         VertSpeed = _aVy * Ratio / speedCoefficient;
         if (!collidedStatus && VertSpeed < 3) VertSpeed = 3;
 

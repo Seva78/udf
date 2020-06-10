@@ -31,11 +31,9 @@ public class Barlog : MonoBehaviour
     private int _healthPointsDelta;
     private int _healthPointsCooldownTrigger;
     private bool _collided;
-    private float _angleAfterRebound;
     private float BarlogX => transform.position.x;
     private float BarlogY => transform.position.y;
     private Quaternion BarlogRot => transform.rotation;
-    private bool _reboundWingsBlockTrigger;
     Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
     
     private void StartGame()
@@ -61,7 +59,14 @@ public class Barlog : MonoBehaviour
                 _anim.SetBool("Collided", true);
                 BarlogMovementAndRotation(true, 1);
             }
-            else{
+            else
+            {
+                // Приводим _r к значению [от -PI до PI]
+                while (_r > Mathf.PI) _r -= Mathf.PI * 2;
+                while (_r < -Mathf.PI) _r += Mathf.PI * 2;
+                
+                print(_r);
+                
                 //если юзер не жмёт ни вправо, ни влево
                 if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
                 else _r += 2 * Input.GetAxis("Horizontal") * Mathf.PI * Time.deltaTime;
@@ -96,52 +101,70 @@ public class Barlog : MonoBehaviour
     {
         _v *= 1 - _k * Time.deltaTime;
         _v += _a * Time.deltaTime;
-        if (collidedStatus)
+        
+        _aVx = _v * Mathf.Sin(_r);
+        _aVy = _v * Mathf.Cos(_r);
+
+        if (!collidedStatus)
         {
-            _aVx = _v* Mathf.Sin(_angleAfterRebound * Mathf.Deg2Rad);
-            _aVy = _v* Mathf.Cos(_angleAfterRebound * Mathf.Deg2Rad);
-            // _aVy += 8 * Time.deltaTime;
-            // print("_aVx2 " + _aVx + " _aVy2 " + _aVy);
-            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                    _angleAfterRebound)), 180);
-            StartCoroutine(Rebound());
-            if (_reboundWingsBlockTrigger == false)
-            {
-                _reboundWingsBlockTrigger = true;
-                StartCoroutine(ReboundWingsBlock());
-            }
-        }
-        else if (transform.rotation.eulerAngles.z <= 90 || transform.rotation.eulerAngles.z >= 270)
-        {
-            _aVx = _v* Mathf.Sin(_r);
-            _aVy = _v* Mathf.Cos(_r);
             _aVy += 8 * Time.deltaTime;
             _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
             _anim.SetFloat("speed", _v);
             _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-            _r = Mathf.Asin(_aVx / _v);
-            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                    _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 180);
-            print("fallingAngle " + transform.rotation.eulerAngles.z);
+            _r = Vector2.SignedAngle(new Vector2(_aVx, _aVy), Vector2.up) * Mathf.Deg2Rad;
+//            _r = Mathf.Asin(_aVx / _v);
         }
-        else if (transform.rotation.eulerAngles.z > 90 && transform.rotation.eulerAngles.z < 180)
-        {
-            var correctedAngle1 = transform.rotation.eulerAngles.z - 2f;
-            print("correctedAngle1 " + transform.rotation.eulerAngles.z);
-            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                    correctedAngle1)), 180);
-        }
-        else if (transform.rotation.eulerAngles.z < 270 && transform.rotation.eulerAngles.z > 180)
-        {
-            var correctedAngle2 = transform.rotation.eulerAngles.z + 2f;
-            print("correctedAngle2 " + transform.rotation.eulerAngles.z);
-            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                    correctedAngle2)), 180);
-        }
+        
+        Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+            Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, _r * Mathf.Rad2Deg)), 180);
+//        
+//        
+//        if (collidedStatus)
+//        {
+//            _aVx = _v* Mathf.Sin(_angleAfterRebound * Mathf.Deg2Rad);
+//            _aVy = _v* Mathf.Cos(_angleAfterRebound * Mathf.Deg2Rad);
+//            // _aVy += 8 * Time.deltaTime;
+//            // print("_aVx2 " + _aVx + " _aVy2 " + _aVy);
+//            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+//                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+//                    _angleAfterRebound)), 180);
+//            StartCoroutine(Rebound());
+//            if (_reboundWingsBlockTrigger == false)
+//            {
+//                _reboundWingsBlockTrigger = true;
+//                StartCoroutine(ReboundWingsBlock());
+//            }
+//        }
+//        else if (transform.rotation.eulerAngles.z <= 90 || transform.rotation.eulerAngles.z >= 270)
+//        {
+//            _aVx = _v* Mathf.Sin(_r);
+//            _aVy = _v* Mathf.Cos(_r);
+//            _aVy += 8 * Time.deltaTime;
+//            _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+//            _anim.SetFloat("speed", _v);
+//            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+//            _r = Mathf.Asin(_aVx / _v);
+//            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+//                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+//                    _r * 180 / Mathf.PI* RotationDirection(Input.GetAxis("Vertical")))), 180);
+//            print("fallingAngle " + transform.rotation.eulerAngles.z);
+//        }
+//        else if (transform.rotation.eulerAngles.z > 90 && transform.rotation.eulerAngles.z < 180)
+//        {
+//            var correctedAngle1 = transform.rotation.eulerAngles.z - 2f;
+//            print("correctedAngle1 " + transform.rotation.eulerAngles.z);
+//            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+//                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+//                    correctedAngle1)), 180);
+//        }
+//        else if (transform.rotation.eulerAngles.z < 270 && transform.rotation.eulerAngles.z > 180)
+//        {
+//            var correctedAngle2 = transform.rotation.eulerAngles.z + 2f;
+//            print("correctedAngle2 " + transform.rotation.eulerAngles.z);
+//            Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
+//                Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+//                    correctedAngle2)), 180);
+//        }
 
         VertSpeed = _aVy * Ratio / speedCoefficient;
         if (!collidedStatus && VertSpeed < 3) VertSpeed = 3;
@@ -158,14 +181,12 @@ public class Barlog : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
         _collided = false;
-        _r = _angleAfterRebound * Mathf.Deg2Rad;
     }
     
     private IEnumerator ReboundWingsBlock()
     {
         yield return new WaitForSeconds(2f);
         _anim.SetBool("Collided", false);
-        _reboundWingsBlockTrigger = false;
     }
     int RotationDirection(float getAxisVertical)
     {
@@ -196,6 +217,10 @@ public class Barlog : MonoBehaviour
         if (collision.gameObject.name == "VertebraPoint(Clone)" && !_collided)
         {
             _collided = true;
+
+            StartCoroutine(Rebound()); 
+            StartCoroutine(ReboundWingsBlock());
+
             _a = 0;
             _healthPointsDelta += Random.Range(1,3);
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
@@ -204,7 +229,9 @@ public class Barlog : MonoBehaviour
             var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
             var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
             var rotationDifference = wallRotation - balrogRotation;
-            _angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
+            var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
+            _r = angleAfterRebound * Mathf.Deg2Rad;
+            
         }
         if (collision.gameObject.tag == "Projectile")
         {

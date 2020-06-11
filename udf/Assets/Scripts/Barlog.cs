@@ -66,10 +66,16 @@ public class Barlog : MonoBehaviour
                 while (_r < -Mathf.PI) _r += Mathf.PI * 2;
                 
                 print(_r);
-                
+                var inputGetAxisHorizontal = Input.GetAxis("Horizontal");
+
                 //если юзер не жмёт ни вправо, ни влево
-                if (Input.GetAxis("Horizontal") == 0) _r *= 1 - _k * Time.deltaTime;  
-                else _r += 2 * Input.GetAxis("Horizontal") * Mathf.PI * Time.deltaTime;
+                if (inputGetAxisHorizontal == 0) _r *= 1 - _k * Time.deltaTime;
+                else
+                {
+                    if (_r > Mathf.PI / 2 && inputGetAxisHorizontal > 0) inputGetAxisHorizontal = 0;
+                    if (_r < -Mathf.PI / 2 && inputGetAxisHorizontal < 0) inputGetAxisHorizontal = 0;
+                    _r += 2 * inputGetAxisHorizontal * Mathf.PI * Time.deltaTime;
+                }
                 if (Input.GetAxis("Vertical") > 0)
                 {
                     GetComponent<SpriteRenderer>().flipY = true;
@@ -101,7 +107,6 @@ public class Barlog : MonoBehaviour
     {
         _v *= 1 - _k * Time.deltaTime;
         _v += _a * Time.deltaTime;
-        
         _aVx = _v * Mathf.Sin(_r);
         _aVy = _v * Mathf.Cos(_r);
 
@@ -112,9 +117,7 @@ public class Barlog : MonoBehaviour
             _anim.SetFloat("speed", _v);
             _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
             _r = Vector2.SignedAngle(new Vector2(_aVx, _aVy), Vector2.up) * Mathf.Deg2Rad;
-//            _r = Mathf.Asin(_aVx / _v);
         }
-        
         Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, _r * Mathf.Rad2Deg)), 180);
 //        

@@ -61,11 +61,9 @@ public class Barlog : MonoBehaviour
             }
             else
             {
-                // Приводим _r к значению [от -PI до PI]
-                while (_r > Mathf.PI) _r -= Mathf.PI * 2;
-                while (_r < -Mathf.PI) _r += Mathf.PI * 2;
-                
-                print(_r);
+                _r = RNormalization(_r);
+              
+                // print(_r);
                 var inputGetAxisHorizontal = Input.GetAxis("Horizontal");
 
                 //если юзер не жмёт ни вправо, ни влево
@@ -187,7 +185,11 @@ public class Barlog : MonoBehaviour
             var rotationDifference = wallRotation - balrogRotation;
             var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
             _r = angleAfterRebound * Mathf.Deg2Rad;
-            
+
+            _r = RNormalization(_r);
+
+            if (collision.gameObject.tag == "LeftWall" && _r < 0) _r *= -1;
+            if (collision.gameObject.tag == "RightWall" && _r > 0) _r *= -1;
         }
         if (collision.gameObject.tag == "Projectile")
         {
@@ -201,6 +203,15 @@ public class Barlog : MonoBehaviour
             StartCoroutine(HealthPointsRedCoroutine(_healthPointsDelta));
         }
     }
+
+    private float RNormalization(float r)
+    {
+        // Приводим _r к значению [от -PI до PI]
+        while (r > Mathf.PI) r -= Mathf.PI * 2;
+        while (r < -Mathf.PI) r += Mathf.PI * 2;
+        return r;
+    }
+
     private IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
     {
         yield return new WaitForSeconds(0.1f);

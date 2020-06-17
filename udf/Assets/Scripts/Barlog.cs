@@ -9,8 +9,6 @@ public class Barlog : MonoBehaviour
 {
     public float VertSpeed; //переменная для передачи в скрипт Mine
     public GameObject cam;
-    public TextMeshPro hpText;
-    public GameObject hpUi;
     public GameObject deepBoard;
     public GameObject reFallButton;
     public int StartButtonPressed;
@@ -27,9 +25,7 @@ public class Barlog : MonoBehaviour
     private Vector3 _moveTo; // Куда стремится барлог средствами Rigidbody.MovePosition 
     private float _centerTendencyCoefficient;
     private Animator _anim;
-    private int _healthPoints = 100;
-    private int _healthPointsDelta;
-    private int _healthPointsCooldownTrigger;
+    // private int _healthPointsCooldownTrigger;
     private bool _collided;
     private float BarlogX => transform.position.x;
     private float BarlogY => transform.position.y;
@@ -43,15 +39,18 @@ public class Barlog : MonoBehaviour
         // QualitySettings.vSyncCount = 0;  // VSync must be disabled
         // Application.targetFrameRate = 15;
     }
+
+    public void Death()
+    {
+        StartButtonPressed = 0;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<CircleCollider2D>().enabled = false;
+        deepBoard.SetActive(true);
+        reFallButton.SetActive(true);
+    }
+
     private void Update()
     {
-        if (_healthPoints <= 0) {
-            StartButtonPressed = 0;
-            GetComponent<SpriteRenderer>().enabled = false;
-            GetComponent<CircleCollider2D>().enabled = false;
-            deepBoard.SetActive(true);
-            reFallButton.SetActive(true);
-        }
         if (StartButtonPressed == 1)
         {
             if (_collided)
@@ -96,9 +95,6 @@ public class Barlog : MonoBehaviour
                 }
                 BarlogMovementAndRotation(false, 1);
             }
-            if (BarlogY > 800) _healthPoints -= 1;
-            if (_healthPoints < 0) _healthPoints = 0;
-            hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
         }
     }
     private void BarlogMovementAndRotation(bool collidedStatus, int speedCoefficient)
@@ -155,9 +151,7 @@ public class Barlog : MonoBehaviour
     {
         _aTrigger = v;
         if (v == 1 && StartButtonPressed == 1) {
-            _healthPointsDelta = 5;
-            _healthPoints += _healthPointsDelta;
-            HealthPointsSpawn(_healthPointsDelta, new Color32(0, 255, 0, 255));
+            GetComponent<HealthPointsManager>().BoostHeal();
         }
     }
 
@@ -176,16 +170,16 @@ public class Barlog : MonoBehaviour
             StartCoroutine(ReboundWingsBlock());
 
             _a = 0;
-            _healthPointsDelta += Random.Range(1,3);
+            GetComponent<HealthPointsManager>().CollisionDamage();
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
-            
             var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
             var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
             var rotationDifference = wallRotation - balrogRotation;
             var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
+            if (angleAfterRebound > 135 && angleAfterRebound <= 180) angleAfterRebound = 135;
+            if (angleAfterRebound > 180 && angleAfterRebound < 225) angleAfterRebound = 225;            
             _r = angleAfterRebound * Mathf.Deg2Rad;
-
             _r = RNormalization(_r);
 
             if (collision.gameObject.tag == "LeftWall" && _r < 0) _r *= -1;
@@ -193,14 +187,7 @@ public class Barlog : MonoBehaviour
         }
         if (collision.gameObject.tag == "Projectile")
         {
-            _healthPointsDelta += Random.Range(1, 2);
-        }
-        _healthPoints -= _healthPointsDelta;
-        if (_healthPoints < 0) _healthPoints = 0;
-        hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
-        if (_healthPointsCooldownTrigger == 0) {
-            _healthPointsCooldownTrigger = 1;
-            StartCoroutine(HealthPointsRedCoroutine(_healthPointsDelta));
+            GetComponent<HealthPointsManager>().ProjectileDamage();
         }
     }
 
@@ -212,19 +199,4 @@ public class Barlog : MonoBehaviour
         return r;
     }
 
-    private IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
-    {
-        yield return new WaitForSeconds(0.1f);
-        HealthPointsSpawn(healthPointsDelta * -1, new Color32(255, 0, 0, 255));
-        _healthPointsCooldownTrigger = 0;
-    }
-
-    private void HealthPointsSpawn(int healthPointsValue, Color32 healthPointsColor)
-    {
-        var hpTextI = Instantiate(hpText, new Vector3(BarlogX + 40, BarlogY, 0), Quaternion.identity);
-        hpTextI.GetComponent<HealthPointsPopup>().Balrog = gameObject;
-        hpTextI.GetComponent<TextMeshPro>().text = healthPointsValue.ToString();
-        hpTextI.GetComponent<TextMeshPro>().color = healthPointsColor;
-        _healthPointsDelta = 0;
-    }
 }

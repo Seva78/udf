@@ -10785,6 +10785,7 @@ GameObject:
   - component: {fileID: 2069570062}
   - component: {fileID: 2069570067}
   - component: {fileID: 2069570068}
+  - component: {fileID: 2069570069}
   m_Layer: 0
   m_Name: Barlog
   m_TagString: Untagged
@@ -11029,6 +11030,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2069570069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069570061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66998ea335acbe24f8cd3915077769d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpUi: {fileID: 1963383471}
+  hpText: {fileID: 4787586125774494781, guid: be1ca96ec2690274a8c23c1527a85afd, type: 3}
 --- !u!1 &2095173372
 GameObject:
   m_ObjectHideFlags: 0

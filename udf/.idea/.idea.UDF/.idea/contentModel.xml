@@ -11,6 +11,7 @@
           <e p="Barlog.cs" t="Include" />
           <e p="Deepboard.cs" t="Include" />
           <e p="Gandalf.cs" t="Include" />
+          <e p="HealthPointsManager.cs" t="Include" />
           <e p="HealthPointsPopup.cs" t="Include" />
           <e p="Mask.cs" t="Include" />
           <e p="Mine.cs" t="Include" />

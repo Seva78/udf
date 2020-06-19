@@ -13,21 +13,18 @@ public class Barlog : MonoBehaviour
     public GameObject reFallButton;
     public int StartButtonPressed;
     public AudioClip soundBarlogHit2;
-    private float _v; //Скорость _v полёта демона.
-    private float _r; //Направление _r полёта демона.
-    private float _a; //Ускорение A, которое демон создаёт в период маха крыла.
-    private int _aTrigger;
-    private float _k; //Коэффициент _k трения об воздух (не константа, т.к. зависит от того, как сильно расправлены крылья).
-    private float _d; //переменная для вывода всякого в служебное меню
+    private float _velocity; //Скорость полёта демона.
+    private float _rotation; //Направление полёта демона.
+    private float _acceleration; //Ускорение, которое демон создаёт в период маха крыла.
+    private int _accelerationTrigger;
+    private float _windage; //Коэффициент трения об воздух (не константа, т.к. зависит от того, как сильно расправлены крылья).
     private const int Ratio = 20;
     private float _aVx;
     private float _aVy;
     private Vector3 _moveTo; // Куда стремится барлог средствами Rigidbody.MovePosition 
     private float _centerTendencyCoefficient;
     private Animator _anim;
-    // private int _healthPointsCooldownTrigger;
     private bool _collided;
-    private float BarlogX => transform.position.x;
     private float BarlogY => transform.position.y;
     private Quaternion BarlogRot => transform.rotation;
     Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
@@ -56,42 +53,40 @@ public class Barlog : MonoBehaviour
             if (_collided)
             {
                 _anim.SetBool("Collided", true);
-                BarlogMovementAndRotation(true, 1);
+                BarlogMovementAndRotation(true, 10);
             }
             else
             {
-                _r = RNormalization(_r);
-              
-                // print(_r);
+                _rotation = MakeRotationFromMinusPiToPI(_rotation);
                 var inputGetAxisHorizontal = Input.GetAxis("Horizontal");
 
                 //если юзер не жмёт ни вправо, ни влево
-                if (inputGetAxisHorizontal == 0) _r *= 1 - _k * Time.deltaTime;
+                if (inputGetAxisHorizontal == 0) _rotation *= 1 - _windage * Time.deltaTime;
                 else
                 {
-                    if (_r > Mathf.PI / 2 && inputGetAxisHorizontal > 0) inputGetAxisHorizontal = 0;
-                    if (_r < -Mathf.PI / 2 && inputGetAxisHorizontal < 0) inputGetAxisHorizontal = 0;
-                    _r += 2 * inputGetAxisHorizontal * Mathf.PI * Time.deltaTime;
+                    if (_rotation > Mathf.PI / 2 && inputGetAxisHorizontal > 0) inputGetAxisHorizontal = 0;
+                    if (_rotation < -Mathf.PI / 2 && inputGetAxisHorizontal < 0) inputGetAxisHorizontal = 0;
+                    _rotation += 2 * inputGetAxisHorizontal * Mathf.PI * Time.deltaTime;
                 }
                 if (Input.GetAxis("Vertical") > 0)
                 {
                     GetComponent<SpriteRenderer>().flipY = true;
-                    _k = 0.99f;
-                    _a = 0;
+                    _windage = 0.99f;
+                    _acceleration = 0;
                     _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
                 }
                 else if (Input.GetAxis("Vertical") == 0)
                 {
                     GetComponent<SpriteRenderer>().flipY = false;
-                    _k = 0.5f;
-                    _a = 0;
+                    _windage = 0.5f;
+                    _acceleration = 0;
                     _centerTendencyCoefficient = (BarlogY - cam.transform.position.y) / 100;
                 }
                 else {
                     GetComponent<SpriteRenderer>().flipY = false;
-                    _k = 0.4f;
-                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _aTrigger * 200))/100;
-                    _a = _aTrigger * 20;
+                    _windage = 0.4f;
+                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _accelerationTrigger * 200))/100;
+                    _acceleration = _accelerationTrigger * 20;
                 }
                 BarlogMovementAndRotation(false, 1);
             }
@@ -99,31 +94,34 @@ public class Barlog : MonoBehaviour
     }
     private void BarlogMovementAndRotation(bool collidedStatus, int speedCoefficient)
     {
-        _v *= 1 - _k * Time.deltaTime;
-        _v += _a * Time.deltaTime;
-        _aVx = _v * Mathf.Sin(_r);
-        _aVy = _v * Mathf.Cos(_r);
+        _velocity *= 1 - _windage * Time.deltaTime * speedCoefficient;
+        _velocity += _acceleration * Time.deltaTime;
+        _aVx = _velocity * Mathf.Sin(_rotation);
+        _aVy = _velocity * Mathf.Cos(_rotation);
 
         if (!collidedStatus)
         {
             _aVy += 8 * Time.deltaTime;
-            _v = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-            _anim.SetFloat("speed", _v);
+            _velocity = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+            _anim.SetFloat("speed", _velocity);
             _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
-            _r = Vector2.SignedAngle(new Vector2(_aVx, _aVy), Vector2.up) * Mathf.Deg2Rad;
+            _rotation = Vector2.SignedAngle(new Vector2(_aVx, _aVy), Vector2.up) * Mathf.Deg2Rad;
         }
         Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
-                _r * Mathf.Rad2Deg * RotationDirection(Input.GetAxis("Vertical")))), 180);
+                _rotation * Mathf.Rad2Deg * RotationDirection(Input.GetAxis("Vertical")))), 180);
 
-        VertSpeed = _aVy * Ratio / speedCoefficient;
+        // VertSpeed = _aVy * Ratio / speedCoefficient;
+        VertSpeed = _aVy * Ratio;
         if (!collidedStatus && VertSpeed < 3) VertSpeed = 3;
 
         // В начале полёта и после столкновения начинаем с фактического местоположения
         if (_moveTo == Vector3.zero) _moveTo = transform.position;
         // Корректируем позицию куда стремится барлог
-        _moveTo += new Vector3(_aVx * Ratio / speedCoefficient * Time.deltaTime,
+        _moveTo += new Vector3(_aVx * Ratio * Time.deltaTime,
             - _centerTendencyCoefficient * Time.deltaTime * 100);
+        // _moveTo += new Vector3(_aVx * Ratio / speedCoefficient * Time.deltaTime,
+            // - _centerTendencyCoefficient * Time.deltaTime * 100);
         // Направляем барлога в расчётную позицию
         Rigidbody.MovePosition(_moveTo);
     }
@@ -149,7 +147,7 @@ public class Barlog : MonoBehaviour
 
     private void BoostEvent(int v)
     {
-        _aTrigger = v;
+        _accelerationTrigger = v;
         if (v == 1 && StartButtonPressed == 1) {
             GetComponent<HealthPointsManager>().BoostHeal();
         }
@@ -169,7 +167,7 @@ public class Barlog : MonoBehaviour
             StartCoroutine(Rebound()); 
             StartCoroutine(ReboundWingsBlock());
 
-            _a = 0;
+            _acceleration = 0;
             GetComponent<HealthPointsManager>().CollisionDamage();
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
@@ -179,11 +177,11 @@ public class Barlog : MonoBehaviour
             var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
             if (angleAfterRebound > 135 && angleAfterRebound <= 180) angleAfterRebound = 135;
             if (angleAfterRebound > 180 && angleAfterRebound < 225) angleAfterRebound = 225;            
-            _r = angleAfterRebound * Mathf.Deg2Rad;
-            _r = RNormalization(_r);
+            _rotation = angleAfterRebound * Mathf.Deg2Rad;
+            _rotation = MakeRotationFromMinusPiToPI(_rotation);
 
-            if (collision.gameObject.tag == "LeftWall" && _r < 0) _r *= -1;
-            if (collision.gameObject.tag == "RightWall" && _r > 0) _r *= -1;
+            if (collision.gameObject.tag == "LeftWall" && _rotation < 0) _rotation *= -1;
+            if (collision.gameObject.tag == "RightWall" && _rotation > 0) _rotation *= -1;
         }
         if (collision.gameObject.tag == "Projectile")
         {
@@ -191,12 +189,12 @@ public class Barlog : MonoBehaviour
         }
     }
 
-    private float RNormalization(float r)
+    private float MakeRotationFromMinusPiToPI(float rotation)
     {
-        // Приводим _r к значению [от -PI до PI]
-        while (r > Mathf.PI) r -= Mathf.PI * 2;
-        while (r < -Mathf.PI) r += Mathf.PI * 2;
-        return r;
+        // Приводим _rotation к значению [от -PI до PI]
+        while (rotation > Mathf.PI) rotation -= Mathf.PI * 2;
+        while (rotation < -Mathf.PI) rotation += Mathf.PI * 2;
+        return rotation;
     }
 
 }

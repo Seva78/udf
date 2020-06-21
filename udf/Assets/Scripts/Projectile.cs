@@ -42,6 +42,7 @@ public class Projectile : MonoBehaviour
         explodeTrigger = 1;
         GetComponent<AudioSource>().PlayOneShot(iceBallExplode, 1f);
         Instantiate(projectileExplosion, transform.position, Quaternion.identity);
+        GetComponent<CircleCollider2D>().enabled = false;
         StartCoroutine("Destroy");
     }
     IEnumerator Destroy()

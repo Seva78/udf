@@ -12,8 +12,7 @@ public class HealthPointsManager : MonoBehaviour
     private float BarlogX => transform.position.x;
     private float BarlogY => transform.position.y;
     private int _healthPointsCooldownTrigger;
-    private bool barlogAlive = true;
-    // Start is called before the first frame update
+    private bool _barlogAlive = true;
     void Start()
     {
         
@@ -53,14 +52,12 @@ public class HealthPointsManager : MonoBehaviour
         HealthPointsSpawn(healthPointsDelta * -1, new Color32(255, 0, 0, 255));
         _healthPointsCooldownTrigger = 0;
     }
-
-    // Update is called once per frame
     private void Update()
     {
         if (BarlogY > 800) _healthPoints -= 1;
-        if (_healthPoints <= 0 && barlogAlive)
+        if (_healthPoints <= 0 && _barlogAlive)
         {
-            barlogAlive = false;
+            _barlogAlive = false;
             _healthPoints = 0;            
             GetComponent<Barlog>().Death();
         }

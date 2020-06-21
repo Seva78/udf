@@ -24,7 +24,7 @@ public class Barlog : MonoBehaviour
     private Vector3 _moveTo; // Куда стремится барлог средствами Rigidbody.MovePosition 
     private float _centerTendencyCoefficient;
     private Animator _anim;
-    private bool _collided;
+    private bool _rebounded;
     private float BarlogY => transform.position.y;
     private Quaternion BarlogRot => transform.rotation;
     Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
@@ -50,7 +50,7 @@ public class Barlog : MonoBehaviour
     {
         if (StartButtonPressed == 1)
         {
-            if (_collided)
+            if (_rebounded)
             {
                 _anim.SetBool("Collided", true);
                 BarlogMovementAndRotation(true, 10);
@@ -125,23 +125,9 @@ public class Barlog : MonoBehaviour
         // Направляем барлога в расчётную позицию
         Rigidbody.MovePosition(_moveTo);
     }
-    private IEnumerator Rebound()
-    {
-        yield return new WaitForSeconds(0.15f);
-        _collided = false;
-    }
-    
-    private IEnumerator ReboundWingsBlock()
-    {
-        yield return new WaitForSeconds(2f);
-        _anim.SetBool("Collided", false);
-    }
     int RotationDirection(float getAxisVertical)
     {
-        if (getAxisVertical > 0)
-        {
-            return -1;
-        }
+        if (getAxisVertical > 0) return -1;
         else return 1;
     }
 
@@ -160,35 +146,52 @@ public class Barlog : MonoBehaviour
     
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "VertebraPoint(Clone)" && !_collided)
+        if (collision.gameObject.name == "VertebraPoint(Clone)" && !_rebounded)
         {
-            _collided = true;
-
-            StartCoroutine(Rebound()); 
-            StartCoroutine(ReboundWingsBlock());
-
             _acceleration = 0;
+            var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
+            var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
             GetComponent<HealthPointsManager>().CollisionDamage();
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
-            var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
-            var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
-            var rotationDifference = wallRotation - balrogRotation;
-            var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
-            if (angleAfterRebound > 135 && angleAfterRebound <= 180) angleAfterRebound = 135;
-            if (angleAfterRebound > 180 && angleAfterRebound < 225) angleAfterRebound = 225;            
-            _rotation = angleAfterRebound * Mathf.Deg2Rad;
-            _rotation = MakeRotationFromMinusPiToPI(_rotation);
-
-            if (collision.gameObject.tag == "LeftWall" && _rotation < 0) _rotation *= -1;
-            if (collision.gameObject.tag == "RightWall" && _rotation > 0) _rotation *= -1;
+            StartCoroutine(ReboundWingsBlock());
+            if (collision.gameObject.tag == "RightWall" && wallRotation < 90 ||
+                collision.gameObject.tag == "RightWall" && wallRotation > 325 || 
+                collision.gameObject.tag == "LeftWall" && wallRotation < 35 ||
+                collision.gameObject.tag == "LeftWall" && wallRotation > 270)
+            {
+                _rebounded = true;
+                StartCoroutine(Rebound()); 
+                var rotationDifference = wallRotation - balrogRotation;
+                var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
+                if (angleAfterRebound > 45 && angleAfterRebound <= 180) angleAfterRebound = 45;
+                if (angleAfterRebound > 180 && angleAfterRebound < 315) angleAfterRebound = 315;            
+                _rotation = angleAfterRebound * Mathf.Deg2Rad;
+                _rotation = MakeRotationFromMinusPiToPI(_rotation);
+                if (collision.gameObject.tag == "LeftWall" && _rotation < 0) _rotation *= -1;
+                if (collision.gameObject.tag == "RightWall" && _rotation > 0) _rotation *= -1;   
+            }
+            else
+            {
+                _rotation = wallRotation * Mathf.Deg2Rad;
+            }
         }
         if (collision.gameObject.tag == "Projectile")
         {
             GetComponent<HealthPointsManager>().ProjectileDamage();
         }
     }
-
+    private IEnumerator Rebound()
+    {
+        yield return new WaitForSeconds(0.15f);
+        _rebounded = false;
+    }
+    
+    private IEnumerator ReboundWingsBlock()
+    {
+        yield return new WaitForSeconds(2f);
+        _anim.SetBool("Collided", false);
+    }
     private float MakeRotationFromMinusPiToPI(float rotation)
     {
         // Приводим _rotation к значению [от -PI до PI]

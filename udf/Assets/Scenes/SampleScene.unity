@@ -6094,7 +6094,7 @@ MonoBehaviour:
     type: 3}
   centralPointPosLimit: 100
   sidePointPosLimit: 200
-  sidePointsMinDist: 150
+  sidePointsMinDist: 200
   speed: 0
   centralPointX: 0
   centralPointY: 0
@@ -10888,8 +10888,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VertSpeed: 0
   cam: {fileID: 519420028}
-  hpText: {fileID: 4787586125774494781, guid: be1ca96ec2690274a8c23c1527a85afd, type: 3}
-  hpUi: {fileID: 1963383471}
   deepBoard: {fileID: 1209580270}
   reFallButton: {fileID: 1838697581}
   StartButtonPressed: 0
@@ -11473,7 +11471,7 @@ PrefabInstance:
     - target: {fileID: 7023896550766544299, guid: 65b21eb075529964fb1379f7fb23c4c4,
         type: 3}
       propertyPath: sidePointsMinDist
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65b21eb075529964fb1379f7fb23c4c4, type: 3}

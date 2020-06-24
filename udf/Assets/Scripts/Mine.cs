@@ -79,10 +79,12 @@ public class Mine : MonoBehaviour
         if (x > _centralPointPosLimitR) x = _centralPointPosLimitR;
         sidePointLeftX = x - 50 - Random.Range(0, 150);
         sidePointLeftX = Mathf.Clamp(sidePointLeftX, mainCamera.pixelWidth / 2 - sidePointPosLimit, 255);
-        if (mineList.Count > 0) 
-            while (Mathf.Abs(sidePointLeftX - mineList[mineList.Count - 1].GetComponent<Vertebra>().RightX) < sidePointsMinDist) 
-                //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
-                sidePointLeftX -= 10; 
+        //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
+        if (mineList.Count > 0 &&
+            Mathf.Abs(sidePointLeftX - mineList[mineList.Count - 1].GetComponent<Vertebra>().RightX) < sidePointsMinDist)
+        {
+            sidePointLeftX = mainCamera.pixelWidth / 2 - sidePointPosLimit;
+        }
         sidePointLeftY = y + Random.Range(-25, 25);
         if (_prevSidePointLeftY == mainCamera.pixelHeight * 2) 
             // выставляем первое реальное значение y-координаты конца левого ребра для запоминания
@@ -94,10 +96,13 @@ public class Mine : MonoBehaviour
         _prevSidePointLeftY = sidePointLeftY; 
         sidePointRightX = x + 50 + Random.Range(0, 150);
         sidePointRightX = Mathf.Clamp(sidePointRightX, 256, mainCamera.pixelWidth / 2 + sidePointPosLimit);
-        if (mineList.Count > 0) 
-            while (Mathf.Abs(sidePointRightX - mineList[mineList.Count - 1].GetComponent<Vertebra>().LeftX) < sidePointsMinDist) 
-                //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
-                sidePointRightX += 10; 
+        //при необходимости двигаем x-координату конца ребра от центра, чтобы избежать экстремальных изломов шахты
+        if (mineList.Count > 0 &&
+            Mathf.Abs(sidePointRightX - mineList[mineList.Count - 1].GetComponent<Vertebra>().LeftX) < sidePointsMinDist)
+        {
+            sidePointRightX = mainCamera.pixelWidth / 2 + sidePointPosLimit;
+        }
+
         sidePointRightY = y + Random.Range(-25, 25);
         if (_prevSidePointRightY == mainCamera.pixelHeight * 2) 
             // выставляем первое реальное значение y-координаты конца правого ребра для запоминания
@@ -111,24 +116,4 @@ public class Mine : MonoBehaviour
         vertebra.name = "vertebra" + mineList.Count.ToString();
         mineList.Add(vertebra);
     }
-
-    //void OnDrawGizmos()
-    //{
-    //    if (EditorApplication.isPlaying)
-    //    {
-    //        foreach (KeyValuePair<int, Dictionary<int, GameObject>> vertebra in _mineDict)
-    //        {
-    //            Gizmos.color = Color.blue;
-    //            Gizmos.DrawLine(vertebra.Value[1].transform.position, vertebra.Value[0].transform.position);
-    //            Gizmos.DrawLine(vertebra.Value[2].transform.position, vertebra.Value[0].transform.position);
-    //            if (_mineDict.ContainsKey(vertebra.Key - 1))
-    //            {
-    //                Gizmos.DrawLine(_mineDict[vertebra.Key - 1][0].transform.position, vertebra.Value[0].transform.position);
-    //                Gizmos.color = Color.red;
-    //                Gizmos.DrawLine(_mineDict[vertebra.Key - 1][2].transform.position, vertebra.Value[2].transform.position);
-    //                Gizmos.DrawLine(_mineDict[vertebra.Key - 1][1].transform.position, vertebra.Value[1].transform.position);
-    //            }
-    //        }
-    //    }
-    //}
 }

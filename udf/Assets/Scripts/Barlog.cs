@@ -1,8 +1,6 @@
 ﻿﻿using UnityEngine;
-using TMPro;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using UnityEngine.Serialization;
 
 [SuppressMessage("ReSharper", "CommentTypo")]
 public class Barlog : MonoBehaviour
@@ -33,8 +31,6 @@ public class Barlog : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         StartButtonPressed = 1;
-        // QualitySettings.vSyncCount = 0;  // VSync must be disabled
-        // Application.targetFrameRate = 15;
     }
 
     public void Death()
@@ -64,10 +60,10 @@ public class Barlog : MonoBehaviour
                 if (inputGetAxisHorizontal == 0) _rotation *= 1 - _windage * Time.deltaTime;
                 else
                 {
-                    if (_rotation > Mathf.PI / 2 && inputGetAxisHorizontal > 0) inputGetAxisHorizontal = 0;
-                    if (_rotation < -Mathf.PI / 2 && inputGetAxisHorizontal < 0) inputGetAxisHorizontal = 0;
+                    if (_rotation > Mathf.PI / 3 && inputGetAxisHorizontal > 0) inputGetAxisHorizontal = 0;
+                    if (_rotation < -Mathf.PI / 3 && inputGetAxisHorizontal < 0) inputGetAxisHorizontal = 0;
                     _rotation += 2 * inputGetAxisHorizontal * Mathf.PI * Time.deltaTime;
-                }
+                } 
                 if (Input.GetAxis("Vertical") > 0)
                 {
                     GetComponent<SpriteRenderer>().flipY = true;
@@ -80,12 +76,13 @@ public class Barlog : MonoBehaviour
                     GetComponent<SpriteRenderer>().flipY = false;
                     _windage = 0.5f;
                     _acceleration = 0;
-                    _centerTendencyCoefficient = (BarlogY - cam.transform.position.y) / 100;
+                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 100)) / 100;
                 }
                 else {
                     GetComponent<SpriteRenderer>().flipY = false;
                     _windage = 0.4f;
-                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y - _accelerationTrigger * 200))/100;
+                    _centerTendencyCoefficient = 
+                        (BarlogY - (cam.transform.position.y + 100 - _accelerationTrigger * 200))/100;
                     _acceleration = _accelerationTrigger * 20;
                 }
                 BarlogMovementAndRotation(false, 1);
@@ -111,17 +108,13 @@ public class Barlog : MonoBehaviour
             Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
                 _rotation * Mathf.Rad2Deg * RotationDirection(Input.GetAxis("Vertical")))), 180);
 
-        // VertSpeed = _aVy * Ratio / speedCoefficient;
         VertSpeed = _aVy * Ratio;
         if (!collidedStatus && VertSpeed < 3) VertSpeed = 3;
 
         // В начале полёта и после столкновения начинаем с фактического местоположения
         if (_moveTo == Vector3.zero) _moveTo = transform.position;
         // Корректируем позицию куда стремится барлог
-        _moveTo += new Vector3(_aVx * Ratio * Time.deltaTime,
-            - _centerTendencyCoefficient * Time.deltaTime * 100);
-        // _moveTo += new Vector3(_aVx * Ratio / speedCoefficient * Time.deltaTime,
-            // - _centerTendencyCoefficient * Time.deltaTime * 100);
+        _moveTo += new Vector3(_aVx * Ratio * Time.deltaTime, - _centerTendencyCoefficient * Time.deltaTime * 100);
         // Направляем барлога в расчётную позицию
         Rigidbody.MovePosition(_moveTo);
     }

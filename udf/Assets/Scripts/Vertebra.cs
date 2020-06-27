@@ -35,7 +35,6 @@ public class Vertebra : MonoBehaviour
         rightPoint.transform.parent = transform;
         if (mineList.Count > 2)
         {
-
             float prevSidePointX = mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftX;
             float prevSidePointY = mineList[mineList.Count - 2].GetComponent<Vertebra>().LeftY;
             float collOffsetY = 0.25f;

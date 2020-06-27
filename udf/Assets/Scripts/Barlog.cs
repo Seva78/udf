@@ -26,7 +26,8 @@ public class Barlog : MonoBehaviour
     private float BarlogY => transform.position.y;
     private Quaternion BarlogRot => transform.rotation;
     Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
-    
+    private Coroutine _reboundWingsBlock;
+    private Coroutine _rebound;
     private void StartGame()
     {
         _anim = GetComponent<Animator>();
@@ -48,7 +49,6 @@ public class Barlog : MonoBehaviour
         {
             if (_rebounded)
             {
-                _anim.SetBool("Collided", true);
                 BarlogMovementAndRotation(true, 10);
             }
             else
@@ -139,22 +139,25 @@ public class Barlog : MonoBehaviour
     
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "VertebraPoint(Clone)" && !_rebounded)
+        if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
+            _anim.SetBool("Collided", true);
             _acceleration = 0;
             var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
             var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
             GetComponent<HealthPointsManager>().CollisionDamage();
             GetComponent<AudioSource>().PlayOneShot(soundBarlogHit2, 1f);
             _moveTo = Vector3.zero; // Обнуляем позицию к которой стремимся. Чтобы начать от фактического положения
-            StartCoroutine(ReboundWingsBlock());
+            if(_reboundWingsBlock != null) StopCoroutine(_reboundWingsBlock);
+            _reboundWingsBlock = StartCoroutine(ReboundWingsBlock());
             if (collision.gameObject.tag == "RightWall" && wallRotation < 90 ||
                 collision.gameObject.tag == "RightWall" && wallRotation > 325 || 
                 collision.gameObject.tag == "LeftWall" && wallRotation < 35 ||
                 collision.gameObject.tag == "LeftWall" && wallRotation > 270)
             {
                 _rebounded = true;
-                StartCoroutine(Rebound()); 
+                if (_rebound != null) StopCoroutine(_rebound);
+                _rebound = StartCoroutine(Rebound());
                 var rotationDifference = wallRotation - balrogRotation;
                 var angleAfterRebound = MakeDegreePositive(wallRotation + rotationDifference);
                 if (angleAfterRebound > 45 && angleAfterRebound <= 180) angleAfterRebound = 45;

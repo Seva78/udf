@@ -58,7 +58,7 @@ public class Mine : MonoBehaviour
         }
         foreach (GameObject vertebra in mineList)
         {
-            if (vertebra.transform.position.y > mainCamera.pixelHeight + 200)
+            if (vertebra && vertebra.transform.position.y > mainCamera.pixelHeight + 200)
             {
                 _vertebraToDelete = mineList.IndexOf(vertebra) + 1;
             }

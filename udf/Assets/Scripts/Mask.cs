@@ -4,7 +4,9 @@ using System.Diagnostics;
 using UnityEngine;
 using System.Linq;
 public class Mask : MonoBehaviour
+
 {
+    private Vertebra _prevVert;
     public void Start()
     {
         var rend = GetComponent<SpriteMask>();
@@ -20,12 +22,12 @@ public class Mask : MonoBehaviour
         var mineList = controller.GetComponent<Mine>().mineList;
         var mineListLocal = new List<GameObject>();
         for (var i = 1; i < mineList.Count - 1; i++) {
-            var prevVert = mineList[i - 1].GetComponent<Vertebra>();
+            if (mineList[i - 1].GetComponent<Vertebra>()) _prevVert = mineList[i - 1].GetComponent<Vertebra>(); 
             var nextVert = mineList[i + 1].GetComponent<Vertebra>();
             if (nextVert.LeftY < topGlobalPosY && nextVert.LeftY > globalPos.y ||
-                prevVert.LeftY < topGlobalPosY && prevVert.LeftY > globalPos.y ||
+                _prevVert.LeftY < topGlobalPosY && _prevVert.LeftY > globalPos.y ||
                 nextVert.RightY < topGlobalPosY && nextVert.RightY > globalPos.y ||
-                prevVert.RightY < topGlobalPosY && prevVert.RightY > globalPos.y)
+                _prevVert.RightY < topGlobalPosY && _prevVert.RightY > globalPos.y)
             {
                 mineListLocal.Add(mineList[i]);
             }

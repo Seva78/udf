@@ -2025,7 +2025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63f9a25039c6a74e9dae17fcb152a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gandalfY: 780
+  gandalfYDefault: 760
+  gandalfYHighSpeed: 830
+  gandalfMaxSpeed: 400
   barlog: {fileID: 2069570061}
   projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
     type: 3}
@@ -10887,11 +10889,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VertSpeed: 0
+  "\u0421enterTendencyCoefficient": 0
   cam: {fileID: 519420028}
   deepBoard: {fileID: 1209580270}
   reFallButton: {fileID: 1838697581}
   StartButtonPressed: 0
   soundBarlogHit2: {fileID: 8300000, guid: 57d2e4dafe193fc4498192d77e936ca6, type: 3}
+  Acceleration: 0
 --- !u!50 &2069570066
 Rigidbody2D:
   serializedVersion: 4

@@ -13,14 +13,14 @@ public class Barlog : MonoBehaviour
     public AudioClip soundBarlogHit2;
     private float _velocity; //Скорость полёта демона.
     private float _rotation; //Направление полёта демона.
-    private float _acceleration; //Ускорение, которое демон создаёт в период маха крыла.
+    private float _сenterTendencyCoefficient;
+    public float Acceleration; //Ускорение, которое демон создаёт в период маха крыла.
     private int _accelerationTrigger;
     private float _windage; //Коэффициент трения об воздух (не константа, т.к. зависит от того, как сильно расправлены крылья).
     private const int Ratio = 20;
     private float _aVx;
     private float _aVy;
     private Vector3 _moveTo; // Куда стремится барлог средствами Rigidbody.MovePosition 
-    private float _centerTendencyCoefficient;
     private Animator _anim;
     private bool _rebounded;
     private float BarlogY => transform.position.y;
@@ -68,22 +68,22 @@ public class Barlog : MonoBehaviour
                 {
                     GetComponent<SpriteRenderer>().flipY = true;
                     _windage = 0.99f;
-                    _acceleration = 0;
-                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
+                    Acceleration = 0;
+                    _сenterTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
                 }
                 else if (Input.GetAxis("Vertical") == 0)
                 {
                     GetComponent<SpriteRenderer>().flipY = false;
                     _windage = 0.5f;
-                    _acceleration = 0;
-                    _centerTendencyCoefficient = (BarlogY - (cam.transform.position.y + 100)) / 100;
+                    Acceleration = 0;
+                    _сenterTendencyCoefficient = (BarlogY - (cam.transform.position.y + 100)) / 100;
                 }
                 else {
                     GetComponent<SpriteRenderer>().flipY = false;
                     _windage = 0.4f;
-                    _centerTendencyCoefficient = 
+                    _сenterTendencyCoefficient = 
                         (BarlogY - (cam.transform.position.y + 100 - _accelerationTrigger * 200))/100;
-                    _acceleration = _accelerationTrigger * 20;
+                    Acceleration = _accelerationTrigger * 20;
                 }
                 BarlogMovementAndRotation(false, 1);
             }
@@ -92,7 +92,7 @@ public class Barlog : MonoBehaviour
     private void BarlogMovementAndRotation(bool collidedStatus, int speedCoefficient)
     {
         _velocity *= 1 - _windage * Time.deltaTime * speedCoefficient;
-        _velocity += _acceleration * Time.deltaTime;
+        _velocity += Acceleration * Time.deltaTime;
         _aVx = _velocity * Mathf.Sin(_rotation);
         _aVy = _velocity * Mathf.Cos(_rotation);
 
@@ -114,7 +114,7 @@ public class Barlog : MonoBehaviour
         // В начале полёта и после столкновения начинаем с фактического местоположения
         if (_moveTo == Vector3.zero) _moveTo = transform.position;
         // Корректируем позицию куда стремится барлог
-        _moveTo += new Vector3(_aVx * Ratio * Time.deltaTime, - _centerTendencyCoefficient * Time.deltaTime * 100);
+        _moveTo += new Vector3(_aVx * Ratio * Time.deltaTime, - _сenterTendencyCoefficient * Time.deltaTime * 100);
         // Направляем барлога в расчётную позицию
         Rigidbody.MovePosition(_moveTo);
     }
@@ -142,7 +142,7 @@ public class Barlog : MonoBehaviour
         if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
             _anim.SetBool("Collided", true);
-            _acceleration = 0;
+            Acceleration = 0;
             var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
             var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
             GetComponent<HealthPointsManager>().CollisionDamage();

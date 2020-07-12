@@ -2,27 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 namespace Assets.Scripts
 {
     public class Gandalf : MonoBehaviour
     {
-        public int gandalfY;
+        public float gandalfVertPosDefault;
+        public float gandalfVertPosHighSpeed;
+        public int gandalfMaxSpeed;
+        private float _gandalfVertPosition;
         public GameObject barlog;
         public GameObject projectile;
         public GameObject controller;
         private float _speed;
         private List<GameObject> _mineList;
-        int _fireCooldownTrigger;
-        void Update()
+        private int _fireCooldownTrigger;
+
+        private void Start()
+        {
+            _gandalfVertPosition = gandalfVertPosDefault;
+        }
+
+        private void Update()
         {
             _mineList = controller.GetComponent<Mine>().mineList;
-            int checkStart = _mineList.IndexOf(_mineList.First()) + 2;
+            var checkStart = _mineList.IndexOf(_mineList.First()) + 2;
             int checkFinish;
             if (_mineList.Count < 7) checkFinish = _mineList.IndexOf(_mineList.Last());
             else checkFinish = _mineList.IndexOf(_mineList.First()) + 6;
             var position = transform.position;
-            for (int i = checkStart; i < checkFinish; i++)
+            for (var i = checkStart; i < checkFinish; i++)
             {
                 var leftPointPosition = _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position;
                 var rightPointPosition = _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position;
@@ -40,12 +48,20 @@ namespace Assets.Scripts
                     transform.position = new Vector3(position.x - 2, position.y);
                 }
             }
-        
-            _speed = barlog.GetComponent<Barlog>().VertSpeed*Time.deltaTime;
-            if (position.y > gandalfY) {
-                transform.position = new Vector3(position.x, position.y - _speed);
+
+            _speed = barlog.GetComponent<Barlog>().VertSpeed;
+            if (_speed > gandalfMaxSpeed && _gandalfVertPosition < gandalfVertPosHighSpeed)
+            {
+                _gandalfVertPosition += (_speed - gandalfMaxSpeed) * Time.deltaTime / 2;
+                transform.position = new Vector3(position.x, _gandalfVertPosition);
             }
-            if (_fireCooldownTrigger == 0 && barlog.GetComponent<Barlog>().StartButtonPressed == 1)
+            if (_speed <= gandalfMaxSpeed && _gandalfVertPosition > gandalfVertPosDefault) {
+                _gandalfVertPosition -= (gandalfMaxSpeed - _speed) * Time.deltaTime * 2;
+                transform.position = new Vector3(position.x, _gandalfVertPosition);
+            }
+            if (_fireCooldownTrigger == 0 && 
+                barlog.GetComponent<Barlog>().StartButtonPressed == 1 &&
+                _gandalfVertPosition < 800)
             {
                 _fireCooldownTrigger = 1;
                 StartCoroutine(Fire(position));
@@ -54,7 +70,7 @@ namespace Assets.Scripts
     
     
     
-        IEnumerator Fire(Vector3 position)
+        private IEnumerator Fire(Vector3 position)
         {
             yield return new WaitForSeconds(2);
             Instantiate(projectile, new Vector3(position.x, position.y), Quaternion.identity);

@@ -56,7 +56,7 @@ namespace Assets.Scripts
                 transform.position = new Vector3(position.x, _gandalfVertPosition);
             }
             if (_speed <= gandalfMaxSpeed && _gandalfVertPosition > gandalfVertPosDefault) {
-                _gandalfVertPosition -= (gandalfMaxSpeed - _speed) * Time.deltaTime * 2;
+                _gandalfVertPosition -= (gandalfMaxSpeed - _speed) * Time.deltaTime;
                 transform.position = new Vector3(position.x, _gandalfVertPosition);
             }
             if (_fireCooldownTrigger == 0 && 

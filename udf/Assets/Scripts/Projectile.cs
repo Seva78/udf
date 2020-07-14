@@ -7,21 +7,21 @@ public class Projectile : MonoBehaviour
     public GameObject projectileExplosion;
     public AudioClip iceBallFire;
     public AudioClip iceBallExplode;
-    public int explodeTrigger;
-    Vector3 _barlogPosition;
-    Vector3 _gandalfPosition;
-    int _changeTrajectoryTrigger;
-    int _changeTrajectoryValue;
-    void Start()
+    public int ExplodeTrigger;
+    private Vector3 _barlogPosition;
+    private Vector3 _gandalfPosition;
+    private int _changeTrajectoryTrigger;
+    private int _changeTrajectoryValue;
+    private void Start()
     {
         _barlogPosition = GameObject.Find("Barlog").transform.position;
         _gandalfPosition = GameObject.Find("Gandalf").transform.position;
         GetComponent<AudioSource>().PlayOneShot(iceBallFire, 1f);
     }
 
-    void Update()
+    private void Update()
     {
-        if (explodeTrigger == 0)
+        if (ExplodeTrigger == 0)
         {
             transform.position = 
                 new Vector3(transform.position.x - (_gandalfPosition.x - (_barlogPosition.x + _changeTrajectoryValue)) * Time.deltaTime, 
@@ -32,20 +32,20 @@ public class Projectile : MonoBehaviour
             StartCoroutine("ChangeTrajectory");
         }
     }
-    IEnumerator ChangeTrajectory()
+    private IEnumerator ChangeTrajectory()
     {
         yield return new WaitForSeconds(0.15f);
         _changeTrajectoryValue = Random.Range(300,-300);
         _changeTrajectoryTrigger = 0;
     }
-    void OnCollisionEnter2D() {
-        explodeTrigger = 1;
+    private void OnCollisionEnter2D() {
+        ExplodeTrigger = 1;
         GetComponent<AudioSource>().PlayOneShot(iceBallExplode, 1f);
         Instantiate(projectileExplosion, transform.position, Quaternion.identity);
         GetComponent<CircleCollider2D>().enabled = false;
         StartCoroutine("Destroy");
     }
-    IEnumerator Destroy()
+    private IEnumerator Destroy()
     {
         yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);

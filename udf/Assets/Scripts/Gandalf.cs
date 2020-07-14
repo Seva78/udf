@@ -9,19 +9,17 @@ namespace Assets.Scripts
         public float gandalfVertPosDefault;
         public float gandalfVertPosHighSpeed;
         public int gandalfMaxSpeed;
-        private float _gandalfVertPosition;
         public GameObject barlog;
         public GameObject projectile;
         public GameObject controller;
+        private float _gandalfVertPosition;
         private float _speed;
         private List<GameObject> _mineList;
         private int _fireCooldownTrigger;
-
         private void Start()
         {
             _gandalfVertPosition = gandalfVertPosDefault;
         }
-
         private void Update()
         {
             _mineList = controller.GetComponent<Mine>().mineList;
@@ -32,11 +30,11 @@ namespace Assets.Scripts
             var position = transform.position;
             for (var i = checkStart; i < checkFinish; i++)
             {
-                var leftPointPosition = _mineList[i].GetComponent<Vertebra>().leftPoint.transform.position;
-                var rightPointPosition = _mineList[i].GetComponent<Vertebra>().rightPoint.transform.position;
+                var leftPointPosition = _mineList[i].GetComponent<Vertebra>().LeftPoint.transform.position;
+                var rightPointPosition = _mineList[i].GetComponent<Vertebra>().RightPoint.transform.position;
             
                 if (leftPointPosition.x > position.x - 20 && 
-                    leftPointPosition.y > position.y - 90 && 
+                    leftPointPosition.y > position.y - 90 &&
                     leftPointPosition.y < position.y) 
                 {
                     transform.position = new Vector3(position.x + 2, position.y);
@@ -48,7 +46,6 @@ namespace Assets.Scripts
                     transform.position = new Vector3(position.x - 2, position.y);
                 }
             }
-
             _speed = barlog.GetComponent<Barlog>().VertSpeed;
             if (_speed > gandalfMaxSpeed && _gandalfVertPosition < gandalfVertPosHighSpeed)
             {
@@ -67,9 +64,6 @@ namespace Assets.Scripts
                 StartCoroutine(Fire(position));
             }
         }
-    
-    
-    
         private IEnumerator Fire(Vector3 position)
         {
             yield return new WaitForSeconds(2);

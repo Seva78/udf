@@ -13,26 +13,23 @@ public class HealthPointsManager : MonoBehaviour
     private float BarlogY => transform.position.y;
     private int _healthPointsCooldownTrigger;
     private bool _barlogAlive = true;
-    void Start()
-    {
-        
-    }
+
     public void BoostHeal()
     {
         _healthPointsDelta = 5;
         _healthPoints += _healthPointsDelta;
-        hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
+        hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints;
         HealthPointsSpawn(_healthPointsDelta, new Color32(0, 255, 0, 255));
     }
 
     public void CollisionDamage()
     {
-        _healthPointsDelta += Random.Range(1,3);
+        _healthPointsDelta += Random.Range(0,0);
         Damage(_healthPointsDelta);
     }
     public void ProjectileDamage()
     {
-        _healthPointsDelta += Random.Range(1,2);
+        _healthPointsDelta += Random.Range(0,0);
         Damage(_healthPointsDelta);
     }
     
@@ -43,7 +40,7 @@ public class HealthPointsManager : MonoBehaviour
             _healthPointsCooldownTrigger = 1;
             StartCoroutine(HealthPointsRedCoroutine(_healthPointsDelta));
         }
-        hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints.ToString();
+        hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints;
     }
     
     private IEnumerator HealthPointsRedCoroutine(int healthPointsDelta)
@@ -58,7 +55,8 @@ public class HealthPointsManager : MonoBehaviour
         if (_healthPoints <= 0 && _barlogAlive)
         {
             _barlogAlive = false;
-            _healthPoints = 0;            
+            _healthPoints = 0;
+            hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints;
             GetComponent<Barlog>().Death();
         }
     }

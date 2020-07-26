@@ -6,7 +6,7 @@ using TMPro;
 public class HealthPointsManager : MonoBehaviour
 {
     public GameObject hpUi;
-    public TextMeshPro hpText;
+    public GameObject hpText;
     private int _healthPoints = 100;
     private int _healthPointsDelta;
     private float BarlogX => transform.position.x;

@@ -1,0 +1,268 @@
+Using pre-set license
+Built from '2020.2/staging' branch; Version is '2020.2.6f1 (8a2143876886) revision 9052483'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19042.804; Version 2009; 64bit' Language: 'ru' Physical Memory: 4087 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\2020.2.6f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/Documents/GitHub/udf/udf
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+55453
+Successfully changed project path to: D:/Documents/GitHub/udf/udf
+D:/Documents/GitHub/udf/udf
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 59.51 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.6f1 (8a2143876886)
+[Subsystems] Discovering subsystems at path C:/Program Files/2020.2.6f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Documents/GitHub/udf/udf/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 10.1]
+    Renderer: NVIDIA GeForce GT 240 (ID=0xca3)
+    Vendor:   
+    VRAM:     972 MB
+    Driver:   21.21.13.4201
+Initialize mono
+Mono path[0] = 'C:/Program Files/2020.2.6f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/2020.2.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/2020.2.6f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56532
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/2020.2.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.010124 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 53.36 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  5.179 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.012949 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.61 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.528 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.37 seconds
+Refreshing native plugins compatible for Editor in 1.72 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1489 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.0 MB.
+
+Unloading 27 unused Assets to reduce memory usage. Loaded Objects now: 1922.
+Total: 13.282200 ms (FindLiveObjects: 0.479200 ms CreateObjectMapping: 0.087100 ms MarkObjects: 10.926200 ms  DeleteObjects: 1.786200 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets
+  artifactKey: Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets using Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f47cf443bddc682ac2de11ea429897ce') in 0.067591 seconds
+  Import took 0.113099 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.999490 seconds.
+  path: Assets/Animations
+  artifactKey: Guid(b801d36aa5bbe784bac027366ed703d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations using Guid(b801d36aa5bbe784bac027366ed703d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b3b23126050ac20c3e55792edebb328') in 0.023963 seconds
+  Import took 0.029132 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 27.802430 seconds.
+  path: Assets/Animations/Gandalf
+  artifactKey: Guid(f3f282cc354e32e49ac930cb249eb5a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf using Guid(f3f282cc354e32e49ac930cb249eb5a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e70b07744c133bad79dafa160194f28f') in 0.029187 seconds
+  Import took 0.035383 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 212.805018 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.png
+  artifactKey: Guid(7cd27d6b7e04769458e758bb1ec7ab79) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.png using Guid(7cd27d6b7e04769458e758bb1ec7ab79) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33abeebb0e72f73214b248836cfad6db') in 0.352168 seconds
+  Import took 0.370316 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000268 seconds.
+  path: Assets/Animations/Gandalf/Gandalf_Gendalf.mat
+  artifactKey: Guid(39ccdf1db7e49584ca74548b33a56de3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf_Gendalf.mat using Guid(39ccdf1db7e49584ca74548b33a56de3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8dca9206d9e216077c05f518874a3b6') in 0.241974 seconds
+  Import took 0.245949 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000297 seconds.
+  path: Assets/Animations/Gandalf/Gandalf_SkeletonData.asset
+  artifactKey: Guid(9c1313928e3cc054b95f0581397353a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf_SkeletonData.asset using Guid(9c1313928e3cc054b95f0581397353a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Material is missing texture: Gandalf_Gendalf
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogError (object,UnityEngine.Object)
+Spine.Unity.MaterialsTextureLoader:Load (Spine.AtlasPage,string) (at Assets/Spine/Runtime/spine-unity/Asset Types/SpineAtlasAsset.cs:222)
+Spine.Atlas:Load (System.IO.TextReader,string,Spine.TextureLoader) (at Assets/Spine/Runtime/spine-csharp/Atlas.cs:150)
+Spine.Atlas:.ctor (System.IO.TextReader,string,Spine.TextureLoader) (at Assets/Spine/Runtime/spine-csharp/Atlas.cs:105)
+Spine.Unity.SpineAtlasAsset:GetAtlas () (at Assets/Spine/Runtime/spine-unity/Asset Types/SpineAtlasAsset.cs:142)
+Spine.Unity.Editor.SkeletonDataAssetInspector:PopulateWarnings () (at Assets/Spine/Editor/spine-unity/Editor/Asset Types/SkeletonDataAssetInspector.cs:651)
+Spine.Unity.Editor.SkeletonDataAssetInspector:InitializeEditor () (at Assets/Spine/Editor/spine-unity/Editor/Asset Types/SkeletonDataAssetInspector.cs:141)
+Spine.Unity.Editor.SkeletonDataAssetInspector:OnEnable () (at Assets/Spine/Editor/spine-unity/Editor/Asset Types/SkeletonDataAssetInspector.cs:84)
+UnityEditor.Editor:CreateEditorWithContext (UnityEngine.Object[],UnityEngine.Object,System.Type)
+UnityEditor.Editor:CreateEditor (UnityEngine.Object,System.Type)
+UnityEditor.Editor:CreateEditor (UnityEngine.Object)
+UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string)
+
+(Filename: Assets/Spine/Runtime/spine-unity/Asset Types/SpineAtlasAsset.cs Line: 222)
+
+ -> (artifact id: '182a5e6c2605c3b2dd5ea7756500bb8d') in 2.940550 seconds
+  Import took 2.963854 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000410 seconds.
+  path: Assets/Animations/Gandalf/Gandalf_Atlas.asset
+  artifactKey: Guid(c10f2e948e5f02e43b23a61be28205bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf_Atlas.asset using Guid(c10f2e948e5f02e43b23a61be28205bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c516974ea29a19e99daa3f03e54128d7') in 0.017877 seconds
+  Import took 0.023577 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 17.635633 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.json
+  artifactKey: Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.json using Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '170ece4f2cc683abc5d4b8ca1151416e') in 0.014970 seconds
+  Import took 0.037038 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.015221 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.json
+  artifactKey: Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.json using Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '170ece4f2cc683abc5d4b8ca1151416e') in 0.005403 seconds
+  Import took 0.009803 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.722237 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.atlas.txt
+  artifactKey: Guid(0dcd18cc42a337a4eade96d0ceaff9fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.atlas.txt using Guid(0dcd18cc42a337a4eade96d0ceaff9fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd29b3ae01ff63db459854642366057a') in 0.029110 seconds
+  Import took 0.035602 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 245.916436 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.atlas.txt
+  artifactKey: Guid(0dcd18cc42a337a4eade96d0ceaff9fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.atlas.txt using Guid(0dcd18cc42a337a4eade96d0ceaff9fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd7d2c6eac469e80ca17436145ca8198') in 0.020791 seconds
+  Import took 0.029830 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 36.329173 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.json
+  artifactKey: Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.json using Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3addb456975eb87535fe40030f1ac8e5') in 0.007303 seconds
+  Import took 0.012922 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003856 seconds.
+  path: Assets/Animations/Gandalf/Gandalf.json
+  artifactKey: Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Gandalf/Gandalf.json using Guid(2e4154bdfdfe74f47840dde1258ec088) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3addb456975eb87535fe40030f1ac8e5') in 0.008593 seconds
+  Import took 0.014212 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.032084 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  4.193 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.98 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1449 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.0 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1967.
+Total: 15.937200 ms (FindLiveObjects: 1.731200 ms CreateObjectMapping: 0.250200 ms MarkObjects: 11.856300 ms  DeleteObjects: 2.096000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 2861.745736 seconds.
+  path: Assets/Animations/New Folder
+  artifactKey: Guid(3376420ff838213488e55ee2db468c43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/New Folder using Guid(3376420ff838213488e55ee2db468c43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9666c7738183fac62f75699b8871f523') in 0.065028 seconds
+  Import took 0.098626 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 23.407906 seconds.
+  path: Assets/Animations/Balrog
+  artifactKey: Guid(3376420ff838213488e55ee2db468c43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Balrog using Guid(3376420ff838213488e55ee2db468c43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9c885a9795bc47c30f31b8c73e2506e') in 0.057978 seconds
+  Import took 0.077201 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 157.862887 seconds.
+  path: Assets/Animations/Balrog/Balrog_SkeletonData.asset
+  artifactKey: Guid(1552ce7437c926e479e5079396c4de97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Balrog/Balrog_SkeletonData.asset using Guid(1552ce7437c926e479e5079396c4de97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8d7ebedcbcd6bdfb455feb602d3bffa') in 4.384999 seconds
+  Import took 4.436646 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.030607 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.72 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.225 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.87 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1449 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.0 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1970.
+Total: 4.693800 ms (FindLiveObjects: 0.322700 ms CreateObjectMapping: 0.090100 ms MarkObjects: 2.542000 ms  DeleteObjects: 1.734200 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

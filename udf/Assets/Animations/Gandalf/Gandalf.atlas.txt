@@ -1,0 +1,132 @@
+
+Gandalf.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Волосы
+  rotate: false
+  xy: 2, 95
+  size: 147, 366
+  orig: 151, 370
+  offset: 2, 2
+  index: -1
+ЗадПодол
+  rotate: false
+  xy: 57, 464
+  size: 177, 246
+  orig: 177, 246
+  offset: 0, 0
+  index: -1
+КолпакЗад
+  rotate: false
+  xy: 2, 4
+  size: 304, 89
+  orig: 304, 91
+  offset: 0, 0
+  index: -1
+КолпакПеред
+  rotate: true
+  xy: 57, 712
+  size: 302, 160
+  orig: 302, 160
+  offset: 0, 0
+  index: -1
+ЛевоГлаз
+  rotate: true
+  xy: 377, 695
+  size: 41, 39
+  orig: 45, 43
+  offset: 2, 2
+  index: -1
+ЛевоПодол
+  rotate: false
+  xy: 236, 479
+  size: 139, 232
+  orig: 139, 232
+  offset: 0, 0
+  index: -1
+Нос
+  rotate: false
+  xy: 351, 791
+  size: 44, 59
+  orig: 48, 63
+  offset: 2, 2
+  index: -1
+ПосохИсточникСвета
+  rotate: false
+  xy: 270, 167
+  size: 32, 42
+  orig: 38, 50
+  offset: 3, 4
+  index: -1
+ПосохОснование
+  rotate: false
+  xy: 2, 463
+  size: 53, 551
+  orig: 57, 555
+  offset: 2, 2
+  index: -1
+ПосохСвет1
+  rotate: false
+  xy: 351, 852
+  size: 135, 162
+  orig: 142, 169
+  offset: 3, 4
+  index: -1
+ПосохСвет2
+  rotate: true
+  xy: 308, 2
+  size: 207, 250
+  orig: 215, 259
+  offset: 5, 5
+  index: -1
+ПосохСвет3
+  rotate: false
+  xy: 151, 211
+  size: 203, 251
+  orig: 218, 269
+  offset: 8, 10
+  index: -1
+ПравоГлаз
+  rotate: true
+  xy: 351, 738
+  size: 51, 41
+  orig: 55, 45
+  offset: 2, 2
+  index: -1
+Предплечье
+  rotate: false
+  xy: 427, 224
+  size: 129, 72
+  orig: 133, 76
+  offset: 2, 2
+  index: -1
+Рука
+  rotate: true
+  xy: 356, 217
+  size: 79, 69
+  orig: 83, 74
+  offset: 2, 3
+  index: -1
+РукавПеред
+  rotate: true
+  xy: 151, 121
+  size: 88, 117
+  orig: 92, 121
+  offset: 2, 2
+  index: -1
+УсыБорода
+  rotate: false
+  xy: 219, 713
+  size: 130, 301
+  orig: 130, 301
+  offset: 0, 0
+  index: -1
+Ухо
+  rotate: false
+  xy: 356, 298
+  size: 132, 179
+  orig: 136, 193
+  offset: 2, 2
+  index: -1

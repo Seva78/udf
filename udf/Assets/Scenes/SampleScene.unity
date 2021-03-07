@@ -1786,7 +1786,6 @@ GameObject:
   m_Component:
   - component: {fileID: 419979422}
   - component: {fileID: 419979421}
-  - component: {fileID: 419979423}
   - component: {fileID: 419979420}
   - component: {fileID: 419979424}
   m_Layer: 0
@@ -1795,7 +1794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &419979420
 Rigidbody2D:
   serializedVersion: 4
@@ -1882,25 +1881,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &419979423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419979419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f63f9a25039c6a74e9dae17fcb152a7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gandalfVertPosDefault: 770
-  gandalfVertPosHighSpeed: 830
-  gandalfMaxSpeed: 400
-  barlog: {fileID: 2069570061}
-  projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
-    type: 3}
-  controller: {fileID: 1111420317}
 --- !u!70 &419979424
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -3514,8 +3494,9 @@ GameObject:
   - component: {fileID: 810070986}
   - component: {fileID: 810070985}
   - component: {fileID: 810070984}
+  - component: {fileID: 810070990}
   m_Layer: 0
-  m_Name: Spine GameObject (Gandalf)
+  m_Name: Gandalf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3549,7 +3530,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810070983}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3592,8 +3573,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Fly
-  loop: 1
+  _animationName: 
+  loop: 0
   timeScale: 1
 --- !u!23 &810070987
 MeshRenderer:
@@ -3652,12 +3633,35 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810070983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 209.4, y: 729.6, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalPosition: {x: 256, y: 708.53, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810070990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810070983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63f9a25039c6a74e9dae17fcb152a7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 810070986}
+  idle: {fileID: 11400000, guid: a041423a475cd1d4c9926234dbd9a561, type: 2}
+  attack: {fileID: 11400000, guid: 69a467f1e0fea4b49a335c4f377bce40, type: 2}
+  currentState: 
+  gandalfVertPosDefault: 708
+  gandalfVertPosHighSpeed: 830
+  gandalfMaxSpeed: 400
+  barlog: {fileID: 2069570061}
+  projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
+    type: 3}
+  controller: {fileID: 1111420317}
 --- !u!1 &819647124
 GameObject:
   m_ObjectHideFlags: 0

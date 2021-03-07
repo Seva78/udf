@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Spine.Unity;
 namespace Assets.Scripts
 {
     public class Gandalf : MonoBehaviour
     {
+        public SkeletonAnimation skeletonAnimation;
+        public AnimationReferenceAsset idle;
+        public AnimationReferenceAsset attack;
+        public string currentState;
         public float gandalfVertPosDefault;
         public float gandalfVertPosHighSpeed;
         public int gandalfMaxSpeed;
@@ -19,6 +24,8 @@ namespace Assets.Scripts
         private void Start()
         {
             _gandalfVertPosition = gandalfVertPosDefault;
+            currentState = "Idle";
+            SetCharacterState(currentState);
         }
         private void Update()
         {
@@ -64,11 +71,31 @@ namespace Assets.Scripts
                 StartCoroutine(Fire(position));
             }
         }
+        public void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
+        {
+            skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
+        }
         private IEnumerator Fire(Vector3 position)
         {
             yield return new WaitForSeconds(2);
+            currentState = "Attack";
+            SetCharacterState(currentState);
+            yield return new WaitForSeconds(0.2f);
             Instantiate(projectile, new Vector3(position.x, position.y), Quaternion.identity);
             _fireCooldownTrigger = 0;
+            currentState = "Idle";
+            SetCharacterState(currentState);
+        }
+        public void SetCharacterState(string state)
+        {
+            if (state.Equals("Idle"))
+            {
+                SetAnimation(idle, true, 1f);
+            }
+            else if (state.Equals("Attack"))
+            {
+                SetAnimation(attack, false, 1f);
+            }
         }
     }
 }

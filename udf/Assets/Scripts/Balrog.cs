@@ -1,10 +1,10 @@
-﻿﻿using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using System.Diagnostics.CodeAnalysis;
 using Spine.Unity;
 
- [SuppressMessage("ReSharper", "CommentTypo")]
-public class Barlog : MonoBehaviour
+[SuppressMessage("ReSharper", "CommentTypo")]
+public class Balrog : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
     public AnimationReferenceAsset balrogFly;
@@ -27,40 +27,41 @@ public class Barlog : MonoBehaviour
     private float _aVx;
     private float _aVy;
     private Vector3 _moveTo; // Куда стремится барлог средствами Rigidbody.MovePosition 
-    private Animator _anim;
     private bool _rebounded;
-    private float BarlogY => transform.position.y;
-    private Quaternion BarlogRot => transform.rotation;
+    private float BalrogY => transform.position.y;
+    private Quaternion BalrogRot => transform.rotation;
     Rigidbody2D Rigidbody => GetComponent<Rigidbody2D>();
     private Coroutine _reboundWingsBlock;
     private Coroutine _rebound;
     private void StartGame()
     {
-        _anim = GetComponent<Animator>();
         StartButtonPressed = 1;
+        currentState = "Idle";
     }
 
     public void Death()
     {
         StartButtonPressed = 0;
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<CircleCollider2D>().enabled = false;
+        enabled = false;
+        //GetComponent<CircleCollider2D>().enabled = false;
         deepBoard.SetActive(true);
         reFallButton.SetActive(true);
     }
 
     private void Update()
     {
+
         if (StartButtonPressed == 1)
         {
             if (_rebounded)
             {
-                BarlogMovementAndRotation(true, 10);
+                BalrogMovementAndRotation(true, 10);
             }
             else
             {
                 _rotation = MakeRotationFromMinusPiToPI(_rotation);
                 var inputGetAxisHorizontal = Input.GetAxis("Horizontal");
+
 
                 //если юзер не жмёт ни вправо, ни влево
                 if (inputGetAxisHorizontal == 0) _rotation *= 1 - _windage * Time.deltaTime;
@@ -72,30 +73,30 @@ public class Barlog : MonoBehaviour
                 } 
                 if (Input.GetAxis("Vertical") > 0)
                 {
-                    GetComponent<SpriteRenderer>().flipY = true;
+//                    GetComponent<SpriteRenderer>().flipY = true;
                     _windage = 0.99f;
                     Acceleration = 0;
-                    _сenterTendencyCoefficient = (BarlogY - (cam.transform.position.y + 200)) / 100;
+                    _сenterTendencyCoefficient = (BalrogY - (cam.transform.position.y + 200)) / 100;
                 }
                 else if (Input.GetAxis("Vertical") == 0)
                 {
-                    GetComponent<SpriteRenderer>().flipY = false;
+//                    GetComponent<SpriteRenderer>().flipY = false;
                     _windage = 0.5f;
                     Acceleration = 0;
-                    _сenterTendencyCoefficient = (BarlogY - (cam.transform.position.y + 100)) / 100;
+                    _сenterTendencyCoefficient = (BalrogY - (cam.transform.position.y + 100)) / 100;
                 }
                 else {
-                    GetComponent<SpriteRenderer>().flipY = false;
+//                    GetComponent<SpriteRenderer>().flipY = false;
                     _windage = 0.4f;
                     _сenterTendencyCoefficient = 
-                        (BarlogY - (cam.transform.position.y + 100 - _accelerationTrigger * 200))/100;
+                        (BalrogY - (cam.transform.position.y + 100 - _accelerationTrigger * 200))/100;
                     Acceleration = _accelerationTrigger * 20;
                 }
-                BarlogMovementAndRotation(false, 1);
+                BalrogMovementAndRotation(false, 1);
             }
         }
     }
-    private void BarlogMovementAndRotation(bool collidedStatus, int speedCoefficient)
+    private void BalrogMovementAndRotation(bool collidedStatus, int speedCoefficient)
     {
         _velocity *= 1 - _windage * Time.deltaTime * speedCoefficient;
         _velocity += Acceleration * Time.deltaTime;
@@ -106,12 +107,12 @@ public class Barlog : MonoBehaviour
         {
             _aVy += 8 * Time.deltaTime;
             _velocity = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-            _anim.SetFloat("speed", _velocity);
-            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
+//            _anim.SetFloat("speed", _velocity);
+//            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
             _rotation = Vector2.SignedAngle(new Vector2(_aVx, _aVy), Vector2.up) * Mathf.Deg2Rad;
         }
-        Rigidbody.transform.rotation = Quaternion.RotateTowards(BarlogRot, 
-            Quaternion.Euler(new Vector3(BarlogRot.x, BarlogRot.y, 
+        Rigidbody.transform.rotation = Quaternion.RotateTowards(BalrogRot, 
+            Quaternion.Euler(new Vector3(BalrogRot.x, BalrogRot.y, 
                 _rotation * Mathf.Rad2Deg * RotationDirection(Input.GetAxis("Vertical")))), 180);
 
         VertSpeed = _aVy * Ratio;
@@ -147,7 +148,7 @@ public class Barlog : MonoBehaviour
     {
         if (collision.gameObject.name == "VertebraPoint(Clone)")
         {
-            _anim.SetBool("Collided", true);
+//            _anim.SetBool("Collided", true);
             Acceleration = 0;
             var wallRotation = MakeDegreePositive(collision.gameObject.transform.eulerAngles.z - 90);
             var balrogRotation = MakeDegreePositive(transform.eulerAngles.z);
@@ -192,7 +193,7 @@ public class Barlog : MonoBehaviour
     private IEnumerator ReboundWingsBlock()
     {
         yield return new WaitForSeconds(2f);
-        _anim.SetBool("Collided", false);
+//        _anim.SetBool("Collided", false);
     }
     private float MakeRotationFromMinusPiToPI(float rotation)
     {

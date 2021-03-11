@@ -16,6 +16,7 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="Background.cs" t="Include" />
+          <e p="Balrog.cs" t="Include" />
           <e p="Barlog.cs" t="Include" />
           <e p="Deepboard.cs" t="Include" />
           <e p="Gandalf.cs" t="Include" />

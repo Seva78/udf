@@ -44,7 +44,7 @@ public class Mine : MonoBehaviour
     }
     void Update()
     {
-        speed = barlog.GetComponent<Barlog>().VertSpeed*Time.deltaTime;
+        speed = barlog.GetComponent<Balrog>().VertSpeed*Time.deltaTime;
         transform.position = new Vector3(transform.position.x, transform.position.y + speed);
         centralPointY += speed;
         _prevSidePointLeftY += speed;
@@ -67,7 +67,7 @@ public class Mine : MonoBehaviour
             mineList.RemoveAt(_vertebraToDelete - 1);
             _vertebraToDelete = 0;
         }
-        if (barlog.GetComponent<Barlog>().StartButtonPressed == 1)
+        if (barlog.GetComponent<Balrog>().StartButtonPressed == 1)
         {
             depthUi.GetComponent<TextMeshProUGUI>().text = Mathf.Round(transform.position.y / 20) + " m";
         }

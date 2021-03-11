@@ -53,7 +53,7 @@ namespace Assets.Scripts
                     transform.position = new Vector3(position.x - 2, position.y);
                 }
             }
-            _speed = barlog.GetComponent<Barlog>().VertSpeed;
+            _speed = barlog.GetComponent<Balrog>().VertSpeed;
             if (_speed > gandalfMaxSpeed && _gandalfVertPosition < gandalfVertPosHighSpeed)
             {
                 _gandalfVertPosition += (_speed - gandalfMaxSpeed) * Time.deltaTime / 2;
@@ -64,17 +64,14 @@ namespace Assets.Scripts
                 transform.position = new Vector3(position.x, _gandalfVertPosition);
             }
             if (_fireCooldownTrigger == 0 && 
-                barlog.GetComponent<Barlog>().StartButtonPressed == 1 &&
+                barlog.GetComponent<Balrog>().StartButtonPressed == 1 &&
                 _gandalfVertPosition < 800)
             {
                 _fireCooldownTrigger = 1;
                 StartCoroutine(Fire(position));
             }
         }
-        public void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
-        {
-            skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
-        }
+
         private IEnumerator Fire(Vector3 position)
         {
             yield return new WaitForSeconds(2);
@@ -85,6 +82,10 @@ namespace Assets.Scripts
             _fireCooldownTrigger = 0;
             currentState = "Idle";
             SetCharacterState(currentState);
+        }
+        public void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
+        {
+            skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
         }
         public void SetCharacterState(string state)
         {

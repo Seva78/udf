@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     private int _changeTrajectoryValue;
     private void Start()
     {
-        _barlogPosition = GameObject.Find("Barlog").transform.position;
+        _barlogPosition = GameObject.Find("Balrog").transform.position;
         _gandalfPosition = GameObject.Find("Gandalf").transform.position;
         GetComponent<AudioSource>().PlayOneShot(iceBallFire, 1f);
     }

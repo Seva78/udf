@@ -3658,7 +3658,7 @@ MonoBehaviour:
   gandalfVertPosDefault: 708
   gandalfVertPosHighSpeed: 830
   gandalfMaxSpeed: 400
-  barlog: {fileID: 2069570061}
+  barlog: {fileID: 2117104278}
   projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
     type: 3}
   controller: {fileID: 1111420317}
@@ -5746,7 +5746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 519420031}
-  barlog: {fileID: 2069570061}
+  barlog: {fileID: 2117104278}
   vertebraSource: {fileID: 6858721886280629069, guid: bb70c34bea0c7cf44aacf10f592ac30a,
     type: 3}
   centralPointPosLimit: 100
@@ -5795,7 +5795,7 @@ MonoBehaviour:
   background: {fileID: 5423297530855525995, guid: 99ba24aa2a3bbde48a827f5f485e0c15,
     type: 3}
   mainCamera: {fileID: 519420031}
-  barlog: {fileID: 2069570061}
+  barlog: {fileID: 2117104278}
   backgroundLagCoefficient: 1.5
   sidesLagCoefficient: 3
 --- !u!82 &1111420321
@@ -7994,9 +7994,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2069570065}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SendMessage
+      - m_Target: {fileID: 2117104285}
+        m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
+        m_MethodName: BroadcastMessage
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10146,7 +10146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!58 &2069570062
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10241,6 +10241,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd4455d28e43844da5a3d783b9b5aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 0}
+  balrogFly: {fileID: 0}
+  balrogFlyDown: {fileID: 0}
+  balrogFlyParachuting: {fileID: 0}
+  currentState: 
   VertSpeed: 0
   cam: {fileID: 519420028}
   deepBoard: {fileID: 1209580270}
@@ -10694,8 +10699,11 @@ GameObject:
   - component: {fileID: 2117104279}
   - component: {fileID: 2117104284}
   - component: {fileID: 2117104283}
+  - component: {fileID: 2117104285}
+  - component: {fileID: 2117104287}
+  - component: {fileID: 2117104286}
   m_Layer: 0
-  m_Name: Spine GameObject (Balrog)
+  m_Name: Balrog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10735,8 +10743,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Fly
-  loop: 1
+  _animationName: 
+  loop: 0
   timeScale: 1
 --- !u!23 &2117104280
 MeshRenderer:
@@ -10794,13 +10802,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117104278}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 259, y: 306, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2117104283
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10829,15 +10837,150 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &2117104285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117104278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3872876e79cbd5746a5a5f0070cbdfda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 2117104279}
+  balrogFly: {fileID: 11400000, guid: cc287f7b0ab52ef40927a530bae47e10, type: 2}
+  balrogFlyDown: {fileID: 11400000, guid: 1712d48586ab6e3488030871d8c4f518, type: 2}
+  balrogFlyParachuting: {fileID: 11400000, guid: 9b1c6c55dde6bff419b8d31777bb98b4,
+    type: 2}
+  currentState: 
+  VertSpeed: 0
+  cam: {fileID: 519420028}
+  deepBoard: {fileID: 1209580270}
+  reFallButton: {fileID: 1838697581}
+  StartButtonPressed: 0
+  soundBarlogHit2: {fileID: 8300000, guid: 57d2e4dafe193fc4498192d77e936ca6, type: 3}
+  Acceleration: 0
+--- !u!114 &2117104286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117104278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66998ea335acbe24f8cd3915077769d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpUi: {fileID: 1963383471}
+  hpText: {fileID: 2528764734435353094, guid: be1ca96ec2690274a8c23c1527a85afd, type: 3}
+--- !u!82 &2117104287
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117104278}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &7023896549662320693
 PrefabInstance:
   m_ObjectHideFlags: 0

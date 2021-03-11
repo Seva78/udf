@@ -34,7 +34,7 @@ public class Texture : MonoBehaviour
     }
     void Update()
     {
-        _speed = barlog.GetComponent<Barlog>().VertSpeed*Time.deltaTime;
+        _speed = barlog.GetComponent<Balrog>().VertSpeed*Time.deltaTime;
         _maskGenerateCheckPoint = TileMovement(_maskGenerateCheckPoint, mask, "Mask", 
             _tileMaskList, 0);
         _sidesGenerateCheckPoint = TileMovement(_sidesGenerateCheckPoint, sides, "Sides", 

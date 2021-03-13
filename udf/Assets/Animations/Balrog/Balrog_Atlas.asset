@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: Balrog_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: c7e02cf44c64e9c44872c423b682df14, type: 3}
+  atlasFile: {fileID: 4900000, guid: 4c62d67e0c0cb9f44adc6dd9e5655d4a, type: 3}
   materials:
-  - {fileID: 2100000, guid: 71a6a75f6350ba1419ad7919e6df01b3, type: 2}
+  - {fileID: 2100000, guid: c3898cd18bfd6c3409640e5e3fd3e69b, type: 2}

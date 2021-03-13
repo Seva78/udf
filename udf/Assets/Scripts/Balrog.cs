@@ -37,6 +37,7 @@ public class Balrog : MonoBehaviour
     {
         StartButtonPressed = 1;
         currentState = "Idle";
+        SetCharacterState(currentState);
     }
 
     public void Death()
@@ -73,7 +74,8 @@ public class Balrog : MonoBehaviour
                 } 
                 if (Input.GetAxis("Vertical") > 0)
                 {
-//                    GetComponent<SpriteRenderer>().flipY = true;
+                    Debug.Log(Input.GetAxis("Vertical"));
+                    //                    GetComponent<SpriteRenderer>().flipY = true;
                     _windage = 0.99f;
                     Acceleration = 0;
                     _сenterTendencyCoefficient = (BalrogY - (cam.transform.position.y + 200)) / 100;
@@ -86,11 +88,20 @@ public class Balrog : MonoBehaviour
                     _сenterTendencyCoefficient = (BalrogY - (cam.transform.position.y + 100)) / 100;
                 }
                 else {
-//                    GetComponent<SpriteRenderer>().flipY = false;
+
+                    if (currentState != "Fly")
+                    {
+                        currentState = "Fly";                        
+                    }
+                    //                    GetComponent<SpriteRenderer>().flipY = false;
+                    SetCharacterState(currentState);
                     _windage = 0.4f;
                     _сenterTendencyCoefficient = 
                         (BalrogY - (cam.transform.position.y + 100 - _accelerationTrigger * 200))/100;
                     Acceleration = _accelerationTrigger * 20;
+                    
+
+                    
                 }
                 BalrogMovementAndRotation(false, 1);
             }

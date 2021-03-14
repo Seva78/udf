@@ -7,10 +7,11 @@ using Spine.Unity;
 public class Balrog : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset balrogFly;
+    public AnimationReferenceAsset balrogIdle;
+    public AnimationReferenceAsset barlogWingsCollapsed;
     public AnimationReferenceAsset balrogFlyDown;
-    public AnimationReferenceAsset balrogFlyParachuting;
     public string currentState;
+    public GameObject balrogUp;
     public float VertSpeed; //переменная для передачи в скрипт Mine
     public GameObject cam;
     public GameObject deepBoard;
@@ -51,7 +52,6 @@ public class Balrog : MonoBehaviour
 
     private void Update()
     {
-
         if (StartButtonPressed == 1)
         {
             if (_rebounded)
@@ -62,8 +62,6 @@ public class Balrog : MonoBehaviour
             {
                 _rotation = MakeRotationFromMinusPiToPI(_rotation);
                 var inputGetAxisHorizontal = Input.GetAxis("Horizontal");
-
-
                 //если юзер не жмёт ни вправо, ни влево
                 if (inputGetAxisHorizontal == 0) _rotation *= 1 - _windage * Time.deltaTime;
                 else
@@ -74,34 +72,42 @@ public class Balrog : MonoBehaviour
                 } 
                 if (Input.GetAxis("Vertical") > 0)
                 {
-                    Debug.Log(Input.GetAxis("Vertical"));
-                    //                    GetComponent<SpriteRenderer>().flipY = true;
+                    balrogUp.SetActive(true);
+                    GetComponent<MeshRenderer>().enabled = false;
+                    if (currentState != "Idle")
+                    {
+                        currentState = "Idle";
+                        SetCharacterState(currentState);
+                    }
                     _windage = 0.99f;
                     Acceleration = 0;
                     _сenterTendencyCoefficient = (BalrogY - (cam.transform.position.y + 200)) / 100;
                 }
                 else if (Input.GetAxis("Vertical") == 0)
                 {
-//                    GetComponent<SpriteRenderer>().flipY = false;
+                    balrogUp.SetActive(false);
+                    GetComponent<MeshRenderer>().enabled = true;
+                    if (currentState != "Idle")
+                    {
+                        currentState = "Idle";
+                        SetCharacterState(currentState);
+                    }
                     _windage = 0.5f;
                     Acceleration = 0;
                     _сenterTendencyCoefficient = (BalrogY - (cam.transform.position.y + 100)) / 100;
                 }
                 else {
-
-                    if (currentState != "Fly")
+                    balrogUp.SetActive(false);
+                    GetComponent<MeshRenderer>().enabled = true;
+                    if (currentState != "Fly" && currentState != "FlyDown")
                     {
-                        currentState = "Fly";                        
+                        currentState = "Fly";
+                        SetCharacterState(currentState);
                     }
-                    //                    GetComponent<SpriteRenderer>().flipY = false;
-                    SetCharacterState(currentState);
                     _windage = 0.4f;
                     _сenterTendencyCoefficient = 
                         (BalrogY - (cam.transform.position.y + 100 - _accelerationTrigger * 200))/100;
                     Acceleration = _accelerationTrigger * 20;
-                    
-
-                    
                 }
                 BalrogMovementAndRotation(false, 1);
             }
@@ -118,6 +124,12 @@ public class Balrog : MonoBehaviour
         {
             _aVy += 8 * Time.deltaTime;
             _velocity = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
+            Debug.Log(_velocity);
+            if (currentState != "FlyDown" && _velocity >= 17)
+            {
+                currentState = "FlyDown";
+                SetCharacterState(currentState);
+            }
 //            _anim.SetFloat("speed", _velocity);
 //            _anim.SetFloat("InputGetAxisVertical", Input.GetAxis("Vertical"));
             _rotation = Vector2.SignedAngle(new Vector2(_aVx, _aVy), Vector2.up) * Mathf.Deg2Rad;
@@ -221,19 +233,15 @@ public class Balrog : MonoBehaviour
     {
         if (state.Equals("Idle"))
         {
-            SetAnimation(balrogFly, true, 0f);
+            SetAnimation(balrogIdle, true, 1f);
         }
         else if (state.Equals("Fly"))
         {
-            SetAnimation(balrogFly, true, 1f);
+            SetAnimation(barlogWingsCollapsed, true, 1f);
         }
         else if (state.Equals("FlyDown"))
         {
             SetAnimation(balrogFlyDown, true, 1f);
-        }
-        else if (state.Equals("FlyParachuting"))
-        {
-            SetAnimation(balrogFlyParachuting, true, 1f);
         }
     }
 }

@@ -50,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -117,7 +118,7 @@ MonoBehaviour:
     type: 3}
   iceBallFire: {fileID: 8300000, guid: 9bcda5c23ec5fb541b9928ea97699d53, type: 3}
   iceBallExplode: {fileID: 8300000, guid: 8f42c40b482cae24ca515ed348163ffa, type: 3}
-  explodeTrigger: 0
+  ExplodeTrigger: 0
 --- !u!50 &-1549393477781686352
 Rigidbody2D:
   serializedVersion: 4

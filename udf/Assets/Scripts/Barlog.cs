@@ -6,11 +6,6 @@ using Spine.Unity;
  [SuppressMessage("ReSharper", "CommentTypo")]
 public class Barlog : MonoBehaviour
 {
-    public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset balrogFly;
-    public AnimationReferenceAsset balrogFlyDown;
-    public AnimationReferenceAsset balrogFlyParachuting;
-    public string currentState;
     public float VertSpeed; //переменная для передачи в скрипт Mine
     public GameObject cam;
     public GameObject deepBoard;
@@ -200,28 +195,5 @@ public class Barlog : MonoBehaviour
         while (rotation > Mathf.PI) rotation -= Mathf.PI * 2;
         while (rotation < -Mathf.PI) rotation += Mathf.PI * 2;
         return rotation;
-    }
-    public void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
-    {
-        skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
-    }
-    public void SetCharacterState(string state)
-    {
-        if (state.Equals("Idle"))
-        {
-            SetAnimation(balrogFly, true, 0f);
-        }
-        else if (state.Equals("Fly"))
-        {
-            SetAnimation(balrogFly, true, 1f);
-        }
-        else if (state.Equals("FlyDown"))
-        {
-            SetAnimation(balrogFlyDown, true, 1f);
-        }
-        else if (state.Equals("FlyParachuting"))
-        {
-            SetAnimation(balrogFlyParachuting, true, 1f);
-        }
     }
 }

@@ -1297,10 +1297,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonAnimation: {fileID: 193874504}
-  balrogIdle: {fileID: 11400000, guid: 3f312cf44199d0d448926f7eba6ecf1b, type: 2}
-  barlogWingsCollapsed: {fileID: 11400000, guid: 36a4e75aaa69b48429ccb4d6749a2028,
+  balrogIdle: {fileID: 11400000, guid: 1aa09a5eaec8e4e49829cd0f21fc11c8, type: 2}
+  barlogWingsCollapsed: {fileID: 11400000, guid: a0a6e841be3ef734cacd6146ea291a5f,
     type: 2}
-  balrogFlyDown: {fileID: 11400000, guid: 46a0a106911f64d43b88119ce3810336, type: 2}
+  balrogFlyDown: {fileID: 11400000, guid: 0e208b201c1ef514f94b8a64727f2341, type: 2}
   currentState: 
   balrogUp: {fileID: 53653258}
   VertSpeed: 0
@@ -1322,7 +1322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 73cce5c072ab84e4da4fa4507b93d9ee, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 34b320e9002eb0f4598b0060f7264832, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -1366,7 +1366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3898cd18bfd6c3409640e5e3fd3e69b, type: 2}
+  - {fileID: 2100000, guid: 288423f1cf3ed92438243e0a9a062129, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -1,0 +1,762 @@
+Using pre-set license
+Built from '2020.2/staging' branch; Version is '2020.2.7f1 (c53830e277f1) revision 12924976'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19042.867; Version 2009; 64bit' Language: 'ru' Physical Memory: 4087 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\2020.2.7f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/Documents/GitHub/udf/udf
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+55606
+Successfully changed project path to: D:/Documents/GitHub/udf/udf
+D:/Documents/GitHub/udf/udf
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 55.65 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.7f1 (c53830e277f1)
+[Subsystems] Discovering subsystems at path C:/Program Files/2020.2.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Documents/GitHub/udf/udf/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 10.1]
+    Renderer: NVIDIA GeForce GT 240 (ID=0xca3)
+    Vendor:   
+    VRAM:     972 MB
+    Driver:   21.21.13.4201
+Initialize mono
+Mono path[0] = 'C:/Program Files/2020.2.7f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/2020.2.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/2020.2.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56096
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/2020.2.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.010984 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 50.98 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.209 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.022654 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.68 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.343 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.21 seconds
+Refreshing native plugins compatible for Editor in 0.80 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1500 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.6 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 27 unused Assets to reduce memory usage. Loaded Objects now: 1934.
+Total: 4.753600 ms (FindLiveObjects: 0.469700 ms CreateObjectMapping: 0.170600 ms MarkObjects: 2.749500 ms  DeleteObjects: 1.360900 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Animations/BalrogDownNew/Balrog.atlas.txt
+  artifactKey: Guid(39722f5840edbba4cbb15e42f7873204) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/Balrog.atlas.txt using Guid(39722f5840edbba4cbb15e42f7873204) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92d74ca294cd520c5f1ed5931cc64258') in 0.080918 seconds
+  Import took 0.135351 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.944387 seconds.
+  path: Assets/Animations/BalrogDownNew/Balrog_Atlas.asset
+  artifactKey: Guid(9f38ddad907fe7445b4750a3dabfffb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/Balrog_Atlas.asset using Guid(9f38ddad907fe7445b4750a3dabfffb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b448a64ca1984d680aef3157e24714d5') in 0.038338 seconds
+  Import took 0.060103 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.019675 seconds.
+  path: Assets/Animations/BalrogDownNew/Balrog_Atlas.asset
+  artifactKey: Guid(9f38ddad907fe7445b4750a3dabfffb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/Balrog_Atlas.asset using Guid(9f38ddad907fe7445b4750a3dabfffb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b448a64ca1984d680aef3157e24714d5') in 0.020478 seconds
+  Import took 0.026395 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 18.909528 seconds.
+  path: Assets/Animations/BalrogDownNew
+  artifactKey: Guid(b207cdf1377106a4eb9f630e9e93a871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew using Guid(b207cdf1377106a4eb9f630e9e93a871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '305a699eaf113177efb324135227ea68') in 0.013435 seconds
+  Import took 0.034083 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.109709 seconds.
+  path: Assets/Animations/BalrogDownNew/Balrog_SkeletonData.asset
+  artifactKey: Guid(99398c57497ec334db61b8d3415dbc17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/Balrog_SkeletonData.asset using Guid(99398c57497ec334db61b8d3415dbc17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8ad7a525a438d7a2bcef3cb48e88dc0') in 2.831092 seconds
+  Import took 2.891395 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 51.364362 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets
+  artifactKey: Guid(d46cdb1f1a3f6af419d90a48a4d0d3db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets using Guid(d46cdb1f1a3f6af419d90a48a4d0d3db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12b1004a09e87df980721b23c1ec4989') in 0.019169 seconds
+  Import took 0.033550 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.511371 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting2.asset
+  artifactKey: Guid(f2472deba4f18cb48a667c249c4154e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting2.asset using Guid(f2472deba4f18cb48a667c249c4154e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04309b6f811cc18d5d084e91f3f13755') in 0.086223 seconds
+  Import took 0.094174 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000951 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting2.asset
+  artifactKey: Guid(f2472deba4f18cb48a667c249c4154e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting2.asset using Guid(f2472deba4f18cb48a667c249c4154e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04309b6f811cc18d5d084e91f3f13755') in 0.072915 seconds
+  Import took 0.079702 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 143.227467 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle2.asset
+  artifactKey: Guid(61237350c55b59c4b9f1d7442f67ac3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle2.asset using Guid(61237350c55b59c4b9f1d7442f67ac3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4270ca2143ee7c3de06ee99a2952a531') in 0.102312 seconds
+  Import took 0.124039 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016702 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle2.asset
+  artifactKey: Guid(61237350c55b59c4b9f1d7442f67ac3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle2.asset using Guid(61237350c55b59c4b9f1d7442f67ac3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4270ca2143ee7c3de06ee99a2952a531') in 0.049092 seconds
+  Import took 0.054668 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.049870 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle.asset
+  artifactKey: Guid(bab8ee500e308c14787f0b210b03c72a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle.asset using Guid(bab8ee500e308c14787f0b210b03c72a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8734e206d14fe6ceef0c0fd1b85d5c02') in 0.054562 seconds
+  Import took 0.062067 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.014530 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.68 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.483 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.78 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1945.
+Total: 4.619100 ms (FindLiveObjects: 0.528100 ms CreateObjectMapping: 0.095700 ms MarkObjects: 2.456000 ms  DeleteObjects: 1.536200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 1439.289766 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/BalrogDownIdle2.asset
+  artifactKey: Guid(61237350c55b59c4b9f1d7442f67ac3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/BalrogDownIdle2.asset using Guid(61237350c55b59c4b9f1d7442f67ac3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c77d4fd652ba99c01e539bfc48aa595') in 0.409396 seconds
+  Import took 0.429864 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.009296 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.61 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.641 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.89 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.0 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1949.
+Total: 9.231000 ms (FindLiveObjects: 0.470000 ms CreateObjectMapping: 0.187000 ms MarkObjects: 5.053500 ms  DeleteObjects: 3.516000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 2528.716614 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/Fly.asset
+  artifactKey: Guid(fe18ac950aeabb5458be2c53fd2998c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/Fly.asset using Guid(fe18ac950aeabb5458be2c53fd2998c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '042b6052473918fecf820222d4ab246b') in 0.487021 seconds
+  Import took 0.492788 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 122.564121 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyDown.asset
+  artifactKey: Guid(77fabb9914dccaf43a448d7ed897ceec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyDown.asset using Guid(77fabb9914dccaf43a448d7ed897ceec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1592e6648bfc862788a5e31f5d9320bb') in 0.092717 seconds
+  Import took 0.117384 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 36.146904 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting.asset
+  artifactKey: Guid(6009cfc5ab6a1b04690b565febbf353a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting.asset using Guid(6009cfc5ab6a1b04690b565febbf353a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aaf1528cbef1c88c54ec77b134ea7be2') in 0.073122 seconds
+  Import took 0.094772 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001242 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting.asset
+  artifactKey: Guid(6009cfc5ab6a1b04690b565febbf353a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting.asset using Guid(6009cfc5ab6a1b04690b565febbf353a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aaf1528cbef1c88c54ec77b134ea7be2') in 0.064365 seconds
+  Import took 0.069867 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001326 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.274 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.60 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1953.
+Total: 4.335200 ms (FindLiveObjects: 0.295800 ms CreateObjectMapping: 0.081400 ms MarkObjects: 2.260100 ms  DeleteObjects: 1.695500 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 303.489491 seconds.
+  path: Assets/Animations/BalrogDown
+  artifactKey: Guid(b207cdf1377106a4eb9f630e9e93a871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown using Guid(b207cdf1377106a4eb9f630e9e93a871) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e4c0dc398f0d97261b0e5c0c71b39e4') in 0.013449 seconds
+  Import took 0.029193 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2401.996265 seconds.
+  path: Assets/Scripts/Balrog.cs
+  artifactKey: Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Balrog.cs using Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e957cf49bebedae3576306812d5ab0dd') in 0.521728 seconds
+  Import took 0.535385 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002091 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.51 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in 23.095 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.84 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1956.
+Total: 23.789000 ms (FindLiveObjects: 1.346800 ms CreateObjectMapping: 0.183800 ms MarkObjects: 18.925900 ms  DeleteObjects: 3.327700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 3501.368120 seconds.
+  path: Assets/Scripts/Balrog.cs
+  artifactKey: Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Balrog.cs using Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc7b78f172730e8013a0299b21afadf9') in 1.013872 seconds
+  Import took 1.487239 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002564 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.63 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.096 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.70 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.3 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1959.
+Total: 11.192600 ms (FindLiveObjects: 0.588900 ms CreateObjectMapping: 0.123700 ms MarkObjects: 7.591000 ms  DeleteObjects: 2.884700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002853 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.15 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.551 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.69 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1962.
+Total: 15.815800 ms (FindLiveObjects: 1.088700 ms CreateObjectMapping: 0.095600 ms MarkObjects: 11.237500 ms  DeleteObjects: 3.390100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001384 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.83 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.941 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.92 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1965.
+Total: 58.382400 ms (FindLiveObjects: 4.743900 ms CreateObjectMapping: 0.636100 ms MarkObjects: 43.912800 ms  DeleteObjects: 9.084700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.017828 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.77 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.586 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.96 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1968.
+Total: 7.539200 ms (FindLiveObjects: 0.718100 ms CreateObjectMapping: 0.255400 ms MarkObjects: 4.580300 ms  DeleteObjects: 1.980000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 4916.900070 seconds.
+  path: Assets/Animations/BalrogDown/BalrogDown_Atlas.asset
+  artifactKey: Guid(9f38ddad907fe7445b4750a3dabfffb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/BalrogDown_Atlas.asset using Guid(9f38ddad907fe7445b4750a3dabfffb7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca4ea8273769cdb1673a0ddb5caf67ac') in 0.266705 seconds
+  Import took 0.319216 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 28.553402 seconds.
+  path: Assets/Animations/BalrogDown/BalrogDown_SkeletonData.asset
+  artifactKey: Guid(99398c57497ec334db61b8d3415dbc17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/BalrogDown_SkeletonData.asset using Guid(99398c57497ec334db61b8d3415dbc17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '15a81f47d405152e38762b72a6fb70ee') in 0.829971 seconds
+  Import took 0.854635 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001315 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.57 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.416 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.73 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.2 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1972.
+Total: 6.041000 ms (FindLiveObjects: 0.643600 ms CreateObjectMapping: 0.190000 ms MarkObjects: 3.213000 ms  DeleteObjects: 1.990100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 58.894759 seconds.
+  path: Assets/Scripts/Balrog.cs
+  artifactKey: Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Balrog.cs using Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cddfedeb8c35c26d9749a00b72a549a4') in 0.013149 seconds
+  Import took 0.037104 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001304 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.57 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.400 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.83 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.3 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1975.
+Total: 5.511300 ms (FindLiveObjects: 0.329100 ms CreateObjectMapping: 0.192900 ms MarkObjects: 3.250300 ms  DeleteObjects: 1.736100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 4554.494482 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownFlyDown.asset
+  artifactKey: Guid(fe18ac950aeabb5458be2c53fd2998c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownFlyDown.asset using Guid(fe18ac950aeabb5458be2c53fd2998c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ac6eb77f73ad182f475e60cd1f25cd37') in 2.757220 seconds
+  Import took 3.406777 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003501 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownFlyDown.asset
+  artifactKey: Guid(fe18ac950aeabb5458be2c53fd2998c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownFlyDown.asset using Guid(fe18ac950aeabb5458be2c53fd2998c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ac6eb77f73ad182f475e60cd1f25cd37') in 0.233118 seconds
+  Import took 0.254115 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9458.067756 seconds.
+  path: Assets/Animations/BalrogDownNew
+  artifactKey: Guid(2131a95b3c1916745960c6172d01994d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew using Guid(2131a95b3c1916745960c6172d01994d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41ecfea8a4dd0182f0844ea0ba672cc5') in 0.065430 seconds
+  Import took 0.299079 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 33.249328 seconds.
+  path: Assets/Animations/BalrogDownNew/Balrog_SkeletonData.asset
+  artifactKey: Guid(34b320e9002eb0f4598b0060f7264832) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/Balrog_SkeletonData.asset using Guid(34b320e9002eb0f4598b0060f7264832) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40eb9c47fd670cdcfe87d1e19611d31a') in 14.580088 seconds
+  Import took 14.662281 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001792 seconds.
+  path: Assets/Animations/BalrogDownNew/Balrog_SkeletonData.asset
+  artifactKey: Guid(34b320e9002eb0f4598b0060f7264832) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/Balrog_SkeletonData.asset using Guid(34b320e9002eb0f4598b0060f7264832) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40eb9c47fd670cdcfe87d1e19611d31a') in 0.225777 seconds
+  Import took 0.232214 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 724.281287 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets
+  artifactKey: Guid(b66e99cf97927aa45aa76437e48b28cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets using Guid(b66e99cf97927aa45aa76437e48b28cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd394e8fbea7a5a28f5cb81bfd9f7c175') in 0.019834 seconds
+  Import took 0.031974 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002717 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets
+  artifactKey: Guid(b66e99cf97927aa45aa76437e48b28cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets using Guid(b66e99cf97927aa45aa76437e48b28cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd394e8fbea7a5a28f5cb81bfd9f7c175') in 0.006968 seconds
+  Import took 0.012512 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 17.946482 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/Fly.asset
+  artifactKey: Guid(0e208b201c1ef514f94b8a64727f2341) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/Fly.asset using Guid(0e208b201c1ef514f94b8a64727f2341) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc5966a97a27660a3c9df6d57d2e93f9') in 0.321927 seconds
+  Import took 0.328197 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002266 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/Fly.asset
+  artifactKey: Guid(0e208b201c1ef514f94b8a64727f2341) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/Fly.asset using Guid(0e208b201c1ef514f94b8a64727f2341) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc5966a97a27660a3c9df6d57d2e93f9') in 0.056668 seconds
+  Import took 0.061914 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.274144 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyDown.asset
+  artifactKey: Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyDown.asset using Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a72292bb423e4a86facf8bed657f2ba') in 0.104801 seconds
+  Import took 0.132168 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000896 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyDown.asset
+  artifactKey: Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyDown.asset using Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a72292bb423e4a86facf8bed657f2ba') in 0.101338 seconds
+  Import took 0.106428 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.578724 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle.asset
+  artifactKey: Guid(97110bf13b278fc46896d8b738a546c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle.asset using Guid(97110bf13b278fc46896d8b738a546c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '221ce4a572bc6c4f850baba1459e6d55') in 0.085342 seconds
+  Import took 0.107633 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.717587 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle2.asset
+  artifactKey: Guid(1aa09a5eaec8e4e49829cd0f21fc11c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyIdle2.asset using Guid(1aa09a5eaec8e4e49829cd0f21fc11c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b00690e2add61936815a251824c008e') in 0.091770 seconds
+  Import took 0.098510 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 103.530764 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting.asset
+  artifactKey: Guid(c700667ea092106418962d46171a206d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting.asset using Guid(c700667ea092106418962d46171a206d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79fc8e37b7a3b48a7e3c745a59ba4d66') in 0.112764 seconds
+  Import took 0.139367 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.875052 seconds.
+  path: Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting2.asset
+  artifactKey: Guid(d3b357a1f89a86947ab9dada6cac092e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDownNew/ReferenceAssets/FlyParachuting2.asset using Guid(d3b357a1f89a86947ab9dada6cac092e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7de523d7da92e4449bd45a97b6d7c095') in 0.072692 seconds
+  Import took 0.079282 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002396 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.26 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.105 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.07 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.3 MB.
+System memory in use after: 77.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1979.
+Total: 6.357900 ms (FindLiveObjects: 0.288300 ms CreateObjectMapping: 0.082600 ms MarkObjects: 4.176900 ms  DeleteObjects: 1.806300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001403 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.081 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.79 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.3 MB.
+System memory in use after: 77.2 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1982.
+Total: 8.713700 ms (FindLiveObjects: 0.508800 ms CreateObjectMapping: 1.281500 ms MarkObjects: 4.203100 ms  DeleteObjects: 2.716600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001723 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.79 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.399 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.3 MB.
+System memory in use after: 77.2 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1985.
+Total: 5.640700 ms (FindLiveObjects: 0.467200 ms CreateObjectMapping: 0.085600 ms MarkObjects: 3.141100 ms  DeleteObjects: 1.941900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001299 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.64 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.548 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.83 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.4 MB.
+System memory in use after: 77.2 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1988.
+Total: 6.397400 ms (FindLiveObjects: 0.325900 ms CreateObjectMapping: 0.130700 ms MarkObjects: 2.657500 ms  DeleteObjects: 3.279700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001323 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.352 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.4 MB.
+System memory in use after: 77.2 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1991.
+Total: 5.344800 ms (FindLiveObjects: 0.289700 ms CreateObjectMapping: 0.089500 ms MarkObjects: 2.837700 ms  DeleteObjects: 2.123800 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 775.447743 seconds.
+  path: Assets/Animations/BalrogDown
+  artifactKey: Guid(2131a95b3c1916745960c6172d01994d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown using Guid(2131a95b3c1916745960c6172d01994d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '210191d1e9e9fbaf66b3fb8e30a28a06') in 0.029044 seconds
+  Import took 0.051836 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 360.646295 seconds.
+  path: Assets/Animations/BalrogDown/Balrog_Atlas.asset
+  artifactKey: Guid(e13180ab9c9e8a04ba4276dc9f117fcd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/Balrog_Atlas.asset using Guid(e13180ab9c9e8a04ba4276dc9f117fcd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d4d0cbd5dd46771f57a68f2b09d5568') in 0.067868 seconds
+  Import took 0.085600 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.424262 seconds.
+  path: Assets/Animations/BalrogDown/BalrogDown_Atlas.asset
+  artifactKey: Guid(e13180ab9c9e8a04ba4276dc9f117fcd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/BalrogDown_Atlas.asset using Guid(e13180ab9c9e8a04ba4276dc9f117fcd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '783eb779a48dbc1872f28f63fab73f5c') in 0.052610 seconds
+  Import took 0.085070 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001472 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.59 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.338 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.86 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1460 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 78.4 MB.
+System memory in use after: 77.2 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1994.
+Total: 6.283500 ms (FindLiveObjects: 0.627900 ms CreateObjectMapping: 0.112900 ms MarkObjects: 3.708800 ms  DeleteObjects: 1.829900 ms)
+

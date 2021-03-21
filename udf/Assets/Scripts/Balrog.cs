@@ -40,6 +40,22 @@ public class Balrog : MonoBehaviour
         currentState = "Idle";
         SetCharacterState(currentState);
     }
+    void Start()
+    {
+        skeletonAnimation.state.Event += Boost_Event;
+    }
+
+    private void Boost_Event(Spine.TrackEntry trackEntry, Spine.Event e)
+    {
+        if (e.Data.Name == "swing") {
+            _accelerationTrigger = 1;
+            Debug.Log(_accelerationTrigger);
+            if (StartButtonPressed == 1)
+            {
+                GetComponent<HealthPointsManager>().BoostHeal();
+            }
+        }
+    }
 
     public void Death()
     {
@@ -124,7 +140,6 @@ public class Balrog : MonoBehaviour
         {
             _aVy += 8 * Time.deltaTime;
             _velocity = Mathf.Sqrt(_aVx * _aVx + _aVy * _aVy);
-            Debug.Log(_velocity);
             if (currentState != "FlyDown" && _velocity >= 17)
             {
                 currentState = "FlyDown";
@@ -154,9 +169,10 @@ public class Balrog : MonoBehaviour
         else return 1;
     }
 
-    private void BoostEvent(int v)
+    void BoostEvent(int v)
     {
         _accelerationTrigger = v;
+        Debug.Log(_accelerationTrigger);
         if (v == 1 && StartButtonPressed == 1) {
             GetComponent<HealthPointsManager>().BoostHeal();
         }

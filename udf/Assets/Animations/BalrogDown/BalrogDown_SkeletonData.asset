@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: BalrogDown_SkeletonData
+  m_Name: Balrog_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 2e074ddc1c049024c83b61394813fe80, type: 2}
+  - {fileID: 11400000, guid: e13180ab9c9e8a04ba4276dc9f117fcd, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 9b480ff3e3fdfe14dbbee740c7ef9d26, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 89ca47b3f94fb724197107c094c7998c, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0

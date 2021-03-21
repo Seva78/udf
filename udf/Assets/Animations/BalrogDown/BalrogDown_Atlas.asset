@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: BalrogDown_Atlas
+  m_Name: Balrog_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 4c62d67e0c0cb9f44adc6dd9e5655d4a, type: 3}
+  atlasFile: {fileID: 4900000, guid: e12ddd614e6e8064b9e4c917ddbae002, type: 3}
   materials:
-  - {fileID: 2100000, guid: c3898cd18bfd6c3409640e5e3fd3e69b, type: 2}
+  - {fileID: 2100000, guid: 908d39cb8c9d40041916b12bf7a97e32, type: 2}

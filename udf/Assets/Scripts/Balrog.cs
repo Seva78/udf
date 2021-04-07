@@ -49,11 +49,12 @@ public class Balrog : MonoBehaviour
     {
         if (e.Data.Name == "swing") {
             _accelerationTrigger = 1;
-            Debug.Log(_accelerationTrigger);
             if (StartButtonPressed == 1)
             {
                 GetComponent<HealthPointsManager>().BoostHeal();
             }
+        } else if (e.Data.Name == "aswing") {
+            _accelerationTrigger = 0;
         }
     }
 

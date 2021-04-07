@@ -1,0 +1,139 @@
+Using pre-set license
+Built from '2020.2/staging' branch; Version is '2020.2.7f1 (c53830e277f1) revision 12924976'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19042.867; Version 2009; 64bit' Language: 'ru' Physical Memory: 4087 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\2020.2.7f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker4
+-projectPath
+D:/Documents/GitHub/udf/udf
+-logFile
+Logs/AssetImportWorker4.log
+-srvPort
+64397
+Successfully changed project path to: D:/Documents/GitHub/udf/udf
+D:/Documents/GitHub/udf/udf
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 113.64 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.2.7f1 (c53830e277f1)
+[Subsystems] Discovering subsystems at path C:/Program Files/2020.2.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Documents/GitHub/udf/udf/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 10.1]
+    Renderer: NVIDIA GeForce GT 240 (ID=0xca3)
+    Vendor:   
+    VRAM:     972 MB
+    Driver:   21.21.13.4201
+Initialize mono
+Mono path[0] = 'C:/Program Files/2020.2.7f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/2020.2.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/2020.2.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56704
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/2020.2.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.010913 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 81.53 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.707 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.006247 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+Mono: successfully reloaded assembly
+- Completed reload, in  5.500 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 1.75 seconds
+Refreshing native plugins compatible for Editor in 0.82 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1500 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.5 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 27 unused Assets to reduce memory usage. Loaded Objects now: 1934.
+Total: 11.903900 ms (FindLiveObjects: 0.446600 ms CreateObjectMapping: 0.092300 ms MarkObjects: 9.195700 ms  DeleteObjects: 2.165000 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Scripts/Balrog.cs
+  artifactKey: Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Balrog.cs using Guid(3872876e79cbd5746a5a5f0070cbdfda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65ccd91e3904b85a3b0658d81d6cf1ca') in 0.339163 seconds
+  Import took 0.386081 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.371557 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownFlyDown.asset
+  artifactKey: Guid(0e208b201c1ef514f94b8a64727f2341) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownFlyDown.asset using Guid(0e208b201c1ef514f94b8a64727f2341) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2496abca35a436c05715826ec9a64696') in 0.759568 seconds
+  Import took 0.766293 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.109176 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle.asset
+  artifactKey: Guid(97110bf13b278fc46896d8b738a546c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle.asset using Guid(97110bf13b278fc46896d8b738a546c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3681d581599aa2ee35c2abf19f075d8a') in 0.066563 seconds
+  Import took 0.082331 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.003523 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle.asset
+  artifactKey: Guid(97110bf13b278fc46896d8b738a546c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle.asset using Guid(97110bf13b278fc46896d8b738a546c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3681d581599aa2ee35c2abf19f075d8a') in 0.081915 seconds
+  Import took 0.109145 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.547731 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle2.asset
+  artifactKey: Guid(1aa09a5eaec8e4e49829cd0f21fc11c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle2.asset using Guid(1aa09a5eaec8e4e49829cd0f21fc11c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6ca422597273fc3773ad3272a4b9a79') in 0.090044 seconds
+  Import took 0.107685 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002381 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle2.asset
+  artifactKey: Guid(1aa09a5eaec8e4e49829cd0f21fc11c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownIdle2.asset using Guid(1aa09a5eaec8e4e49829cd0f21fc11c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6ca422597273fc3773ad3272a4b9a79') in 0.052567 seconds
+  Import took 0.058219 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.501727 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownWingsCollapsed.asset
+  artifactKey: Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownWingsCollapsed.asset using Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54ec179c972d4be959b63fadff713b2c') in 0.086494 seconds
+  Import took 0.093694 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000902 seconds.
+  path: Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownWingsCollapsed.asset
+  artifactKey: Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/BalrogDown/ReferenceAssets/BalrogDownWingsCollapsed.asset using Guid(a0a6e841be3ef734cacd6146ea291a5f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54ec179c972d4be959b63fadff713b2c') in 0.064197 seconds
+  Import took 0.076089 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

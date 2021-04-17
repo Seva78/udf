@@ -1366,7 +1366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 288423f1cf3ed92438243e0a9a062129, type: 2}
+  - {fileID: 2100000, guid: 908d39cb8c9d40041916b12bf7a97e32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4076,7 +4076,7 @@ MonoBehaviour:
   gandalfVertPosHighSpeed: 830
   gandalfMaxSpeed: 400
   barlog: {fileID: 193874498}
-  projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
+  projectile: {fileID: 8550816026909929687, guid: efa270dc8caee5246a0e81b376c1c24c,
     type: 3}
   controller: {fileID: 1111420317}
 --- !u!1 &819647124

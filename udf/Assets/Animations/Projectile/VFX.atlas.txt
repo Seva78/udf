@@ -1,0 +1,27 @@
+
+VFX.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ПосохСвет1
+  rotate: true
+  xy: 207, 327
+  size: 135, 162
+  orig: 142, 169
+  offset: 3, 4
+  index: -1
+ПосохСвет2
+  rotate: true
+  xy: 2, 2
+  size: 207, 250
+  orig: 215, 259
+  offset: 5, 5
+  index: -1
+ПосохСвет3
+  rotate: false
+  xy: 2, 211
+  size: 203, 251
+  orig: 218, 269
+  offset: 8, 10
+  index: -1

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
@@ -50,7 +49,6 @@ public class Projectile : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(iceBallExplode, 1f);
         currentState = "Explosion";
         SetCharacterState(currentState);
-//        Instantiate(projectileExplosion, transform.position, Quaternion.identity);
         GetComponent<CircleCollider2D>().enabled = false;
         StartCoroutine("Destroy");
     }

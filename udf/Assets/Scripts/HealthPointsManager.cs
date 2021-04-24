@@ -24,12 +24,12 @@ public class HealthPointsManager : MonoBehaviour
 
     public void CollisionDamage()
     {
-        _healthPointsDelta += Random.Range(0,0);
+        _healthPointsDelta += Random.Range(1,6);
         Damage(_healthPointsDelta);
     }
     public void ProjectileDamage()
     {
-        _healthPointsDelta += Random.Range(0,0);
+        _healthPointsDelta += Random.Range(1,6);
         Damage(_healthPointsDelta);
     }
     
@@ -57,7 +57,7 @@ public class HealthPointsManager : MonoBehaviour
             _barlogAlive = false;
             _healthPoints = 0;
             hpUi.GetComponent<TextMeshProUGUI>().text = "HP: " + _healthPoints;
-            GetComponent<Barlog>().Death();
+            GetComponent<Balrog>().Death();
         }
     }
     private void HealthPointsSpawn(int healthPointsValue, Color32 healthPointsColor)

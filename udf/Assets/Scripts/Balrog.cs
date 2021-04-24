@@ -61,10 +61,11 @@ public class Balrog : MonoBehaviour
     public void Death()
     {
         StartButtonPressed = 0;
-        enabled = false;
-        //GetComponent<CircleCollider2D>().enabled = false;
         deepBoard.SetActive(true);
         reFallButton.SetActive(true);
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<CircleCollider2D>().enabled = false;
+
     }
 
     private void Update()

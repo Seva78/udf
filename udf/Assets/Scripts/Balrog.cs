@@ -65,7 +65,7 @@ public class Balrog : MonoBehaviour
         reFallButton.SetActive(true);
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<CircleCollider2D>().enabled = false;
-
+        GameObject.Find("BalrogUp").GetComponent<MeshRenderer>().enabled = false;
     }
 
     private void Update()

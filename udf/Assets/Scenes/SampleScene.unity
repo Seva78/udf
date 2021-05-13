@@ -459,6 +459,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1358,6 +1359,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -3883,6 +3885,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5597,7 +5600,7 @@ MonoBehaviour:
   soundButton: {fileID: 1053324920}
   soundOff: {fileID: 21300000, guid: b49441af433e49844962f0c608ab278e, type: 3}
   soundOn: {fileID: 21300000, guid: 390f2140561630543b2e1e256de893d9, type: 3}
-  projectile: {fileID: 7756416353625399529, guid: 328d60d3a76d473408ba60705aa89816,
+  projectile: {fileID: 8550816026909929687, guid: efa270dc8caee5246a0e81b376c1c24c,
     type: 3}
   balrog: {fileID: 193874498}
 --- !u!1 &1069518805

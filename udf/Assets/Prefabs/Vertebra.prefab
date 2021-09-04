@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c09ec3dd532944ea29627c2b417eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point: {fileID: 2302104410519513460, guid: 6dff2a13bb9df2c4d9bf8fec4aa69594, type: 3}
-  leftPoint: {fileID: 0}
-  rightPoint: {fileID: 0}
+  Point: {fileID: 2302104410519513460, guid: 6dff2a13bb9df2c4d9bf8fec4aa69594, type: 3}
+  LeftPoint: {fileID: 0}
+  RightPoint: {fileID: 0}

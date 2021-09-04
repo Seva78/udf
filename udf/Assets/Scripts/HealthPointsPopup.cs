@@ -5,11 +5,11 @@ using UnityEngine;
 public class HealthPointsPopup : MonoBehaviour
 {
     public GameObject Balrog;
-    public float HealthPointPopupSpeed;
+    public float _healthPointPopupSpeed;
 
-    void Update()
+    private void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + HealthPointPopupSpeed * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, transform.position.y + _healthPointPopupSpeed * Time.deltaTime);
         if (transform.position.y - Balrog.transform.position.y > 70) {
             Destroy(gameObject);
         }

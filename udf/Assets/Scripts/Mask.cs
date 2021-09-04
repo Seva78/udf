@@ -4,23 +4,25 @@ using System.Diagnostics;
 using UnityEngine;
 using System.Linq;
 public class Mask : MonoBehaviour
+
 {
+    private GameObject _controller;
     public void Start()
     {
         var rend = GetComponent<SpriteMask>();
-        Texture2D tex = rend.sprite.texture;
-        Color32[] pixels = new Color32[tex.width * tex.height];
+        var tex = rend.sprite.texture;
+        var pixels = new Color32[tex.width * tex.height];
         pixels = tex.GetPixels32();
-        Texture2D newTex = new Texture2D(tex.width, tex.height, tex.format, mipChain: false);
+        var newTex = new Texture2D(tex.width, tex.height, tex.format, mipChain: false);
         newTex.SetPixels32(pixels);
-        Vector3 globalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
+        var globalPos = transform.TransformPoint(-tex.width / 2, -tex.height / 2, 0);
         //вертикальная координата верхней части объекта
-        var topGlobalPosY = globalPos.y + tex.height; 
-        var controller = GameObject.Find("Controller");
-        var mineList = controller.GetComponent<Mine>().mineList;
+        var topGlobalPosY = globalPos.y + tex.height;
+        _controller = transform.parent.gameObject;
+        var mineList = _controller.GetComponent<Mine>().mineList;
         var mineListLocal = new List<GameObject>();
-        for (var i = 1; i < mineList.Count - 1; i++) {
-            var prevVert = mineList[i - 1].GetComponent<Vertebra>();
+        for (var i = 5; i < mineList.Count - 1; i++) {
+            var prevVert = mineList[i - 1].GetComponent<Vertebra>(); 
             var nextVert = mineList[i + 1].GetComponent<Vertebra>();
             if (nextVert.LeftY < topGlobalPosY && nextVert.LeftY > globalPos.y ||
                 prevVert.LeftY < topGlobalPosY && prevVert.LeftY > globalPos.y ||
@@ -55,7 +57,7 @@ public class Mask : MonoBehaviour
             newTex.SetPixels32(wallLeft, y - (int)globalPos.y, mineWidth, 1, GetRow(mineWidth));
         }
         newTex.Apply();
-        Sprite newSprite = 
+        var newSprite = 
             Sprite.Create(newTex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 1f);
         rend.sprite = newSprite;
     }
@@ -68,11 +70,11 @@ public class Mask : MonoBehaviour
         return wallX;
     }
     
-    public Color32[] GetRow(int length)
+    private Color32[] GetRow(int length)
     {
         var pixel = new Color32(0, 0, 0, 0);
         var row = new Color32[length];
-        for (int i = 0; i < length; i++)
+        for (var i = 0; i < length; i++)
         {
             row[i] = pixel;
         }
